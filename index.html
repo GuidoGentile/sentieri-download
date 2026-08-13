@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#163f33" />
+    <meta
+      name="description"
+      content="Sentieri: piattaforma per accessi, prenotazioni e fruizione responsabile dei territori protetti. Scarica la demo Android."
+    />
+    <title>Sentieri · Il territorio, con regole chiare</title>
+    <link rel="icon" href="assets/sentieri-mark.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#inizio" aria-label="Sentieri, torna all'inizio">
+        <img src="assets/sentieri-mark.svg" alt="" />
+        <span>Sentieri</span>
+      </a>
+      <nav aria-label="Navigazione principale">
+        <a href="#ecosistema">Applicazioni</a>
+        <a href="#download">Download</a>
+        <a href="#stato">Stato</a>
+      </nav>
+    </header>
+
+    <main id="inizio">
+      <section class="hero shell">
+        <div class="hero-copy">
+          <p class="eyebrow"><span></span> Prima demo Android</p>
+          <h1>Il territorio,<br /><em>con regole chiare.</em></h1>
+          <p class="lead">
+            Sentieri unisce catalogo, accessi programmati e strumenti sul campo in un'unica piattaforma
+            configurabile per gli enti gestori. La prima declinazione progettata è il PNALM.
+          </p>
+          <div class="actions">
+            <a
+              class="button primary"
+              href="https://github.com/GuidoGentile/sentieri-download/releases/latest/download/Sentieri-Android-demo.apk"
+            >
+              <span>Scarica demo Android</span>
+              <small>APK · installazione manuale</small>
+            </a>
+            <a class="button secondary" href="https://github.com/GuidoGentile/sentieri-download/releases/latest">
+              Note della release
+            </a>
+          </div>
+          <p class="microcopy">Demo tecnica non disponibile su Google Play. Nessuna funzione territoriale è ancora operativa.</p>
+        </div>
+
+        <div class="terrain-card" aria-label="Illustrazione di un percorso tra montagne">
+          <div class="terrain-meta"><span>PROFILO TERRITORIALE</span><strong>PNALM · DEMO</strong></div>
+          <svg viewBox="0 0 660 520" role="img" aria-label="Percorso stilizzato attraverso un paesaggio montano">
+            <defs>
+              <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#dceadf" />
+                <stop offset="1" stop-color="#f5f1e5" />
+              </linearGradient>
+              <linearGradient id="mountain" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#79917c" />
+                <stop offset="1" stop-color="#355d4c" />
+              </linearGradient>
+            </defs>
+            <rect width="660" height="520" rx="30" fill="url(#sky)" />
+            <circle cx="520" cy="105" r="42" fill="#e8b258" opacity=".9" />
+            <path d="M0 330 122 180l94 109 99-145 149 180 78-91 118 137v150H0Z" fill="#aec0af" />
+            <path d="M0 366 138 225l91 105 90-131 138 166 80-91 123 133v113H0Z" fill="url(#mountain)" />
+            <path d="M78 472c68-76 108-73 161-31 51 41 89 25 123-34 40-70 94-79 198-27" fill="none" stroke="#f0bd60" stroke-width="15" stroke-linecap="round" />
+            <circle cx="78" cy="472" r="12" fill="#fffaf0" stroke="#163f33" stroke-width="6" />
+            <circle cx="560" cy="380" r="12" fill="#fffaf0" stroke="#163f33" stroke-width="6" />
+          </svg>
+          <div class="terrain-status"><span class="pulse"></span> Catalogo, capienze e titoli in progettazione</div>
+        </div>
+      </section>
+
+      <section id="ecosistema" class="section shell">
+        <p class="eyebrow"><span></span> Un solo nucleo, ruoli distinti</p>
+        <div class="section-heading">
+          <h2>Quattro strumenti.<br />Responsabilità separate.</h2>
+          <p>Ogni applicazione vede soltanto le funzioni necessarie al proprio ruolo.</p>
+        </div>
+        <div class="products">
+          <article class="product available">
+            <div class="product-top"><span>01</span><b>Demo disponibile</b></div>
+            <h3>App utente</h3>
+            <p>Percorsi, prenotazioni, titoli, orientamento offline e sicurezza volontaria.</p>
+          </article>
+          <article class="product">
+            <div class="product-top"><span>02</span><b>In progettazione</b></div>
+            <h3>Console gestore</h3>
+            <p>Editor geografico, import GPX/GeoJSON, calendari e capienze condivise.</p>
+          </article>
+          <article class="product">
+            <div class="product-top"><span>03</span><b>In progettazione</b></div>
+            <h3>App Guardia</h3>
+            <p>Verifica QR, sicurezza sul territorio, controlli e stampa portatile.</p>
+          </article>
+          <article class="product">
+            <div class="product-top"><span>04</span><b>In progettazione</b></div>
+            <h3>Portale verbali</h3>
+            <p>Consultazione, istruzioni di contestazione e pagamenti online.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="download" class="download-band">
+        <div class="shell download-grid">
+          <div>
+            <p class="eyebrow light"><span></span> Android · 0.1.0 demo</p>
+            <h2>Una prima anteprima,<br />direttamente sul telefono.</h2>
+            <p>
+              Questa build consente di verificare installazione, identità e base Android. Non contiene ancora
+              prenotazioni, mappa, navigazione o funzioni operative.
+            </p>
+            <a
+              class="button warm"
+              href="https://github.com/GuidoGentile/sentieri-download/releases/latest/download/Sentieri-Android-demo.apk"
+            >Scarica l'APK</a>
+          </div>
+          <ol class="steps">
+            <li><span>1</span><div><strong>Scarica</strong><p>Apri questa pagina da Android e tocca il pulsante.</p></div></li>
+            <li><span>2</span><div><strong>Autorizza</strong><p>Se richiesto, consenti temporaneamente l'installazione dal browser.</p></div></li>
+            <li><span>3</span><div><strong>Installa</strong><p>Apri il file scaricato e avvia Sentieri.</p></div></li>
+          </ol>
+        </div>
+      </section>
+
+      <section id="stato" class="section shell status-section">
+        <div>
+          <p class="eyebrow"><span></span> Stato del progetto</p>
+          <h2>Trasparenza prima delle promesse.</h2>
+        </div>
+        <div class="status-grid">
+          <article><strong>Definito</strong><p>Modello multi-parco, accessi, calendari, capienze, prenotazioni e titoli.</p></article>
+          <article><strong>Dimostrativo</strong><p>Prototipo web esplorativo e involucro Android installabile.</p></article>
+          <article><strong>Non operativo</strong><p>Dati ufficiali, pagamenti, QR verificabili, sicurezza reale e strumenti gestore/guardia.</p></article>
+        </div>
+        <div class="notice">
+          <strong>Importante</strong>
+          <p>
+            Sentieri non è ancora un'app ufficiale del PNALM o di altri enti. Non usare questa demo per
+            navigazione, emergenze, prenotazioni reali o autorizzazioni di accesso.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="shell footer-inner">
+        <div class="brand footer-brand"><img src="assets/sentieri-mark.svg" alt="" /><span>Sentieri</span></div>
+        <p>Demo sperimentale · prima declinazione territoriale PNALM · nessun logo ufficiale utilizzato</p>
+        <a href="https://github.com/GuidoGentile/sentieri-download/releases">Tutte le release</a>
+      </div>
+    </footer>
+  </body>
+</html>
+
