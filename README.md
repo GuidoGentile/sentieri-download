@@ -19,9 +19,10 @@ Scarica soltanto dalla pagina ufficiale e confronta, se necessario, il file SHA-
 - prototipo web utente: esplorativo, non pubblicato come servizio operativo;
 - console web gestore: modello definito, implementazione non iniziata;
 - app Guardia Parco: modello definito, implementazione non iniziata;
-- portale verbali: modello definito, implementazione non iniziata.
+- portale verbali: modello definito, implementazione non iniziata;
+- modulo comunale per eventi, cultura e servizi locali: prima bozza definita, implementazione non iniziata;
+- area operatori locali: prevista per profili e offerte gratuite sottoposte a moderazione.
 
 ## Avvertenza
 
 Sentieri è un progetto sperimentale. Non è ancora un'app ufficiale del PNALM o di altri enti e non deve essere usata per navigazione, sicurezza, prenotazioni reali, controllo degli accessi o accertamenti.
-
