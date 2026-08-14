@@ -4,7 +4,7 @@ Questo repository pubblico ospita la pagina di presentazione e le release dimost
 
 ## Android
 
-La release attuale è una **demo tecnica**, distribuita fuori dal Play Store per prove controllate. L'APK mostra il nuovo involucro Android del prodotto, ma non contiene ancora catalogo, prenotazioni, navigazione, console gestore o funzioni Guardia Parco.
+La release attuale è una **demo tecnica 0.6.0**, distribuita fuori dal Play Store per prove controllate. L'APK contiene il catalogo PNALM offline con 155 candidati, filtri, dettaglio del percorso, profilo altimetrico, menu diretto e prime schermate account/storico/copertura. Non contiene ancora prenotazioni reali, navigazione GPS operativa, cartografia vettoriale offline completa, console gestore o funzioni Guardia Parco.
 
 1. Apri la pagina pubblica da Android.
 2. Tocca **Scarica demo Android**.
@@ -15,14 +15,13 @@ Scarica soltanto dalla pagina ufficiale e confronta, se necessario, il file SHA-
 
 ## Stato delle applicazioni
 
-- app utente Android: involucro dimostrativo installabile;
+- app utente Android: demo installabile con catalogo e profili offline;
 - prototipo web utente: esplorativo, non pubblicato come servizio operativo;
-- console web gestore: modello definito, implementazione non iniziata;
+- console web gestore: prima configurazione locale di colori, logo e area cartografica; autenticazione e pubblicazione centrale non ancora operative;
 - app Guardia Parco: modello definito, implementazione non iniziata;
-- portale verbali: modello definito, implementazione non iniziata;
-- modulo comunale per eventi, cultura e servizi locali: prima bozza definita, implementazione non iniziata;
-- area operatori locali: prevista per profili e offerte gratuite sottoposte a moderazione.
+- portale verbali: modello definito, implementazione non iniziata.
 
 ## Avvertenza
 
 Sentieri è un progetto sperimentale. Non è ancora un'app ufficiale del PNALM o di altri enti e non deve essere usata per navigazione, sicurezza, prenotazioni reali, controllo degli accessi o accertamenti.
+

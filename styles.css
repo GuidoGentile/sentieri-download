@@ -111,7 +111,7 @@ h2 { margin-bottom: 20px; font-size: clamp(2.5rem, 5vw, 4.6rem); }
 .section-heading h2 { margin: 0; }
 .section-heading p { max-width: 390px; margin-bottom: 6px; color: var(--muted); }
 
-.products { display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+.products { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
 .product { min-height: 260px; padding: 25px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: rgba(255,255,255,.25); }
 .product.available { background: var(--forest); color: white; }
 .product-top { display: flex; justify-content: space-between; gap: 12px; color: var(--muted); font-size: .68rem; font-weight: 850; letter-spacing: .08em; text-transform: uppercase; }
@@ -120,21 +120,6 @@ h2 { margin-bottom: 20px; font-size: clamp(2.5rem, 5vw, 4.6rem); }
 .product h3 { margin: 72px 0 12px; font-family: Georgia, serif; font-size: 1.7rem; font-weight: 500; }
 .product p { margin: 0; color: var(--muted); font-size: .91rem; }
 .product.available p { color: #d2dfd7; }
-
-.municipal-section { padding-block: 110px; background: var(--paper-2); border-block: 1px solid var(--line); }
-.municipal-grid { display: grid; grid-template-columns: .82fr 1.18fr; gap: clamp(52px, 9vw, 120px); align-items: start; }
-.municipal-copy { position: sticky; top: 112px; }
-.municipal-lead { max-width: 560px; color: #4d5c55; font-size: 1.08rem; }
-.concept-badge { display: inline-flex; align-items: center; gap: 9px; margin-top: 12px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--forest); background: rgba(255,255,255,.35); font-size: .75rem; font-weight: 800; }
-.concept-badge span { width: 8px; height: 8px; border-radius: 50%; background: var(--warm); }
-.journey { display: flex; flex-wrap: wrap; gap: 9px; align-items: center; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
-.journey span { padding: 7px 10px; border-radius: 8px; color: var(--forest); background: rgba(255,255,255,.55); font-size: .76rem; font-weight: 850; }
-.journey i { color: var(--moss); font-style: normal; }
-.municipal-benefits article { display: grid; grid-template-columns: 44px 1fr; gap: 18px; padding: 28px 0; border-bottom: 1px solid var(--line); }
-.municipal-benefits article > span { color: var(--forest-2); font-size: .72rem; font-weight: 900; letter-spacing: .1em; }
-.municipal-benefits h3 { margin: -4px 0 7px; font-family: Georgia, serif; font-size: 1.65rem; font-weight: 500; }
-.municipal-benefits p { margin: 0; color: var(--muted); }
-.municipal-note { margin: 22px 0 0; color: var(--forest); font-size: .84rem; font-weight: 800; }
 
 .download-band { padding-block: 100px; color: white; background: var(--forest); }
 .download-grid { display: grid; grid-template-columns: 1fr .82fr; gap: clamp(50px, 9vw, 130px); align-items: center; }
@@ -160,11 +145,10 @@ footer { padding-block: 34px; border-top: 1px solid var(--line); }
 .footer-inner > a { color: var(--forest); font-size: .83rem; font-weight: 800; }
 
 @media (max-width: 900px) {
-  .hero, .download-grid, .status-section, .municipal-grid { grid-template-columns: 1fr; }
+  .hero, .download-grid, .status-section { grid-template-columns: 1fr; }
   .hero { min-height: auto; padding-block: 60px 80px; }
   .terrain-card { max-width: 640px; transform: none; }
   .products { grid-template-columns: repeat(2, 1fr); }
-  .municipal-copy { position: static; }
   .section-heading { display: block; }
   .section-heading p { margin-top: 20px; }
 }
@@ -186,10 +170,6 @@ footer { padding-block: 34px; border-top: 1px solid var(--line); }
   .product { min-height: 220px; }
   .product h3 { margin-top: 50px; }
   .download-band { padding-block: 76px; }
-  .municipal-section { padding-block: 78px; }
-  .journey { align-items: stretch; }
-  .journey span { display: grid; place-items: center; flex: 1 1 38%; text-align: center; }
-  .journey i { display: none; }
   .status-grid article, .notice { grid-template-columns: 1fr; gap: 8px; }
   .footer-inner { grid-template-columns: 1fr; justify-items: center; }
   .footer-inner p { order: 3; }
@@ -199,3 +179,4 @@ footer { padding-block: 34px; border-top: 1px solid var(--line); }
   html { scroll-behavior: auto; }
   .button { transition: none; }
 }
+
