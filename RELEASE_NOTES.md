@@ -9,6 +9,7 @@
 - dislivelli, punti notevoli, chilometri equivalenti di fatica e calorie stimate dal DEM TINITALY;
 - registrazione di percorsi personali privati per piedi, bici, e-bike e cavallo;
 - mappa GPS dal vivo, frequenza configurabile e servizio predisposto per continuare a schermo spento;
+- salvataggio nello Storico oppure cancellazione completa con conferma di traccia, punti GPS ed esagoni;
 - arresto prudente e documentato delle registrazioni dimenticate;
 - copertura geografica a esagoni da 100 metri sui 131 percorsi ufficiali PNALM, con 5.097 celle uniche;
 - titoli progressivi e prima classifica dimostrativa;
