@@ -14,10 +14,11 @@
 
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html { overflow-x: hidden; scroll-behavior: smooth; }
 
 body {
   margin: 0;
+  overflow-x: hidden;
   color: var(--ink);
   background: var(--paper);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -58,6 +59,7 @@ nav a:hover { color: var(--forest); }
   min-height: calc(100vh - 76px);
   padding-block: 76px;
 }
+.hero > *, .download-grid > *, .manager-grid > * { min-width: 0; }
 
 .eyebrow {
   display: flex;
@@ -120,6 +122,25 @@ h2 { margin-bottom: 20px; font-size: clamp(2.5rem, 5vw, 4.6rem); }
 .product h3 { margin: 72px 0 12px; font-family: Georgia, serif; font-size: 1.7rem; font-weight: 500; }
 .product p { margin: 0; color: var(--muted); font-size: .91rem; }
 .product.available p { color: #d2dfd7; }
+.product.prototype { background: #e4eee8; }
+.product.prototype .product-top b { color: var(--forest-2); }
+.product .text-link { display: inline-block; margin-top: 18px; color: var(--forest); font-size: .82rem; font-weight: 850; text-decoration: none; }
+
+.compact-section { padding-bottom: 74px; }
+.feature-section { padding-top: 80px; }
+.feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.feature-card { min-height: 255px; padding: 27px; border: 1px solid var(--line); border-radius: 22px; background: rgba(255,255,255,.38); }
+.feature-card > span { display: block; margin-bottom: 45px; color: var(--forest-2); font-size: .72rem; font-weight: 900; letter-spacing: .12em; }
+.feature-card h3 { margin: 0 0 12px; font-family: Georgia, serif; font-size: 1.55rem; font-weight: 500; }
+.feature-card p { margin: 0; color: var(--muted); font-size: .91rem; }
+
+.manager-band { padding-block: 100px; color: white; background: #255848; }
+.manager-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(50px, 9vw, 130px); align-items: center; }
+.manager-grid > div > p:not(.eyebrow) { max-width: 610px; color: #d2dfd7; }
+.manager-status { border-top: 1px solid rgba(255,255,255,.25); }
+.manager-status article { display: grid; grid-template-columns: 150px 1fr; gap: 22px; padding: 23px 0; border-bottom: 1px solid rgba(255,255,255,.25); }
+.manager-status strong { color: var(--warm); }
+.manager-status p { margin: 0; color: #d2dfd7; }
 
 .download-band { padding-block: 100px; color: white; background: var(--forest); }
 .download-grid { display: grid; grid-template-columns: 1fr .82fr; gap: clamp(50px, 9vw, 130px); align-items: center; }
@@ -145,10 +166,11 @@ footer { padding-block: 34px; border-top: 1px solid var(--line); }
 .footer-inner > a { color: var(--forest); font-size: .83rem; font-weight: 800; }
 
 @media (max-width: 900px) {
-  .hero, .download-grid, .status-section { grid-template-columns: 1fr; }
+  .hero, .download-grid, .status-section, .manager-grid { grid-template-columns: 1fr; }
   .hero { min-height: auto; padding-block: 60px 80px; }
   .terrain-card { max-width: 640px; transform: none; }
   .products { grid-template-columns: repeat(2, 1fr); }
+  .feature-grid { grid-template-columns: repeat(2, 1fr); }
   .section-heading { display: block; }
   .section-heading p { margin-top: 20px; }
 }
@@ -163,14 +185,17 @@ footer { padding-block: 34px; border-top: 1px solid var(--line); }
   h2 { font-size: clamp(2.5rem, 13vw, 3.7rem); }
   .hero { gap: 48px; padding-top: 50px; }
   .actions, .button { width: 100%; }
-  .button.primary { align-items: center; }
+  .button.primary { min-width: 0; align-items: center; text-align: center; }
   .terrain-meta { font-size: .62rem; }
   .section { padding-block: 78px; }
   .products { grid-template-columns: 1fr; }
+  .feature-grid { grid-template-columns: 1fr; }
   .product { min-height: 220px; }
   .product h3 { margin-top: 50px; }
-  .download-band { padding-block: 76px; }
-  .status-grid article, .notice { grid-template-columns: 1fr; gap: 8px; }
+  .feature-card { min-height: auto; }
+  .feature-card > span { margin-bottom: 28px; }
+  .download-band, .manager-band { padding-block: 76px; }
+  .status-grid article, .notice, .manager-status article { grid-template-columns: 1fr; gap: 8px; }
   .footer-inner { grid-template-columns: 1fr; justify-items: center; }
   .footer-inner p { order: 3; }
 }

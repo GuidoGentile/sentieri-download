@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Console di configurazione dell'ente in Sentieri" />
+    <title>Sentieri — Console gestore</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="admin.css?v=5" />
+    <script defer src="theme-config.js"></script>
+    <script defer src="map-config.js"></script>
+    <script defer src="admin.js?v=5"></script>
+  </head>
+  <body class="admin-page">
+    <header class="admin-header">
+      <div>
+        <p class="eyebrow">Sentieri · console gestore</p>
+        <h1>Gestione del territorio</h1>
+        <p>Controlla il catalogo e configura l’identità usata nel tuo territorio.</p>
+      </div>
+      <a class="outline admin-user-link" href="../">Torna alla presentazione</a>
+    </header>
+
+    <main class="admin-layout">
+      <section class="public-demo-notice" aria-label="Limiti della demo pubblica">
+        <strong>Demo pubblica non autenticata</strong>
+        <p>
+          Puoi provare configurazione e governo delle tracce senza modificare dati reali. Tutte le
+          scelte restano soltanto in questo browser; login, ruoli, sincronizzazione ed editor GIS
+          saranno collegati nelle prossime versioni.
+        </p>
+      </section>
+      <section class="card governance-panel" aria-labelledby="governance-title">
+        <div class="section-head governance-heading">
+          <div>
+            <p class="step-label">Catalogo percorsi</p>
+            <h2 id="governance-title">Tracce doppie e varianti</h2>
+            <p>Una sola scheda pubblica per sentiero; ogni traccia originale resta conservata.</p>
+          </div>
+          <label class="governance-filter">
+            <span>Mostra</span>
+            <select id="governance-filter">
+              <option value="all">Tutti i confronti</option>
+              <option value="supporting-source">Stesso sentiero</option>
+              <option value="variant-candidate">Possibili varianti</option>
+              <option value="review-required">Confronto manuale</option>
+              <option value="decided">Già decisi</option>
+            </select>
+          </label>
+        </div>
+        <div class="governance-stats" aria-live="polite">
+          <div><strong id="governance-canonical-count">—</strong><span>Schede pubbliche</span></div>
+          <div><strong id="governance-observation-count">—</strong><span>Tracce originali</span></div>
+          <div><strong id="governance-match-count">—</strong><span>Coincidenze forti</span></div>
+          <div><strong id="governance-review-count">—</strong><span>Da decidere</span></div>
+        </div>
+        <div class="governance-legend">
+          <span><i class="relation-dot relation-dot--same"></i> stessa geometria</span>
+          <span><i class="relation-dot relation-dot--variant"></i> possibile variante</span>
+          <span><i class="relation-dot relation-dot--separate"></i> confronto manuale richiesto</span>
+        </div>
+        <p id="governance-message" class="admin-message" aria-live="polite"></p>
+        <div id="governance-review-list" class="governance-review-list">
+          <p class="muted">Caricamento del catalogo in corso…</p>
+        </div>
+        <p class="governance-local-note">Le decisioni di questa demo restano su questo computer. Saranno sincronizzate e autenticate quando collegheremo il server.</p>
+      </section>
+
+      <form id="branding-form" class="card branding-editor" novalidate>
+        <section>
+          <div class="section-head">
+            <div>
+              <p class="step-label">01</p>
+              <h2>Nome e logo</h2>
+            </div>
+            <span class="admin-hint">PNG, JPG o WebP · massimo 512 KB</span>
+          </div>
+
+          <div class="admin-grid two-columns">
+            <label class="admin-field">
+              <span>Nome dell’app</span>
+              <input id="branding-app-name" type="text" maxlength="60" autocomplete="off" />
+            </label>
+            <label class="admin-field">
+              <span>Nome dell’ente o territorio</span>
+              <input id="branding-organization-name" type="text" maxlength="120" autocomplete="off" />
+            </label>
+          </div>
+
+          <div class="logo-editor">
+            <div id="branding-logo-preview" class="logo-preview" aria-label="Anteprima logo">
+              <span>S</span>
+            </div>
+            <div class="logo-editor__actions">
+              <label class="file-button" for="branding-logo-file">Scegli un logo</label>
+              <input id="branding-logo-file" type="file" accept="image/png,image/jpeg,image/webp" />
+              <button id="branding-remove-logo" type="button" class="outline">Usa il logo predefinito</button>
+              <p id="branding-logo-note" class="muted">Il logo viene conservato localmente in questa demo.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="branding-colors-section map-configuration-section">
+          <div class="section-head">
+            <div>
+              <p class="step-label">02</p>
+              <h2>Copertura cartografica</h2>
+            </div>
+            <span class="admin-hint">Centro e lati dei due pacchetti offline</span>
+          </div>
+          <div class="admin-grid two-columns">
+            <label class="admin-field map-center-name">
+              <span>Nome del centro</span>
+              <input id="map-center-name" type="text" maxlength="80" autocomplete="off" value="Pescasseroli" />
+            </label>
+            <label class="admin-field">
+              <span>Longitudine</span>
+              <input id="map-center-longitude" type="number" min="-180" max="180" step="0.000001" inputmode="decimal" value="13.789" />
+            </label>
+            <label class="admin-field">
+              <span>Latitudine</span>
+              <input id="map-center-latitude" type="number" min="-85" max="85" step="0.000001" inputmode="decimal" value="41.803" />
+            </label>
+            <label class="admin-field">
+              <span>Lato dettaglio (km)</span>
+              <input id="map-detail-side" type="number" min="1" max="1000" step="1" inputmode="decimal" value="100" />
+            </label>
+            <label class="admin-field">
+              <span>Lato contesto (km)</span>
+              <input id="map-context-side" type="number" min="1" max="2000" step="1" inputmode="decimal" value="200" />
+            </label>
+          </div>
+          <div class="map-coverage-preview" aria-label="Anteprima delle coperture cartografiche">
+            <div class="map-context-square">
+              <span id="map-context-label">Contesto · 200 km</span>
+              <div id="map-detail-square" class="map-detail-square"><span id="map-detail-label">Dettaglio · 100 km</span></div>
+              <i class="map-center-point" aria-hidden="true"></i>
+            </div>
+            <p id="map-coverage-description">Pescasseroli · 13,789000; 41,803000</p>
+          </div>
+          <p id="map-validation-message" class="field-message" aria-live="polite"></p>
+        </section>
+
+        <section class="branding-colors-section">
+          <div class="section-head">
+            <div>
+              <p class="step-label">03</p>
+              <h2>Colori di base</h2>
+            </div>
+            <span class="admin-hint">Ogni colore ha un ruolo stabile nell’interfaccia</span>
+          </div>
+          <div id="branding-color-grid" class="color-grid"></div>
+        </section>
+
+        <section class="branding-actions">
+          <button type="submit" class="primary">Salva configurazione</button>
+          <button id="branding-reset" type="button" class="outline">Ripristina cielo e faggeta</button>
+          <button id="branding-export" type="button" class="outline">Esporta configurazione</button>
+          <label class="outline import-button" for="branding-import">Importa configurazione</label>
+          <input id="branding-import" type="file" accept="application/json,.json" />
+        </section>
+        <p id="branding-message" class="admin-message" aria-live="polite"></p>
+      </form>
+
+      <aside class="branding-preview-column">
+        <div class="preview-sticky">
+          <p class="step-label">Anteprima immediata</p>
+          <article id="branding-preview" class="phone-preview">
+            <header class="preview-brand">
+              <div id="preview-logo" class="preview-logo"><span class="provisional-logo-mark" aria-hidden="true"></span></div>
+              <div class="preview-brand__identity">
+                <strong id="preview-app-name">Sentieri</strong>
+                <small id="preview-organization-name">Parco Nazionale d'Abruzzo, Lazio e Molise</small>
+              </div>
+              <button class="preview-menu" type="button" aria-label="Apri menu"><span></span><span></span><span></span></button>
+            </header>
+            <div class="preview-search">⌕ <span>Cerca un percorso</span></div>
+            <div class="preview-map">
+              <span class="preview-tree preview-tree--one"></span>
+              <span class="preview-tree preview-tree--two"></span>
+              <span class="preview-route"></span>
+            </div>
+            <div class="preview-card">
+              <small>Sentiero A1</small>
+              <h3>Pescasseroli — Prato Rosso</h3>
+              <p>19,5 km · 5 h 30 min</p>
+              <button type="button">Apri il percorso</button>
+            </div>
+            <div class="preview-states">
+              <span class="state-success">Disponibile</span>
+              <span class="state-warning">Attenzione</span>
+              <span class="state-danger">Chiuso</span>
+            </div>
+          </article>
+          <div id="branding-contrast" class="contrast-check" aria-live="polite"></div>
+          <p class="preview-note">L’anteprima mostra anche percorso, successo, avviso e pericolo per evitare combinazioni poco leggibili.</p>
+        </div>
+      </aside>
+    </main>
+  </body>
+</html>

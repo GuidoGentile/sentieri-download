@@ -1,5 +1,29 @@
 # Note di versione
 
+## 0.11.0 prova GPS — 15 agosto 2026
+
+- catalogo offline con 155 percorsi candidati e provenienza PNALM/CAI conservata;
+- cartografia vettoriale offline con etichette, curve di livello, cime, valichi e livelli selezionabili;
+- panoramica del percorso, mappa dinamica e profilo altimetrico scorrevole e sincronizzato;
+- pendenza rappresentata con gli stessi colori sulla traccia e sul profilo;
+- dislivelli, punti notevoli, chilometri equivalenti di fatica e calorie stimate dal DEM TINITALY;
+- registrazione di percorsi personali privati per piedi, bici, e-bike e cavallo;
+- mappa GPS dal vivo, frequenza configurabile e servizio predisposto per continuare a schermo spento;
+- arresto prudente e documentato delle registrazioni dimenticate;
+- copertura geografica a esagoni da 100 metri sui 131 percorsi ufficiali PNALM, con 5.097 celle uniche;
+- titoli progressivi e prima classifica dimostrativa;
+- account locale di prova, calendario, prenotazioni simulate, storico e recensioni legate alle uscite;
+- prima console gestore pubblica per identità, palette, area cartografica e governo di duplicati e varianti.
+
+### Limiti
+
+Il GPS in background e le regole di arresto devono essere validati con prove reali sul campo.
+Account, prenotazioni, classifica e contenuti personali non sono ancora collegati a un servizio remoto.
+Non sono operativi meteo live, navigazione con avvisi, pagamenti, QR, app Guardia Parco o editor GIS
+completo. La console gestore non ha ancora autenticazione e salva le modifiche soltanto nel browser.
+L’APK resta una build debug fuori da Google Play e non deve essere usato come unico strumento di
+navigazione o sicurezza.
+
 ## 0.6.0 demo — 14 agosto 2026
 
 - catalogo offline con 155 percorsi candidati e provenienza PNALM/CAI;
@@ -13,8 +37,8 @@
 ### Limiti
 
 La navigazione GPS, le prenotazioni, gli account remoti, gli avvisi meteo live e
-la cartografia vettoriale offline completa non sono ancora operativi. L'APK resta
-una build debug per valutazione e non è una distribuzione Play Store.
+la cartografia vettoriale offline completa non erano ancora operativi. L’APK restava
+una build debug per valutazione e non una distribuzione Play Store.
 
 ## 0.1.0 demo — 13 agosto 2026
 
@@ -28,4 +52,6 @@ Prima pubblicazione dimostrativa di Sentieri.
 
 ### Limiti
 
-L'APK è una build debug per valutazione e non contiene ancora funzioni operative. Non è firmato per la distribuzione Play Store e può richiedere l'autorizzazione temporanea all'installazione da origini esterne.
+L’APK era una build debug per valutazione e non conteneva ancora funzioni operative. Non era firmato
+per la distribuzione Play Store e poteva richiedere l’autorizzazione temporanea all’installazione da
+origini esterne.
