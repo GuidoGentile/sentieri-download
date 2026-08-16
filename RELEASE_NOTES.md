@@ -1,5 +1,12 @@
 # Note di versione
 
+## 0.11.2 nuovi esagoni — 16 agosto 2026
+
+- la registrazione personale mostra `Nuovi esagoni` invece del totale generico;
+- il conteggio include soltanto le celle aggiunte per la prima volta alla copertura dell'utente;
+- gli esagoni già visitati in sessioni precedenti non vengono conteggiati nuovamente;
+- lo stesso valore compare nella relativa scheda dello Storico.
+
 ## 0.11.1 foto private — 16 agosto 2026
 
 - fino a 5 fotografie allegabili alla conclusione di una registrazione personale;
