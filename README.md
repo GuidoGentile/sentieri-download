@@ -4,7 +4,7 @@ Questo repository pubblico ospita la pagina di presentazione e le release dimost
 
 ## Android
 
-La release attuale è una **build sperimentale 0.11.1 per la prova GPS sul campo** (circa 350 MB), distribuita fuori
+La release attuale è una **build sperimentale 0.11.1 ARM64 per la prova GPS sul campo** (circa 307 MB), distribuita fuori
 dal Play Store per test controllati. L’APK contiene il catalogo PNALM offline con 155 candidati,
 cartografia vettoriale offline, profili altimetrici e registrazione GPS predisposta per continuare
 anche a schermo spento. Dal menu `Registra` si può creare un percorso personale privato e vederlo

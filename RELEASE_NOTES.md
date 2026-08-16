@@ -6,11 +6,13 @@
 - anteprima e rimozione delle immagini prima del salvataggio;
 - fotografie conservate localmente e mostrate nella relativa scheda dello Storico;
 - aggiornamento compatibile con le registrazioni già presenti nel database;
-- pacchetto offline compresso da 389 a 350 MB senza rimuovere i due livelli cartografici;
+- pacchetto ARM64 offline ridotto da 389 a circa 307 MB senza rimuovere i due livelli cartografici;
 - nuova build distinta dalla 0.11.0 per rendere verificabile l'aggiornamento sul telefono.
 
 Le fotografie dei percorsi personali non vengono pubblicate e gli originali restano nella galleria
-del dispositivo. La sincronizzazione remota dei contenuti personali non è ancora attiva.
+del dispositivo. Questa build è destinata ai telefoni Android ARM64 moderni; la build universale
+resta disponibile nel repository di sviluppo per emulatore e dispositivi meno comuni. La
+sincronizzazione remota dei contenuti personali non è ancora attiva.
 
 ## 0.11.0 prova GPS — 15 agosto 2026
 
