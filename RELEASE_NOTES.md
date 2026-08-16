@@ -1,5 +1,16 @@
 # Note di versione
 
+## 0.11.1 foto private — 16 agosto 2026
+
+- fino a 5 fotografie allegabili alla conclusione di una registrazione personale;
+- anteprima e rimozione delle immagini prima del salvataggio;
+- fotografie conservate localmente e mostrate nella relativa scheda dello Storico;
+- aggiornamento compatibile con le registrazioni già presenti nel database;
+- nuova build distinta dalla 0.11.0 per rendere verificabile l'aggiornamento sul telefono.
+
+Le fotografie dei percorsi personali non vengono pubblicate e gli originali restano nella galleria
+del dispositivo. La sincronizzazione remota dei contenuti personali non è ancora attiva.
+
 ## 0.11.0 prova GPS — 15 agosto 2026
 
 - catalogo offline con 155 percorsi candidati e provenienza PNALM/CAI conservata;
