@@ -1,5 +1,11 @@
 # Note di versione
 
+## 0.11.3 esagoni ufficiali — 16 agosto 2026
+
+- `Nuovi esagoni` conta soltanto celle appartenenti ai percorsi ufficiali PNALM;
+- una cella fuori dalla rete ufficiale resta nella traccia personale, ma non aumenta copertura, titolo o classifica;
+- conclusione della registrazione, Storico e pagina Copertura usano ora la stessa maschera geografica ufficiale.
+
 ## 0.11.2 nuovi esagoni — 16 agosto 2026
 
 - la registrazione personale mostra `Nuovi esagoni` invece del totale generico;
