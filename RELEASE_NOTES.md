@@ -1,5 +1,12 @@
 # Note di versione
 
+## 0.11.4 icona provvisoria — 16 agosto 2026
+
+- l'icona Android predefinita è sostituita dal simbolo provvisorio già usato nell'app;
+- sono disponibili icona adattiva, rotonda e monocromatica per i diversi launcher Android;
+- nella pagina del percorso la fonte è accanto alla difficoltà e non interferisce più con Avvia;
+- Avvia usa ora una freccia piena, arrotondata e inclinata verso destra.
+
 ## 0.11.3 esagoni ufficiali — 16 agosto 2026
 
 - `Nuovi esagoni` conta soltanto celle appartenenti ai percorsi ufficiali PNALM;
