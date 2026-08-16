@@ -1,5 +1,13 @@
 # Note di versione
 
+## 0.11.5 correzione copertura — 16 agosto 2026
+
+- i piccoli buchi tra posizioni GPS affidabili vengono cuciti campionando il segmento ogni 25 metri;
+- la correzione è limitata a 3 minuti, 450 metri e velocità compatibile con il mezzo;
+- le celle corrette automaticamente restano distinguibili nel database da quelle osservate direttamente;
+- soltanto gli esagoni dei percorsi ufficiali PNALM aumentano copertura, titoli e classifica;
+- i titoli delle pagine principali sono ora centrati senza essere spostati dalle icone laterali.
+
 ## 0.11.4 icona provvisoria — 16 agosto 2026
 
 - l'icona Android predefinita è sostituita dal simbolo provvisorio già usato nell'app;
