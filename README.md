@@ -4,7 +4,7 @@ Questo repository pubblico ospita la pagina di presentazione e le release dimost
 
 ## Android
 
-La release attuale è una **build sperimentale 0.11.1 ARM64 per la prova GPS sul campo** (circa 307 MB), distribuita fuori
+La release attuale è una **build sperimentale 0.11.1 ARM64 di aggiornamento** (circa 30 MB), distribuita fuori
 dal Play Store per test controllati. L’APK contiene il catalogo PNALM offline con 155 candidati,
 cartografia vettoriale offline, profili altimetrici e registrazione GPS predisposta per continuare
 anche a schermo spento. Dal menu `Registra` si può creare un percorso personale privato e vederlo
@@ -13,7 +13,9 @@ quindi salvato nello Storico o eliminato integralmente con
 conferma. Il campionamento è configurabile tra 30 secondi, 1 minuto e 2 minuti. La quota
 viene attribuita successivamente tramite DEM. I punti alimentano la copertura dei 131 percorsi
 ufficiali PNALM, con percentuale, titoli progressivi e classifica dimostrativa. Il comportamento GPS
-deve ancora essere validato con prove reali sul campo.
+deve ancora essere validato con prove reali sul campo. La 0.11.1 riusa i dati cartografici estratti
+dalla 0.11.0: per una prima installazione occorre installare il pacchetto completo 0.11.0, aprire
+almeno una mappa e poi installare l'aggiornamento senza disinstallare l'app.
 
 1. Apri la pagina pubblica da Android.
 2. Tocca **Scarica Sentieri per Android**.
