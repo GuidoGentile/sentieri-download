@@ -7,6 +7,9 @@
 - la pagina cartografica arriva fino al bordo inferiore senza la fascia bianca del sistema;
 - la linguetta chiusa del profilo è più bassa e arrotondata su tutti i lati.
 
+La 0.12.1 è un aggiornamento ARM64 leggero da installare sopra la 0.12.0 completa dopo avere aperto
+almeno una mappa. Conserva i dati territoriali già estratti sul telefono.
+
 ## 0.12.0 completamento collaudo — 17 agosto 2026
 
 - splash iniziale con il nome Sentieri in grande sopra il simbolo dell'app;
