@@ -4,7 +4,7 @@ Questo repository pubblico ospita la pagina di presentazione e le release dimost
 
 ## Android
 
-La release attuale è una **build sperimentale 0.12.0 ARM64 completa** (circa 260 MB), distribuita fuori
+La release attuale è una **build sperimentale 0.12.1 ARM64 completa** (circa 260 MB), distribuita fuori
 dal Play Store per test controllati. L’APK contiene il catalogo PNALM offline con 155 candidati,
 cartografia vettoriale offline, profili altimetrici e registrazione GPS predisposta per continuare
 anche a schermo spento. Dal menu `Registra` si può creare un percorso personale privato e vederlo
@@ -13,7 +13,7 @@ quindi salvato nello Storico o eliminato integralmente con
 conferma. Il campionamento è configurabile tra 30 secondi, 1 minuto e 2 minuti. La quota
 viene attribuita successivamente tramite DEM. I punti alimentano la copertura dei 131 percorsi
 ufficiali PNALM, con percentuale, titoli progressivi e classifica dimostrativa. Il comportamento GPS
-è stato provato sul campo in una prima registrazione reale, ma richiede ulteriori collaudi. La 0.12.0
+è stato provato sul campo in una prima registrazione reale, ma richiede ulteriori collaudi. La 0.12.1
 include già i dati cartografici: può essere installata da zero oppure sopra una versione precedente
 senza disinstallare l'app.
 

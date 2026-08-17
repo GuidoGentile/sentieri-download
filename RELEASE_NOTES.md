@@ -1,5 +1,12 @@
 # Note di versione
 
+## 0.12.1 correzione mappa — 17 agosto 2026
+
+- il rosso è riservato alla rete ufficiale nella sola pagina Copertura;
+- nelle mappe dei sentieri la rete circostante resta verde e la salita molto ripida usa il viola;
+- la pagina cartografica arriva fino al bordo inferiore senza la fascia bianca del sistema;
+- la linguetta chiusa del profilo è più bassa e arrotondata su tutti i lati.
+
 ## 0.12.0 completamento collaudo — 17 agosto 2026
 
 - splash iniziale con il nome Sentieri in grande sopra il simbolo dell'app;
