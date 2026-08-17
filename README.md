@@ -4,7 +4,7 @@ Questo repository pubblico ospita la pagina di presentazione e le release dimost
 
 ## Android
 
-La release attuale è una **build sperimentale 0.11.5 ARM64 di aggiornamento** (circa 30 MB), distribuita fuori
+La release attuale è una **build sperimentale 0.12.0 ARM64 completa** (circa 260 MB), distribuita fuori
 dal Play Store per test controllati. L’APK contiene il catalogo PNALM offline con 155 candidati,
 cartografia vettoriale offline, profili altimetrici e registrazione GPS predisposta per continuare
 anche a schermo spento. Dal menu `Registra` si può creare un percorso personale privato e vederlo
@@ -13,9 +13,9 @@ quindi salvato nello Storico o eliminato integralmente con
 conferma. Il campionamento è configurabile tra 30 secondi, 1 minuto e 2 minuti. La quota
 viene attribuita successivamente tramite DEM. I punti alimentano la copertura dei 131 percorsi
 ufficiali PNALM, con percentuale, titoli progressivi e classifica dimostrativa. Il comportamento GPS
-deve ancora essere validato con prove reali sul campo. La 0.11.5 riusa i dati cartografici estratti
-dalla 0.11.0: per una prima installazione occorre installare il pacchetto completo 0.11.0, aprire
-almeno una mappa e poi installare l'aggiornamento senza disinstallare l'app.
+è stato provato sul campo in una prima registrazione reale, ma richiede ulteriori collaudi. La 0.12.0
+include già i dati cartografici: può essere installata da zero oppure sopra una versione precedente
+senza disinstallare l'app.
 
 1. Apri la pagina pubblica da Android.
 2. Tocca **Scarica Sentieri per Android**.
@@ -31,11 +31,13 @@ La landing collega anche una demo web della console gestore. Sono già esplorabi
 - nome dell’app, ente, logo e palette configurabile;
 - anteprima mobile e controllo del contrasto;
 - centro e dimensioni dei pacchetti cartografici;
+- elenco dei percorsi presenti nell'app, con aggiunta, correzione ed esclusione locale;
+- calendario delle disponibilità, capienze giornaliere, prenotazioni e posti liberi;
 - coda di confronto tra sentieri coincidenti, varianti e casi da verificare;
 - importazione ed esportazione locale della configurazione.
 
 La demo non è autenticata e salva le modifiche soltanto nel browser. Editor GIS, import GPX/GeoJSON,
-validazione amministrativa, calendari, capienze e sincronizzazione server sono ancora da realizzare.
+validazione amministrativa e sincronizzazione server sono ancora da realizzare.
 
 ## Stato delle applicazioni
 

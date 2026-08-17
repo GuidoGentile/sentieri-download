@@ -6,17 +6,21 @@
     <meta name="description" content="Console di configurazione dell'ente in Sentieri" />
     <title>Sentieri — Console gestore</title>
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="admin.css?v=5" />
+    <link rel="stylesheet" href="admin.css?v=7" />
     <script defer src="theme-config.js"></script>
     <script defer src="map-config.js"></script>
-    <script defer src="admin.js?v=5"></script>
+    <script defer src="manager-access-model.js?v=1"></script>
+    <script defer src="manager-catalog-model.js?v=1"></script>
+    <script defer src="admin-catalog.js?v=1"></script>
+    <script defer src="admin-access.js?v=1"></script>
+    <script defer src="admin.js?v=7"></script>
   </head>
   <body class="admin-page">
     <header class="admin-header">
       <div>
         <p class="eyebrow">Sentieri · console gestore</p>
         <h1>Gestione del territorio</h1>
-        <p>Controlla il catalogo e configura l’identità usata nel tuo territorio.</p>
+        <p>Programma gli accessi, controlla le prenotazioni e governa il catalogo del territorio.</p>
       </div>
       <a class="outline admin-user-link" href="../">Torna alla presentazione</a>
     </header>
@@ -25,11 +29,318 @@
       <section class="public-demo-notice" aria-label="Limiti della demo pubblica">
         <strong>Demo pubblica non autenticata</strong>
         <p>
-          Puoi provare configurazione e governo delle tracce senza modificare dati reali. Tutte le
-          scelte restano soltanto in questo browser; login, ruoli, sincronizzazione ed editor GIS
-          saranno collegati nelle prossime versioni.
+          Puoi provare catalogo, calendari, capienze e prenotazioni senza modificare dati reali.
+          Tutte le scelte restano soltanto in questo browser; login, ruoli e sincronizzazione
+          centrale saranno collegati nelle prossime versioni.
         </p>
       </section>
+      <nav class="manager-section-nav" aria-label="Sezioni della console gestore">
+        <a class="manager-section-nav__item manager-section-nav__item--active" href="#manager-trails">Percorsi</a>
+        <a class="manager-section-nav__item" href="#access-calendar">Calendario e capienze</a>
+        <a class="manager-section-nav__item" href="#manager-bookings">Prenotazioni</a>
+        <a class="manager-section-nav__item" href="#governance-title">Dati e fonti</a>
+        <a class="manager-section-nav__item" href="#branding-form">Configurazione</a>
+      </nav>
+
+      <section id="manager-trails" class="card trail-catalog-panel" aria-labelledby="manager-trails-title">
+        <div class="section-head trail-catalog-heading">
+          <div>
+            <p class="step-label">Catalogo pubblicato</p>
+            <h2 id="manager-trails-title">Percorsi nell’app</h2>
+            <p>Controlla ciò che vede il visitatore, correggi i dati e prepara nuovi percorsi.</p>
+          </div>
+          <button id="add-manager-trail" type="button" class="primary">Aggiungi percorso</button>
+        </div>
+
+        <div class="trail-catalog-kpis" aria-live="polite">
+          <div><span>Pubblicati nell’app</span><strong id="trail-published-count">—</strong></div>
+          <div><span>Bozze</span><strong id="trail-draft-count">—</strong></div>
+          <div><span>Ritirati</span><strong id="trail-retired-count">—</strong></div>
+          <div><span>Inseriti dal gestore</span><strong id="trail-custom-count">—</strong></div>
+        </div>
+
+        <div class="trail-catalog-toolbar">
+          <label class="admin-field trail-search-field">
+            <span>Cerca percorso</span>
+            <input id="manager-trail-search" type="search" placeholder="Nome o codice" autocomplete="off" />
+          </label>
+          <label class="admin-field">
+            <span>Pubblicazione</span>
+            <select id="manager-trail-status-filter">
+              <option value="all">Tutti gli stati</option>
+              <option value="published">Pubblicati</option>
+              <option value="draft">Bozze</option>
+              <option value="retired">Ritirati</option>
+            </select>
+          </label>
+          <label class="admin-field">
+            <span>Fonte</span>
+            <select id="manager-trail-source-filter">
+              <option value="all">Tutte le fonti</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="trail-catalog-summary">
+          <strong id="manager-trail-visible-count">—</strong>
+          <span>percorsi mostrati</span>
+          <button id="reset-trail-catalog-demo" type="button" class="outline compact-button">Azzera modifiche demo</button>
+        </div>
+
+        <div class="trail-catalog-table-wrap">
+          <table class="trail-catalog-table">
+            <thead>
+              <tr>
+                <th>Percorso</th>
+                <th>Dati principali</th>
+                <th>Modalità</th>
+                <th>Fonte</th>
+                <th>Stato</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="manager-trail-table-body">
+              <tr><td colspan="6" class="muted">Caricamento dei percorsi…</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p id="manager-trail-empty-state" class="muted booking-empty-state" hidden>Nessun percorso corrisponde ai filtri.</p>
+        <p id="manager-trail-message" class="admin-message trail-catalog-message" aria-live="polite"></p>
+        <p class="governance-local-note">Ritirare un percorso lo nasconde dall’app senza cancellare geometria, fonte o storico. I nuovi percorsi senza geometria restano in bozza finché non saranno disegnati o importati.</p>
+      </section>
+
+      <dialog id="trail-editor-dialog" class="trail-editor-dialog" aria-labelledby="trail-editor-title">
+        <form id="trail-editor-form" class="trail-editor-form" novalidate>
+          <header class="trail-editor-header">
+            <div>
+              <p id="trail-editor-kicker" class="step-label">Correzione manuale</p>
+              <h2 id="trail-editor-title">Modifica percorso</h2>
+            </div>
+            <button id="close-trail-editor" type="button" class="trail-editor-close" aria-label="Chiudi">×</button>
+          </header>
+          <input id="trail-editor-id" type="hidden" />
+          <div class="trail-editor-grid">
+            <label class="admin-field">
+              <span>Codice</span>
+              <input id="trail-editor-code" type="text" maxlength="30" autocomplete="off" />
+            </label>
+            <label class="admin-field trail-editor-name-field">
+              <span>Nome del percorso</span>
+              <input id="trail-editor-name" type="text" maxlength="180" autocomplete="off" required />
+            </label>
+            <label class="admin-field">
+              <span>Difficoltà</span>
+              <select id="trail-editor-difficulty">
+                <option value="not-specified">Non indicata</option>
+                <option value="easy">Facile</option>
+                <option value="medium">Medio</option>
+                <option value="hard">Difficile</option>
+                <option value="expert">Esperto</option>
+              </select>
+            </label>
+            <label class="admin-field">
+              <span>Durata (minuti)</span>
+              <input id="trail-editor-duration" type="number" min="0" max="2880" step="5" inputmode="numeric" />
+            </label>
+            <label class="admin-field">
+              <span>Lunghezza (km)</span>
+              <input id="trail-editor-length" type="number" min="0" max="1000" step="0.1" inputmode="decimal" />
+            </label>
+            <label class="admin-field">
+              <span>Dislivello positivo (m)</span>
+              <input id="trail-editor-gain" type="number" min="0" max="20000" step="1" inputmode="numeric" />
+            </label>
+            <label class="admin-field">
+              <span>Dislivello negativo (m)</span>
+              <input id="trail-editor-loss" type="number" min="0" max="20000" step="1" inputmode="numeric" />
+            </label>
+            <div class="admin-field trail-source-readonly">
+              <span>Fonte originale</span>
+              <strong id="trail-editor-source">—</strong>
+              <small>La fonte non viene riscritta da una correzione manuale.</small>
+            </div>
+          </div>
+          <fieldset class="trail-mode-editor">
+            <legend>Modalità ammesse</legend>
+            <label><input id="trail-editor-walking" type="checkbox" /> A piedi</label>
+            <label><input id="trail-editor-bike" type="checkbox" /> Bici</label>
+            <label><input id="trail-editor-ebike" type="checkbox" /> E-bike</label>
+            <label><input id="trail-editor-horse" type="checkbox" /> Cavallo</label>
+          </fieldset>
+          <label class="admin-field">
+            <span id="trail-editor-reason-label">Motivo della correzione</span>
+            <textarea id="trail-editor-reason" maxlength="500" rows="3" placeholder="Perché questi dati vengono corretti" required></textarea>
+          </label>
+          <div id="trail-editor-geometry-note" class="trail-geometry-note"></div>
+          <p id="trail-editor-message" class="admin-message admin-message--error" aria-live="polite"></p>
+          <footer class="trail-editor-actions">
+            <button id="cancel-trail-editor" type="button" class="outline">Annulla</button>
+            <button type="submit" class="primary">Salva percorso</button>
+          </footer>
+        </form>
+      </dialog>
+
+      <dialog id="trail-status-dialog" class="trail-status-dialog" aria-labelledby="trail-status-title">
+        <form id="trail-status-form" class="trail-status-form">
+          <p class="step-label">Pubblicazione</p>
+          <h2 id="trail-status-title">Ritira percorso dall’app</h2>
+          <p id="trail-status-description"></p>
+          <input id="trail-status-id" type="hidden" />
+          <input id="trail-status-value" type="hidden" />
+          <label class="admin-field">
+            <span>Motivazione</span>
+            <textarea id="trail-status-reason" maxlength="500" rows="3" required></textarea>
+          </label>
+          <p id="trail-status-message" class="admin-message admin-message--error" aria-live="polite"></p>
+          <div class="trail-editor-actions">
+            <button id="cancel-trail-status" type="button" class="outline">Annulla</button>
+            <button id="confirm-trail-status" type="submit" class="primary">Conferma</button>
+          </div>
+        </form>
+      </dialog>
+
+      <section id="access-calendar" class="card access-panel" aria-labelledby="access-calendar-title">
+        <div class="section-head access-heading">
+          <div>
+            <p class="step-label">Accessi al territorio</p>
+            <h2 id="access-calendar-title">Calendario e capienze</h2>
+            <p>Definisci quando il percorso è libero, chiuso o disponibile con prenotazione a numero chiuso.</p>
+          </div>
+          <span class="demo-badge">Dati dimostrativi locali</span>
+        </div>
+
+        <div class="access-toolbar">
+          <label class="admin-field access-trail-field">
+            <span>Percorso</span>
+            <select id="access-trail-select" aria-label="Percorso da programmare"></select>
+          </label>
+          <label class="admin-field">
+            <span>Modalità</span>
+            <select id="access-mode-select" aria-label="Modalità di accesso">
+              <option value="a_piedi">A piedi</option>
+              <option value="bici">Bici</option>
+              <option value="ebike">E-bike</option>
+              <option value="cavallo">Cavallo</option>
+            </select>
+          </label>
+          <div class="month-switcher" aria-label="Mese visualizzato">
+            <button id="calendar-previous-month" type="button" class="calendar-arrow" aria-label="Mese precedente">‹</button>
+            <strong id="calendar-month-label">—</strong>
+            <button id="calendar-next-month" type="button" class="calendar-arrow" aria-label="Mese successivo">›</button>
+          </div>
+        </div>
+
+        <div class="access-kpis" aria-live="polite">
+          <div><span>Giornate a numero chiuso</span><strong id="calendar-limited-days">0</strong></div>
+          <div><span>Posti prenotati</span><strong id="calendar-booked-places">0</strong></div>
+          <div><span>Posti ancora liberi</span><strong id="calendar-free-places">0</strong></div>
+          <div><span>Giornate esaurite</span><strong id="calendar-sold-out-days">0</strong></div>
+        </div>
+
+        <div class="access-workspace">
+          <div class="manager-calendar" aria-label="Calendario delle disponibilità">
+            <div class="calendar-weekdays" aria-hidden="true">
+              <span>Lun</span><span>Mar</span><span>Mer</span><span>Gio</span><span>Ven</span><span>Sab</span><span>Dom</span>
+            </div>
+            <div id="calendar-grid" class="calendar-grid"></div>
+            <div class="calendar-legend" aria-label="Legenda calendario">
+              <span><i class="calendar-dot calendar-dot--free"></i> Libero</span>
+              <span><i class="calendar-dot calendar-dot--limited"></i> Numero chiuso</span>
+              <span><i class="calendar-dot calendar-dot--sold-out"></i> Esaurito</span>
+              <span><i class="calendar-dot calendar-dot--closed"></i> Chiuso</span>
+            </div>
+          </div>
+
+          <aside class="day-editor" aria-labelledby="day-editor-title">
+            <p class="step-label">Giornata selezionata</p>
+            <h3 id="day-editor-title">Seleziona una data</h3>
+            <p id="day-editor-trail" class="day-editor__trail"></p>
+            <label class="admin-field">
+              <span>Regime della giornata</span>
+              <select id="day-access-kind">
+                <option value="free">Accesso libero</option>
+                <option value="limited">Prenotazione a numero chiuso</option>
+                <option value="closed">Chiuso</option>
+              </select>
+            </label>
+            <label id="day-capacity-field" class="admin-field">
+              <span>Capienza massima</span>
+              <input id="day-capacity" type="number" min="0" max="100000" step="1" inputmode="numeric" />
+            </label>
+            <div class="day-capacity-summary" aria-live="polite">
+              <div><span>Prenotati</span><strong id="day-booked">0</strong></div>
+              <div><span>Liberi</span><strong id="day-remaining">—</strong></div>
+            </div>
+            <button id="save-day-access" type="button" class="primary">Salva giornata</button>
+            <p id="day-editor-message" class="admin-message" aria-live="polite"></p>
+            <div class="day-bookings">
+              <div class="day-bookings__head">
+                <h4>Prenotazioni del giorno</h4>
+                <strong id="day-booking-count">0</strong>
+              </div>
+              <div id="day-booking-list" class="day-booking-list">
+                <p class="muted">Nessuna prenotazione.</p>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="manager-bookings" class="card bookings-panel" aria-labelledby="manager-bookings-title">
+        <div class="section-head bookings-heading">
+          <div>
+            <p class="step-label">Controllo operativo</p>
+            <h2 id="manager-bookings-title">Tutte le prenotazioni</h2>
+            <p>Cerca una persona, un codice o un percorso e apri direttamente la giornata interessata.</p>
+          </div>
+          <button id="reset-access-demo" type="button" class="outline compact-button">Ripristina dati demo</button>
+        </div>
+        <div class="booking-toolbar">
+          <label class="admin-field booking-search-field">
+            <span>Cerca</span>
+            <input id="booking-search" type="search" placeholder="Nome, email, codice o percorso" autocomplete="off" />
+          </label>
+          <label class="admin-field">
+            <span>Stato</span>
+            <select id="booking-status-filter">
+              <option value="all">Tutti gli stati</option>
+              <option value="confermata">Confermate</option>
+              <option value="trattenuta">In attesa di pagamento</option>
+              <option value="annullata">Annullate</option>
+            </select>
+          </label>
+          <label class="admin-field">
+            <span>Periodo</span>
+            <select id="booking-period-filter">
+              <option value="all">Tutte le date</option>
+              <option value="month">Mese visualizzato</option>
+            </select>
+          </label>
+        </div>
+        <div class="booking-kpis" aria-live="polite">
+          <span><strong id="booking-visible-count">0</strong> prenotazioni mostrate</span>
+          <span><strong id="booking-visible-people">0</strong> persone</span>
+        </div>
+        <div class="booking-table-wrap">
+          <table class="booking-table">
+            <thead>
+              <tr>
+                <th>Visitatore</th>
+                <th>Percorso</th>
+                <th>Data</th>
+                <th>Modalità</th>
+                <th>Posti</th>
+                <th>Stato</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="booking-table-body"></tbody>
+          </table>
+        </div>
+        <p id="booking-empty-state" class="muted booking-empty-state" hidden>Nessuna prenotazione corrisponde ai filtri.</p>
+        <p class="governance-local-note">Questa prima console usa prenotazioni sintetiche e salva le modifiche soltanto in questo browser. Il collegamento autenticato al server sarà indispensabile prima dell’uso reale.</p>
+      </section>
+
       <section class="card governance-panel" aria-labelledby="governance-title">
         <div class="section-head governance-heading">
           <div>
@@ -127,12 +438,12 @@
             </label>
             <label class="admin-field">
               <span>Lato contesto (km)</span>
-              <input id="map-context-side" type="number" min="1" max="2000" step="1" inputmode="decimal" value="200" />
+              <input id="map-context-side" type="number" min="1" max="2000" step="1" inputmode="decimal" value="100" />
             </label>
           </div>
           <div class="map-coverage-preview" aria-label="Anteprima delle coperture cartografiche">
             <div class="map-context-square">
-              <span id="map-context-label">Contesto · 200 km</span>
+              <span id="map-context-label">Contesto · 100 km</span>
               <div id="map-detail-square" class="map-detail-square"><span id="map-detail-label">Dettaglio · 100 km</span></div>
               <i class="map-center-point" aria-hidden="true"></i>
             </div>

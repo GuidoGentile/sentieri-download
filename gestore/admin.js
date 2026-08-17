@@ -48,7 +48,6 @@
   const mapContextLabel = document.getElementById("map-context-label");
   const mapCoverageDescription = document.getElementById("map-coverage-description");
   const mapValidationMessage = document.getElementById("map-validation-message");
-
   let draft = brandingApi.load();
   let mapDraft = mapApi.load();
 

@@ -1,5 +1,24 @@
 # Note di versione
 
+## 0.12.0 completamento collaudo — 17 agosto 2026
+
+- splash iniziale con il nome Sentieri in grande sopra il simbolo dell'app;
+- Copertura e anteprime cartografiche non chiudono più l'app quando il pacchetto offline completo non è installato: mostrano una base minima con i percorsi PNALM;
+- pacchetto cartografico di contesto ridotto a 100 km e APK completo ridotto a circa 259 MiB;
+- sfondi illustrati astratti e leggeri nelle card dei percorsi;
+- codici compatti nelle viste specialistiche, profilo chilometrico colorato per pendenza assoluta e nomi dei punti notevoli;
+- mappa dinamica stabilizzata, pannello layer richiudibile e cime visibili dal livello delle curve direttrici;
+- permessi futuri con QR Code offline, pulsante Prenota nella panoramica e recensioni con media;
+- copertura con rete PNALM rossa ed esagoni fucsia semitrasparenti;
+- rete rossa più sottile e limitata alla sola Copertura; nelle mappe dei sentieri la rete circostante resta verde;
+- linguetta del profilo dinamico più compatta, senza fascia bianca inutilizzata;
+- account con selfie/galleria, finestra dedicata per cercare e scegliere una nazionalità ISO con bandiera, e data di nascita corretta;
+- apertura delle tracce private dallo Storico con mappa, profilo, dislivelli ed energia.
+- console gestore ampliata con elenco modificabile dei percorsi, calendario delle capienze, disponibilità residue e lista delle prenotazioni.
+
+Questa versione è stata compilata e collaudata sull'emulatore. L'APK completo è firmato con la stessa
+chiave debug delle versioni precedenti ed è quindi compatibile con gli aggiornamenti sul telefono.
+
 ## 0.11.5 correzione copertura — 16 agosto 2026
 
 - i piccoli buchi tra posizioni GPS affidabili vengono cuciti campionando il segmento ogni 25 metri;

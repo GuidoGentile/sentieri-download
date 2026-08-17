@@ -7,7 +7,7 @@
     schema: SCHEMA,
     center: Object.freeze({ name: "Pescasseroli", longitude: 13.789, latitude: 41.803 }),
     detailSideKilometers: 100,
-    contextSideKilometers: 200,
+    contextSideKilometers: 100,
     updatedAt: null
   });
 
