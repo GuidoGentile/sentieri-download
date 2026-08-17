@@ -1,5 +1,20 @@
 # Note di versione
 
+## 0.13.0 recupero tracce — 17 agosto 2026
+
+- ogni punto GPS valido viene scritto subito nel database locale e resta disponibile offline;
+- i salti che implicherebbero più di 50 km/h vengono scartati prima di alterare mappa, distanza o copertura;
+- all'aggiornamento la stessa pulizia viene applicata alle registrazioni personali già conservate;
+- frammenti compatibili della stessa uscita vengono riuniti con criteri prudenti, mentre i casi dubbi restano bozze separate;
+- una registrazione attiva della giornata viene proposta per la prosecuzione prima di iniziarne una nuova;
+- lo Storico distingue tracce recuperate e stato della futura copia online;
+- client Supabase e coda idempotente sono predisposti, ma questo APK di recupero non contiene ancora la configurazione dell'account remoto.
+
+La 0.13.0 è un aggiornamento ARM64 leggero da installare **sopra** Sentieri senza disinstallare
+l'app: la firma è la stessa e Android conserva database, tracce e pacchetti cartografici già estratti.
+È consigliabile aprire `Registra` e poi `Storico` subito dopo l'aggiornamento. Una bozza recuperata è
+preferibile a un frammento perso; eventuali doppioni potranno essere corretti in seguito.
+
 ## 0.12.1 correzione mappa — 17 agosto 2026
 
 - il rosso è riservato alla rete ufficiale nella sola pagina Copertura;
