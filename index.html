@@ -29,7 +29,7 @@
     <main id="inizio">
       <section class="hero shell">
         <div class="hero-copy">
-          <p class="eyebrow"><span></span> Prova sul campo Android 0.13.0</p>
+          <p class="eyebrow"><span></span> Prova sul campo Android 0.14.0</p>
           <h1>Il territorio,<br /><em>con regole chiare.</em></h1>
           <p class="lead">
             Sentieri unisce catalogo, cartografia offline, registrazione sul campo e gestione degli
@@ -50,8 +50,8 @@
             </a>
           </div>
           <p class="microcopy">
-            Build sperimentale fuori da Google Play. La prima registrazione GPS sul campo è riuscita;
-            servono ulteriori prove: non usare la demo come unico strumento di navigazione.
+            Build sperimentale fuori da Google Play. Le tracce restano sempre sul telefono e la
+            0.14 ne tenta anche il backup privato su Supabase quando torna la connessione.
           </p>
         </div>
 
@@ -132,7 +132,7 @@
           </article>
           <article class="feature-card">
             <span>04</span><h3>Registra un percorso</h3>
-            <p>Traccia personale privata a piedi, in bici, e-bike o a cavallo, mappa dal vivo e campionamento configurabile. Recupero delle interruzioni, esclusione dei salti GPS oltre 50 km/h e bozze prudenti evitano di perdere un'uscita.</p>
+            <p>Traccia personale privata a piedi, in bici, e-bike o a cavallo, mappa dal vivo e campionamento configurabile. Recupero delle interruzioni, filtro dei salti GPS oltre 50 km/h e backup online differito proteggono l'uscita senza togliere la copia offline.</p>
           </article>
           <article class="feature-card">
             <span>05</span><h3>Copertura e progressione</h3>
@@ -168,27 +168,27 @@
       <section id="download" class="download-band">
         <div class="shell download-grid">
           <div>
-            <p class="eyebrow light"><span></span> Android · 0.13.0 recupero tracce</p>
+            <p class="eyebrow light"><span></span> Android · 0.14.0 backup tracce</p>
             <h2>Portala fuori,<br />direttamente sul telefono.</h2>
             <p>
-              La 0.13.0 è un aggiornamento leggero da installare sopra la 0.12.0 completa: recupera
-              registrazioni interrotte, filtra i salti GPS e conserva catalogo, mappe e dati locali.
+              La 0.14.0 conserva immediatamente ogni punto sul telefono, recupera le sessioni
+              interrotte e, quando trova rete, invia una copia privata della traccia a Supabase.
             </p>
             <div class="actions">
               <a
                 class="button warm"
                 href="https://github.com/GuidoGentile/sentieri-download/releases/latest/download/Sentieri-Android-demo.apk"
-              >Aggiorna alla 0.13.0</a>
+              >Aggiorna alla 0.14.0</a>
               <a
                 class="button secondary"
-                href="https://github.com/GuidoGentile/sentieri-download/releases/download/v0.12.0-todo-completion/Sentieri-Android-demo.apk"
-              >Prima installazione · 0.12.0 completa</a>
+                href="https://github.com/GuidoGentile/sentieri-download/releases/latest/download/Sentieri-Android-full.apk"
+              >Prima installazione · 0.14.0 completa</a>
             </div>
           </div>
           <ol class="steps">
-            <li><span>1</span><div><strong>Prepara</strong><p>Se parti da zero, installa prima la 0.12.0 completa e apri almeno una mappa.</p></div></li>
+            <li><span>1</span><div><strong>Scegli</strong><p>Usa l’aggiornamento se Sentieri è già installata; usa la versione completa soltanto per una prima installazione.</p></div></li>
             <li><span>2</span><div><strong>Autorizza</strong><p>Se richiesto, consenti temporaneamente l’installazione dal browser.</p></div></li>
-            <li><span>3</span><div><strong>Recupera</strong><p>Installa la 0.13.0 sopra Sentieri, poi apri Registra e Storico. Non disinstallare: Android conserva dati e mappe offline.</p></div></li>
+            <li><span>3</span><div><strong>Aggiorna</strong><p>Non disinstallare la versione precedente: Android conserva tracce, account locale e mappe offline.</p></div></li>
           </ol>
         </div>
       </section>
@@ -199,9 +199,9 @@
           <h2>Trasparenza prima delle promesse.</h2>
         </div>
         <div class="status-grid">
-          <article><strong>Realizzato</strong><p>APK Android installabile, catalogo, mappe offline, profili, registrazione GPS, recupero delle interruzioni e copertura personale.</p></article>
+          <article><strong>Realizzato</strong><p>APK Android installabile, catalogo, mappe offline, profili, registrazione GPS, recupero delle interruzioni e backup Supabase delle tracce personali.</p></article>
           <article><strong>Dimostrativo</strong><p>Dati account, prenotazioni, eventi, recensioni, titoli e classifica; console gestore salvata localmente.</p></article>
-          <article><strong>Non operativo</strong><p>Autenticazione, server pubblico, prenotazioni e pagamenti reali, meteo live, QR, Guardia Parco e gestione GIS completa.</p></article>
+          <article><strong>Non operativo</strong><p>Account social, prenotazioni e pagamenti reali, meteo live, verifica QR della Guardia Parco e gestione GIS completa.</p></article>
         </div>
         <div class="notice">
           <strong>Importante</strong>

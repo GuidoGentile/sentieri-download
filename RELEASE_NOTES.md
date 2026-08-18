@@ -1,5 +1,21 @@
 # Note di versione
 
+## 0.14.0 backup tracce — 18 agosto 2026
+
+- SQLite resta la destinazione immediata e autorevole di ogni registrazione, anche senza rete;
+- quando la connessione torna disponibile, l'app crea un'identità Supabase anonima autenticata e invia una copia privata della sessione e dei suoi punti;
+- la sincronizzazione è idempotente, conserva revisioni ed errori e non cancella mai la copia presente sul telefono;
+- RLS limita ogni traccia al proprietario e nell'APK entra soltanto la chiave pubblicabile, mai una chiave amministrativa;
+- la cartografia offline completa è stata ripristinata con sfondo, etichette, idrografia, cime, valichi e curve di livello;
+- i 155 percorsi dell'app formano un livello verde autonomo; il percorso aperto conserva la colorazione assoluta della pendenza e Copertura usa esagoni fucsia semitrasparenti;
+- profili e mappe condividono la scala blu, celeste, verde, giallo, arancio, rosso e viola alle soglie 5, 10, 15, 20, 25 e 30%;
+- il calendario di prenotazione distingue giorni prenotabili, liberi, chiusi ed esauriti, con residui fino a 999 più leggibili.
+
+Sono pubblicati due APK ARM64: l'aggiornamento leggero `Sentieri-Android-demo.apk`, da installare
+sopra Sentieri senza disinstallare, e `Sentieri-Android-full.apk` per una prima installazione con
+cartografia completa. La sincronizzazione riguarda per ora soltanto le tracce personali; account
+social, prenotazioni, recensioni e console gestore restano locali o dimostrativi.
+
 ## 0.13.0 recupero tracce — 17 agosto 2026
 
 - ogni punto GPS valido viene scritto subito nel database locale e resta disponibile offline;
