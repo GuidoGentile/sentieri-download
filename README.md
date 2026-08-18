@@ -4,7 +4,7 @@ Questo repository pubblico ospita la pagina di presentazione e le release dimost
 
 ## Android
 
-La release attuale è una **build sperimentale 0.15.0 ARM64**, distribuita fuori
+La release attuale è una **build sperimentale 0.16.0 ARM64**, distribuita fuori
 dal Play Store per test controllati. L’APK contiene il catalogo PNALM offline con 155 candidati,
 cartografia vettoriale offline, profili altimetrici e registrazione GPS predisposta per continuare
 anche a schermo spento. Dal menu `Registra` si può creare un percorso personale privato e vederlo
@@ -13,13 +13,19 @@ quindi salvato nello Storico o eliminato integralmente con
 conferma. Il campionamento è configurabile tra 30 secondi, 1 minuto e 2 minuti. La quota
 viene attribuita successivamente tramite DEM. I punti alimentano la copertura dei 131 percorsi
 ufficiali PNALM, con percentuale, titoli progressivi e classifica dimostrativa. Il comportamento GPS
-è stato provato sul campo in una prima registrazione reale. La 0.15.0 recupera registrazioni interrotte,
+è stato provato sul campo in una prima registrazione reale. La 0.16.0 recupera registrazioni interrotte,
 riunisce soltanto frammenti compatibili e scarta i salti GPS che implicherebbero più di 50 km/h. La copia
-resta sul telefono e, quando torna la rete, viene copiata nell'account anonimo privato su Supabase.
+resta sul telefono e, quando torna la rete, viene copiata nell'identità privata su Supabase. Dalla pagina
+`Account` si vede lo stato del backup, si può sincronizzare subito e si recuperano nel database locale
+le tracce già inviate. Una copia remota più vecchia non sostituisce mai quella locale.
 Sul percorso pilota A1 anche calendario, capienza, prenotazione gratuita e titolo QR provengono dal server;
 gli altri percorsi sono dichiarati non configurati finché il gestore non pubblica una regola.
 Sono disponibili un aggiornamento leggero da installare senza disinstallare l'app e un APK completo
 con tutti i dati cartografici per la prima installazione.
+
+Il recupero della 0.16 usa l'identità anonima già conservata dalla versione installata. Per mantenere
+i dati aggiornare senza disinstallare. Il collegamento Google, necessario per ritrovare lo stesso
+account anche su un telefono nuovo, è il passo successivo e non è ancora operativo.
 
 1. Apri la pagina pubblica da Android.
 2. Tocca **Scarica Sentieri per Android**.

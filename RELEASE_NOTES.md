@@ -1,5 +1,18 @@
 # Note di versione
 
+## 0.16.0 recupero account — 18 agosto 2026
+
+- la sincronizzazione delle registrazioni personali è ora bidirezionale: l'app invia le modifiche locali e recupera le tracce già presenti nel proprio spazio Supabase;
+- i punti recuperati ricostruiscono mappa, distanza ed esagoni nel database SQLite del telefono;
+- la fusione è prudente: la revisione più recente prevale, una copia remota vecchia non può sostituire quella locale e l'assenza sul server non provoca cancellazioni;
+- la pagina Account mostra ultimo esito, elementi inviati, recuperati o ancora in attesa e offre il comando `Sincronizza ora`;
+- una registrazione remota rimasta attiva viene recuperata come bozza, evitando di riavviare silenziosamente il GPS;
+- application ID e certificato restano identici alla 0.15; il `versionCode` sale a 26 e l'aggiornamento è stato provato sopra la 0.14 conservando database e preferenze.
+
+Questa versione recupera l'identità anonima già presente sullo stesso telefono. Il collegamento Google
+per il recupero su un dispositivo nuovo è ancora da realizzare. Le fotografie allegate restano locali:
+il backup remoto riguarda per ora metadati della registrazione e punti GPS.
+
 ## 0.15.0 nucleo accessi — 18 agosto 2026
 
 - introdotto su Supabase il nucleo ente → prodotto → regime → calendario → capienza → prenotazione → titolo;
