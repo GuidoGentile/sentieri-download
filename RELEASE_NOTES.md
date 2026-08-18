@@ -1,5 +1,19 @@
 # Note di versione
 
+## 0.17.0 correzioni dal campo — 18 agosto 2026
+
+- eliminato il doppio avvio: resta soltanto lo splash riconoscibile con la scritta `Sentieri`;
+- le tracce recuperate e appena concluse eliminano in modo prudente le soste iniziali e finali prolungate e l'eventuale coda in automobile successiva a una sosta, conservando sempre una bozza in caso di dubbio;
+- le tracce personali si possono rinominare e aprono ora una panoramica statica, dalla quale si accede alla mappa dinamica e al profilo dedicato;
+- la mappa dinamica ha i comandi per ripristinare il nord e centrare la posizione; cime e valichi sono un livello autonomo, sempre leggibile sopra i boschi, mentre la rete dei percorsi circostanti usa un tratteggio rosso;
+- la linguetta del profilo, la legenda delle pendenze e gli altri comandi rispettano l'area riservata alla barra di navigazione del telefono;
+- calendario delle prenotazioni più compatto, con giorno e disponibilità nettamente distinti;
+- inserimento della data di nascita con barre automatiche e simboli più chiari per dislivello e mezzi di percorrenza;
+- Informazioni → App riporta il nome e il codice esatti della versione installata.
+
+Gli APK mantengono identità e firma delle versioni precedenti: l'aggiornamento va installato senza
+disinstallare Sentieri, così Android conserva tracce, account locale e mappe offline.
+
 ## 0.16.0 recupero account — 18 agosto 2026
 
 - la sincronizzazione delle registrazioni personali è ora bidirezionale: l'app invia le modifiche locali e recupera le tracce già presenti nel proprio spazio Supabase;
