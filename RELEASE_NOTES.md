@@ -6,6 +6,7 @@
 - i punti recuperati ricostruiscono mappa, distanza ed esagoni nel database SQLite del telefono;
 - la fusione è prudente: la revisione più recente prevale, una copia remota vecchia non può sostituire quella locale e l'assenza sul server non provoca cancellazioni;
 - la pagina Account mostra ultimo esito, elementi inviati, recuperati o ancora in attesa e offre il comando `Sincronizza ora`;
+- Informazioni → App mostra nome e codice esatti della versione installata;
 - una registrazione remota rimasta attiva viene recuperata come bozza, evitando di riavviare silenziosamente il GPS;
 - application ID e certificato restano identici alla 0.15; il `versionCode` sale a 26 e l'aggiornamento è stato provato sopra la 0.14 conservando database e preferenze.
 
