@@ -1,5 +1,18 @@
 # Note di versione
 
+## 0.15.0 nucleo accessi — 18 agosto 2026
+
+- introdotto su Supabase il nucleo ente → prodotto → regime → calendario → capienza → prenotazione → titolo;
+- importati come prodotti territoriali tutti i 155 percorsi del catalogo unificato, conservando fonte, ufficialità e validazione come dati distinti;
+- il percorso pilota A1 usa calendario remoto con giorni liberi, chiusi o prenotabili e capienza da 1 a 999;
+- disponibilità e prenotazione sono verificate nella stessa transazione; una chiave di idempotenza impedisce doppie richieste involontarie;
+- una prenotazione gratuita confermata genera un titolo separato e un QR che non contiene dati personali;
+- l'app dichiara i percorsi non ancora configurati invece di mostrare disponibilità inventate;
+- la console locale può collegarsi con l'account gestore autorizzato, modificare il catalogo, configurare giornate e leggere prenotazioni; senza login resta una demo locale dichiarata.
+
+Sono pubblicati l'aggiornamento ARM64 leggero e l'APK completo con le cinque basi cartografiche offline.
+Il nuovo flusso serve al collaudo tecnico: non costituisce ancora un permesso ufficiale del Parco.
+
 ## 0.14.0 backup tracce — 18 agosto 2026
 
 - SQLite resta la destinazione immediata e autorevole di ogni registrazione, anche senza rete;
