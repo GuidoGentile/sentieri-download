@@ -333,6 +333,32 @@
   renderForm();
 })();
 
+(function setupManagerSectionTabs() {
+  "use strict";
+
+  const items = [...document.querySelectorAll(".manager-section-nav__item")];
+  if (!items.length) return;
+
+  function selectItem(item) {
+    items.forEach((candidate) => {
+      const selected = candidate === item;
+      candidate.classList.toggle("manager-section-nav__item--active", selected);
+      if (selected) candidate.setAttribute("aria-current", "location");
+      else candidate.removeAttribute("aria-current");
+    });
+  }
+
+  function selectFromHash() {
+    const hash = window.location.hash;
+    const matchingItem = hash && items.find((item) => item.hash === hash);
+    selectItem(matchingItem || items[0]);
+  }
+
+  items.forEach((item) => item.addEventListener("click", () => selectItem(item)));
+  window.addEventListener("hashchange", selectFromHash);
+  selectFromHash();
+})();
+
 (function setupTrailGovernance() {
   "use strict";
 
