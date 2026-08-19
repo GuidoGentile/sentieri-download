@@ -2,6 +2,7 @@
   "use strict";
 
   const model = window.SentieriManagerAccessModel;
+  const onlineApi = window.SentieriSupabase;
   const trailSelect = document.getElementById("access-trail-select");
   const modeSelect = document.getElementById("access-mode-select");
   const calendarGrid = document.getElementById("calendar-grid");
@@ -53,6 +54,7 @@
   const bookingVisibleCount = document.getElementById("booking-visible-count");
   const bookingVisiblePeople = document.getElementById("booking-visible-people");
   const resetDemo = document.getElementById("reset-access-demo");
+  const dataBadge = document.getElementById("access-data-badge");
 
   const today = new Date();
   let viewYear = today.getFullYear();
@@ -60,6 +62,8 @@
   let selectedDate = model.dateKey(viewYear, viewMonth, Math.min(17, model.daysInMonth(viewYear, viewMonth)));
   let trails = FALLBACK_TRAILS;
   let state = loadState();
+  let onlineMode = false;
+  let onlineLoading = false;
 
   function escapeHtml(value) {
     return String(value ?? "")
@@ -131,7 +135,70 @@
   }
 
   function saveState() {
+    if (onlineMode) return;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  function monthRange() {
+    return {
+      from: model.dateKey(viewYear, viewMonth, 1),
+      to: model.dateKey(viewYear, viewMonth, model.daysInMonth(viewYear, viewMonth))
+    };
+  }
+
+  async function loadOnlineState() {
+    const session = await onlineApi?.validSession();
+    if (!session || onlineLoading) return false;
+    onlineLoading = true;
+    try {
+      onlineMode = true;
+      modeSelect.value = "a_piedi";
+      modeSelect.disabled = true;
+      resetDemo.hidden = true;
+      dataBadge.textContent = "Dati online Supabase";
+      const trail = selectedTrail();
+      const range = monthRange();
+      const [availabilityRows, bookingRows] = await Promise.all([
+        onlineApi.availability(trail.id, range.from, range.to),
+        onlineApi.bookings("PNALM", range.from, range.to)
+      ]);
+      const calendar = {};
+      for (let day = 1; day <= model.daysInMonth(viewYear, viewMonth); day += 1) {
+        const date = model.dateKey(viewYear, viewMonth, day);
+        calendar[model.accessKey(trail.id, "a_piedi", date)] = { kind: "unconfigured", capacity: null, serverBooked: 0 };
+      }
+      (availabilityRows || []).forEach((row) => {
+        const kind = row.access_type === "free" ? "free" : row.access_type === "closed" ? "closed" : "limited";
+        calendar[model.accessKey(trail.id, "a_piedi", row.day)] = {
+          kind,
+          capacity: row.daily_capacity,
+          serverBooked: row.daily_capacity == null || row.remaining_places == null
+            ? 0
+            : Math.max(0, row.daily_capacity - row.remaining_places)
+        };
+      });
+      const bookings = (bookingRows || []).map((item) => booking(
+        item.booking_id,
+        item.customer_email || "Utente Sentieri",
+        item.customer_email || "—",
+        item.product_id,
+        item.product_code,
+        item.product_name,
+        item.access_date,
+        "a_piedi",
+        item.party_size,
+        item.booking_status === "confirmed" ? "confermata" : item.booking_status === "cancelled" ? "annullata" : "trattenuta"
+      ));
+      state = { schema: "sentieri/manager-access-online/v1", calendar, bookings };
+      renderAll();
+      return true;
+    } catch (error) {
+      editorMessage.textContent = error.message || "Dati online non raggiungibili.";
+      editorMessage.classList.add("admin-message--error");
+      return false;
+    } finally {
+      onlineLoading = false;
+    }
   }
 
   function selectedTrail() {
@@ -177,6 +244,10 @@
         statusClass = "closed";
         mainLabel = "Chiuso";
         detailLabel = "Accesso non disponibile";
+      } else if (availability.kind === "unconfigured") {
+        statusClass = "unconfigured";
+        mainLabel = "Non configurato";
+        detailLabel = "Nessun regime pubblicato";
       } else if (availability.kind === "limited") {
         statusClass = availability.soldOut ? "sold-out" : "limited";
         mainLabel = availability.soldOut ? "Esaurito" : `${availability.remaining} liberi`;
@@ -236,7 +307,7 @@
         <td>${escapeHtml(MODE_LABELS[item.mode] || item.mode)}</td>
         <td><strong>${item.quantity}</strong></td>
         <td><span class="booking-status booking-status--${escapeHtml(item.status)}">${escapeHtml(STATUS_LABELS[item.status] || item.status)}</span></td>
-        <td><button type="button" class="outline booking-open-day" data-booking-id="${escapeHtml(item.id)}">Apri giorno</button></td>
+        <td><div class="trail-row-actions"><button type="button" class="outline booking-open-day" data-booking-id="${escapeHtml(item.id)}">Apri giorno</button>${onlineMode && item.status !== "annullata" ? `<button type="button" class="outline booking-cancel" data-booking-id="${escapeHtml(item.id)}">Annulla</button>` : ""}</div></td>
       </tr>`).join("");
     bookingEmpty.hidden = filtered.length > 0;
   }
@@ -258,7 +329,7 @@
     if (accessKind.value === "limited" && !capacityInput.value) capacityInput.value = "30";
   });
 
-  saveDay.addEventListener("click", () => {
+  saveDay.addEventListener("click", async () => {
     const trail = selectedTrail();
     const mode = modeSelect.value;
     const currentBooked = model.bookedUnits(state.bookings, trail.id, mode, selectedDate);
@@ -272,6 +343,27 @@
     if (kind !== "limited" && currentBooked > 0) {
       editorMessage.textContent = `La giornata ha ${currentBooked} posti impegnati: prima occorre gestire quelle prenotazioni.`;
       editorMessage.classList.add("admin-message--error");
+      return;
+    }
+    if (onlineMode) {
+      try {
+        saveDay.disabled = true;
+        await onlineApi.setCapacityDay(
+          trail.id,
+          selectedDate,
+          kind === "limited" ? "booking_free" : kind,
+          kind === "limited" ? capacity : null,
+          "Modifica dalla console gestore"
+        );
+        editorMessage.classList.remove("admin-message--error");
+        editorMessage.textContent = "Giornata salvata online.";
+        await loadOnlineState();
+      } catch (error) {
+        editorMessage.textContent = error.message || "Salvataggio online non riuscito.";
+        editorMessage.classList.add("admin-message--error");
+      } finally {
+        saveDay.disabled = false;
+      }
       return;
     }
     state.calendar[model.accessKey(trail.id, mode, selectedDate)] = {
@@ -289,16 +381,27 @@
     viewYear = next.getFullYear();
     viewMonth = next.getMonth();
     selectedDate = monthDate(1);
-    renderAll();
+    if (onlineMode) loadOnlineState();
+    else renderAll();
   }
 
   previousMonth.addEventListener("click", () => changeMonth(-1));
   nextMonth.addEventListener("click", () => changeMonth(1));
-  trailSelect.addEventListener("change", renderAll);
+  trailSelect.addEventListener("change", () => onlineMode ? loadOnlineState() : renderAll());
   modeSelect.addEventListener("change", renderAll);
   [bookingSearch, bookingStatus, bookingPeriod].forEach((control) => control.addEventListener("input", renderBookings));
 
-  bookingTableBody.addEventListener("click", (event) => {
+  bookingTableBody.addEventListener("click", async (event) => {
+    const cancel = event.target.closest(".booking-cancel");
+    if (cancel && onlineMode) {
+      const item = state.bookings.find((bookingItem) => bookingItem.id === cancel.dataset.bookingId);
+      if (!item || !window.confirm(`Annullare la prenotazione ${item.code}?`)) return;
+      try {
+        await onlineApi.setBookingStatus("PNALM", item.id, "cancelled", "Annullata dalla console gestore");
+        await loadOnlineState();
+      } catch (error) { window.alert(error.message || "Annullamento non riuscito."); }
+      return;
+    }
     const button = event.target.closest(".booking-open-day");
     if (!button) return;
     const item = state.bookings.find((bookingItem) => bookingItem.id === button.dataset.bookingId);
@@ -340,8 +443,11 @@
       official: item.official
     }));
     populateTrailSelect();
-    renderAll();
+    if (onlineMode) loadOnlineState();
+    else renderAll();
   });
+
+  window.addEventListener("sentieri:manager-online", loadOnlineState);
 
   populateTrailSelect();
   renderAll();
@@ -372,4 +478,5 @@
     .catch(() => {
       // I percorsi principali restano disponibili anche aprendo la demo senza catalogo completo.
     });
+  loadOnlineState();
 })();

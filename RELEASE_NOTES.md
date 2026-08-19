@@ -1,5 +1,18 @@
 # Note di versione
 
+## 0.19.0 catalogo abruzzese — 19 agosto 2026
+
+- il catalogo cresce a 1.219 percorsi canonici dell'Abruzzo, organizzati per destinazioni e aree senza pubblicare doppioni geometrici come schede separate;
+- 334 percorsi conservano un'identità CAI documentata e riconoscibile, distinta dalla validazione del gestore;
+- fonti e varianti storiche restano collegate al percorso padre più autorevole: gestore validato, fonte ufficiale, CAI diretto, CAI attribuito, OpenStreetMap e altre fonti;
+- la scala della pendenza assoluta diventa celeste 0–5%, verde 5–10%, giallo 10–15%, arancio 15–20% e rosso dal 20% in su, identica su mappa, profili e legenda;
+- la console gestore espone il catalogo regionale multi-ente, calendari, capienze, prenotazioni, abilitazione delle Guardie e registro dei controlli;
+- debutta la beta Android separata `Guardiaparco` per accesso di servizio, scansione QR, verifica del titolo e consultazione dei controlli recenti;
+- viene predisposto il formato versionato dei pacchetti territoriali scaricabili una volta e utilizzabili offline, mantenendo fotografie e contenuti pesanti fuori dal catalogo di base.
+
+La 0.19.0 mantiene application ID, certificato e database delle versioni precedenti. Installare
+l'aggiornamento senza disinstallare Sentieri per conservare tracce, account locale e dati offline.
+
 ## 0.18.0 rifinitura interfaccia — 19 agosto 2026
 
 - i comandi livelli, nord e posizione corrente restano allineati, leggermente piu grandi e con uno sfondo semitrasparente discreto;

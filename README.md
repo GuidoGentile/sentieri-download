@@ -4,8 +4,9 @@ Questo repository pubblico ospita la pagina di presentazione e le release dimost
 
 ## Android
 
-La release attuale è una **build sperimentale 0.18.0 ARM64**, distribuita fuori
-dal Play Store per test controllati. L’APK contiene il catalogo PNALM offline con 155 candidati,
+La release attuale è una **build sperimentale 0.19.0 ARM64**, distribuita fuori
+dal Play Store per test controllati. L’APK contiene un catalogo offline di 1.219 percorsi
+canonici abruzzesi, con 334 identità CAI documentate e fonti storiche conservate,
 cartografia vettoriale offline, profili altimetrici e registrazione GPS predisposta per continuare
 anche a schermo spento. Dal menu `Registra` si può creare un percorso personale privato e vederlo
 crescere sulla mappa; al termine può essere completato con stelle, ricordo e fino a 5 foto private,
@@ -13,7 +14,7 @@ quindi salvato nello Storico o eliminato integralmente con
 conferma. Il campionamento è configurabile tra 30 secondi, 1 minuto e 2 minuti. La quota
 viene attribuita successivamente tramite DEM. I punti alimentano la copertura dei 131 percorsi
 ufficiali PNALM, con percentuale, titoli progressivi e classifica dimostrativa. Il comportamento GPS
-è stato provato sul campo in una prima registrazione reale. La 0.18.0 recupera registrazioni interrotte,
+è stato provato sul campo in una prima registrazione reale. La 0.19.0 recupera registrazioni interrotte,
 riunisce soltanto frammenti compatibili, scarta i salti GPS oltre 50 km/h e ripulisce con prudenza soste
 prolungate agli estremi e code in automobile successive a una sosta. La copia
 resta sul telefono e, quando torna la rete, viene copiata nell'identità privata su Supabase. Dalla pagina
@@ -26,7 +27,7 @@ gli altri percorsi sono dichiarati non configurati finché il gestore non pubbli
 Sono disponibili un aggiornamento leggero da installare senza disinstallare l'app e un APK completo
 con tutti i dati cartografici per la prima installazione.
 
-Il recupero della 0.18 usa l'identità anonima già conservata dalla versione installata. Per mantenere
+Il recupero della 0.19 usa l'identità anonima già conservata dalla versione installata. Per mantenere
 i dati aggiornare senza disinstallare. Il collegamento Google, necessario per ritrovare lo stesso
 account anche su un telefono nuovo, è il passo successivo e non è ancora operativo.
 
@@ -49,15 +50,16 @@ La landing collega anche una demo web della console gestore. Sono già esplorabi
 - coda di confronto tra sentieri coincidenti, varianti e casi da verificare;
 - importazione ed esportazione locale della configurazione.
 
-La demo non è autenticata e salva le modifiche soltanto nel browser. Editor GIS, import GPX/GeoJSON,
-validazione amministrativa e sincronizzazione server sono ancora da realizzare.
+Senza accesso la console salva le modifiche dimostrative soltanto nel browser. Con l'account
+autorizzato usa Supabase per catalogo regionale multi-ente, calendari, capienze, prenotazioni,
+abilitazione delle Guardie e registro dei controlli. Editor GIS e import GPX/GeoJSON restano da collegare.
 
 ## Stato delle applicazioni
 
 - app utente Android: build installabile con catalogo, mappe offline, profili e prima registrazione GPS sul campo;
 - prototipo web utente: esplorativo, non pubblicato come servizio operativo;
 - console web gestore: demo pubblica con configurazione locale e governo iniziale delle tracce;
-- app Guardia Parco: modello definito, implementazione non iniziata;
+- app Guardiaparco: prima beta Android separata con accesso di servizio, scansione QR, verifica server e cronologia dei controlli;
 - portale verbali: modello definito, implementazione non iniziata.
 
 ## Avvertenza

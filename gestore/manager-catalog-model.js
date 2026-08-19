@@ -194,6 +194,7 @@
     const query = `${options.query || ""}`.trim().toLocaleLowerCase("it-IT");
     return (Array.isArray(catalog) ? catalog : [])
       .filter((item) => options.status === "all" || !options.status || item.publicationStatus === options.status)
+      .filter((item) => options.entity === "all" || !options.entity || item.entityCode === options.entity)
       .filter((item) => options.source === "all" || !options.source || item.source === options.source)
       .filter((item) => !query || [item.code, item.name].some((value) => `${value || ""}`.toLocaleLowerCase("it-IT").includes(query)))
       .sort((first, second) => statusOrder(first.publicationStatus) - statusOrder(second.publicationStatus)

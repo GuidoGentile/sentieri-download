@@ -8,7 +8,7 @@
   "use strict";
 
   const ACTIVE_BOOKING_STATUSES = new Set(["confermata", "trattenuta"]);
-  const ACCESS_KINDS = new Set(["free", "limited", "closed"]);
+  const ACCESS_KINDS = new Set(["free", "limited", "closed", "unconfigured"]);
 
   function pad(value) {
     return String(value).padStart(2, "0");
@@ -32,7 +32,8 @@
     const capacity = kind === "limited" && Number.isFinite(capacityValue) && capacityValue >= 0
       ? capacityValue
       : null;
-    return { kind, capacity };
+    const serverBooked = Number.isFinite(Number(entry?.serverBooked)) ? Math.max(0, Number(entry.serverBooked)) : null;
+    return serverBooked === null ? { kind, capacity } : { kind, capacity, serverBooked };
   }
 
   function bookingsForDay(bookings, trailId, mode, date, includeCancelled = true) {
@@ -51,7 +52,7 @@
 
   function availabilityForDay(entry, bookings, trailId, mode, date) {
     const normalized = normalizeAccessEntry(entry);
-    const booked = bookedUnits(bookings, trailId, mode, date);
+    const booked = normalized.serverBooked ?? bookedUnits(bookings, trailId, mode, date);
     if (normalized.kind !== "limited") {
       return {
         ...normalized,

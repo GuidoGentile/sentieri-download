@@ -40,30 +40,6 @@
   align-items: start;
 }
 
-.public-demo-notice {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: minmax(180px, .35fr) 1fr;
-  gap: 22px;
-  padding: 18px 22px;
-  border: 1px solid rgba(52, 122, 91, .24);
-  border-radius: 18px;
-  color: #173e33;
-  background: #e6f2ec;
-}
-
-.public-demo-notice p {
-  margin: 0;
-  color: #466157;
-}
-
-@media (max-width: 720px) {
-  .public-demo-notice {
-    grid-template-columns: 1fr;
-    gap: 6px;
-  }
-}
-
 .governance-panel {
   grid-column: 1 / -1;
   padding: clamp(1rem, 3vw, 1.6rem);
@@ -1777,4 +1753,52 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
   }
+}
+.manager-session-panel {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(320px, 1.3fr) auto;
+  gap: 20px;
+  align-items: end;
+}
+
+.manager-session-panel h2,
+.manager-session-panel p {
+  margin-bottom: 0;
+}
+
+.manager-login-form {
+  display: flex;
+  gap: 12px;
+  align-items: end;
+}
+
+.manager-login-form .admin-field {
+  flex: 1;
+}
+
+@media (max-width: 800px) {
+  .manager-session-panel,
+  .manager-login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+.calendar-day--unconfigured {
+  opacity: 0.72;
+  background: var(--surface-soft, #eef2ef);
+}
+.field-operations-panel { padding: 24px; }
+.field-operations-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+.field-operations-grid h3 { font-size: 1.25rem; margin: 12px 0; }
+.operator-form { display: grid; grid-template-columns: 1.5fr 1fr auto; gap: 10px; align-items: end; }
+.operations-list { display: grid; gap: 8px; margin-top: 14px; }
+.operation-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; border: 1px solid rgba(31, 79, 61, .14); border-radius: 14px; padding: 12px 14px; background: rgba(255,255,255,.72); }
+.operation-row div { display: grid; gap: 3px; }
+.operation-row small { color: #53645c; }
+.operation-result { font-weight: 800; white-space: nowrap; color: #9a5b00; }
+.operation-result--valid { color: #167345; }
+.operation-result--revoked, .operation-result--expired, .operation-result--not_found, .operation-result--cancelled { color: #b3261e; }
+@media (max-width: 850px) {
+  .field-operations-grid, .operator-form { grid-template-columns: 1fr; }
 }

@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="admin.css?v=7" />
     <script defer src="theme-config.js"></script>
     <script defer src="map-config.js"></script>
+    <script defer src="supabase-config.js"></script>
+    <script defer src="admin-supabase.js?v=1"></script>
+    <script defer src="admin-session.js?v=1"></script>
+    <script defer src="admin-operations.js?v=1"></script>
     <script defer src="manager-access-model.js?v=1"></script>
     <script defer src="manager-catalog-model.js?v=1"></script>
     <script defer src="admin-catalog.js?v=1"></script>
@@ -22,25 +26,62 @@
         <h1>Gestione del territorio</h1>
         <p>Programma gli accessi, controlla le prenotazioni e governa il catalogo del territorio.</p>
       </div>
-      <a class="outline admin-user-link" href="../">Torna alla presentazione</a>
+      <a class="outline admin-user-link" href="../" target="_blank" rel="noopener">Apri anteprima utente</a>
     </header>
 
     <main class="admin-layout">
-      <section class="public-demo-notice" aria-label="Limiti della demo pubblica">
-        <strong>Demo pubblica non autenticata</strong>
-        <p>
-          Puoi provare catalogo, calendari, capienze e prenotazioni senza modificare dati reali.
-          Tutte le scelte restano soltanto in questo browser; login, ruoli e sincronizzazione
-          centrale saranno collegati nelle prossime versioni.
-        </p>
-      </section>
       <nav class="manager-section-nav" aria-label="Sezioni della console gestore">
         <a class="manager-section-nav__item manager-section-nav__item--active" href="#manager-trails">Percorsi</a>
         <a class="manager-section-nav__item" href="#access-calendar">Calendario e capienze</a>
         <a class="manager-section-nav__item" href="#manager-bookings">Prenotazioni</a>
+        <a class="manager-section-nav__item" href="#field-operations">Guardie e controlli</a>
         <a class="manager-section-nav__item" href="#governance-title">Dati e fonti</a>
         <a class="manager-section-nav__item" href="#branding-form">Configurazione</a>
       </nav>
+
+      <section class="card manager-session-panel" aria-labelledby="manager-session-title">
+        <div>
+          <p class="step-label">Collegamento sicuro</p>
+          <h2 id="manager-session-title">Account gestore</h2>
+          <p id="manager-session-status">Verifica della sessione in corso…</p>
+        </div>
+        <form id="manager-login-form" class="manager-login-form">
+          <label class="admin-field">
+            <span>Email autorizzata</span>
+            <input id="manager-login-email" type="email" value="guido.gentile@uniroma1.it" autocomplete="email" required />
+          </label>
+          <button type="submit" class="primary">Invia link di accesso</button>
+        </form>
+        <button id="manager-logout" type="button" class="outline" hidden>Esci</button>
+        <p id="manager-login-message" class="admin-message" aria-live="polite"></p>
+      </section>
+
+      <section id="field-operations" class="card field-operations-panel" aria-labelledby="field-operations-title">
+        <div class="section-head">
+          <div>
+            <p class="step-label">Presidio sul territorio</p>
+            <h2 id="field-operations-title">Guardie e controlli QR</h2>
+            <p>Abilita gli operatori dell’app Guardiaparco e consulta gli esiti registrati sul campo.</p>
+          </div>
+          <span id="field-operations-badge" class="demo-badge">Accesso gestore richiesto</span>
+        </div>
+        <div class="field-operations-grid">
+          <div>
+            <h3>Operatori abilitati</h3>
+            <form id="manager-operator-form" class="operator-form">
+              <label class="admin-field"><span>Email Guardiaparco</span><input id="manager-operator-email" type="email" placeholder="guardiaparco@ente.it" required /></label>
+              <label class="admin-field"><span>Ruolo</span><select id="manager-operator-role"><option value="guard">Guardiaparco</option><option value="supervisor">Supervisore</option></select></label>
+              <button type="submit" class="primary">Abilita</button>
+            </form>
+            <p id="manager-operator-message" class="admin-message" aria-live="polite"></p>
+            <div id="manager-operators-list" class="operations-list"><p class="muted">Accedi per vedere gli operatori.</p></div>
+          </div>
+          <div>
+            <h3>Controlli degli ultimi 30 giorni</h3>
+            <div id="manager-checks-list" class="operations-list"><p class="muted">Accedi per vedere i controlli.</p></div>
+          </div>
+        </div>
+      </section>
 
       <section id="manager-trails" class="card trail-catalog-panel" aria-labelledby="manager-trails-title">
         <div class="section-head trail-catalog-heading">
@@ -71,6 +112,12 @@
               <option value="published">Pubblicati</option>
               <option value="draft">Bozze</option>
               <option value="retired">Ritirati</option>
+            </select>
+          </label>
+          <label class="admin-field">
+            <span>Ente gestore</span>
+            <select id="manager-trail-entity-filter">
+              <option value="all">Tutti gli enti gestiti</option>
             </select>
           </label>
           <label class="admin-field">
@@ -206,7 +253,7 @@
             <h2 id="access-calendar-title">Calendario e capienze</h2>
             <p>Definisci quando il percorso è libero, chiuso o disponibile con prenotazione a numero chiuso.</p>
           </div>
-          <span class="demo-badge">Dati dimostrativi locali</span>
+          <span id="access-data-badge" class="demo-badge">Dati dimostrativi locali</span>
         </div>
 
         <div class="access-toolbar">
@@ -258,6 +305,7 @@
             <label class="admin-field">
               <span>Regime della giornata</span>
               <select id="day-access-kind">
+                <option value="unconfigured" disabled>Non configurato</option>
                 <option value="free">Accesso libero</option>
                 <option value="limited">Prenotazione a numero chiuso</option>
                 <option value="closed">Chiuso</option>

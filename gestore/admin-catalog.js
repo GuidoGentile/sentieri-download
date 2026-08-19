@@ -2,6 +2,7 @@
   "use strict";
 
   const model = window.SentieriManagerCatalogModel;
+  const onlineApi = window.SentieriSupabase;
   const tableBody = document.getElementById("manager-trail-table-body");
   if (!model || !tableBody) return;
 
@@ -17,6 +18,7 @@
 
   const search = document.getElementById("manager-trail-search");
   const statusFilter = document.getElementById("manager-trail-status-filter");
+  const entityFilter = document.getElementById("manager-trail-entity-filter");
   const sourceFilter = document.getElementById("manager-trail-source-filter");
   const visibleCount = document.getElementById("manager-trail-visible-count");
   const emptyState = document.getElementById("manager-trail-empty-state");
@@ -66,6 +68,7 @@
   let baseTrails = [];
   let catalogState = loadState();
   let effectiveTrails = [];
+  let onlineMode = false;
 
   function escapeHtml(value) {
     return String(value ?? "")
@@ -85,7 +88,55 @@
   }
 
   function saveState() {
+    if (onlineMode) return;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(catalogState));
+  }
+
+  function remoteTrail(row) {
+    const metadata = row.metadata || {};
+    const modes = metadata.modes || {};
+    return {
+      id: row.id,
+      entityCode: row.entity_code || "PNALM",
+      code: row.code || "",
+      name: row.name,
+      difficulty: ({ Facile: "easy", Medio: "medium", Difficile: "hard", Esperto: "expert" })[metadata.difficulty] || "not-specified",
+      durationMinutes: Number.isFinite(Number(metadata.duration_minutes)) ? Number(metadata.duration_minutes) : null,
+      lengthMeters: Number.isFinite(Number(metadata.length_meters)) ? Number(metadata.length_meters) : null,
+      elevationGainMeters: Number.isFinite(Number(metadata.elevation_gain_meters)) ? Number(metadata.elevation_gain_meters) : null,
+      elevationLossMeters: Number.isFinite(Number(metadata.elevation_loss_meters)) ? Number(metadata.elevation_loss_meters) : null,
+      walking: modes.walking !== false,
+      mountainBike: Boolean(modes.bike),
+      eBike: Boolean(modes.ebike),
+      horse: Boolean(modes.horse),
+      source: row.source_label || "Fonte non indicata",
+      official: Boolean(row.official),
+      geometryAvailable: metadata.geometry_available !== false,
+      custom: row.source_label === "Inserimento manuale gestore",
+      publicationStatus: row.status === "active" ? "published" : row.status === "draft" ? "draft" : "retired",
+      lastReason: metadata.last_manager_note || null,
+      remoteMetadata: metadata
+    };
+  }
+
+  async function loadRemoteCatalog() {
+    const session = await onlineApi?.validSession();
+    if (!session) return false;
+    try {
+      const rows = await onlineApi.products();
+      onlineMode = true;
+      resetButton.hidden = true;
+      catalogState = model.emptyState();
+      baseTrails = rows.map(remoteTrail);
+      renderCatalog();
+      catalogMessage.classList.remove("admin-message--error");
+      catalogMessage.textContent = `Catalogo collegato a Supabase: ${rows.length.toLocaleString("it-IT")} percorsi in tutti gli ambiti gestiti.`;
+      return true;
+    } catch (error) {
+      catalogMessage.textContent = error.message || "Catalogo online non raggiungibile.";
+      catalogMessage.classList.add("admin-message--error");
+      return false;
+    }
   }
 
   function formatDuration(minutes) {
@@ -116,6 +167,23 @@
     sourceFilter.value = sources.includes(selected) ? selected : "all";
   }
 
+  function populateEntityFilter() {
+    const selected = entityFilter.value || "all";
+    const labels = {
+      PNALM: "PNALM",
+      PNMAIELLA: "Parco Nazionale della Maiella",
+      PRSIRENTEVELINO: "Parco Sirente Velino",
+      PNGRANSASSOLAGA: "Parco Gran Sasso e Laga",
+      ABRUZZO_CENTRALE: "Abruzzo centrale · fonti candidate",
+      REGIONE_ABRUZZO: "Regione Abruzzo"
+    };
+    const entities = [...new Set(effectiveTrails.map((item) => item.entityCode).filter(Boolean))]
+      .sort((a, b) => (labels[a] || a).localeCompare(labels[b] || b, "it"));
+    entityFilter.innerHTML = '<option value="all">Tutti gli enti gestiti</option>'
+      + entities.map((entity) => `<option value="${escapeHtml(entity)}">${escapeHtml(labels[entity] || entity)}</option>`).join("");
+    entityFilter.value = entities.includes(selected) ? selected : "all";
+  }
+
   function renderCatalog() {
     effectiveTrails = model.effectiveCatalog(baseTrails, catalogState);
     const stats = model.catalogStats(effectiveTrails);
@@ -124,9 +192,11 @@
     retiredCount.textContent = stats.retired.toLocaleString("it-IT");
     customCount.textContent = stats.custom.toLocaleString("it-IT");
     populateSourceFilter();
+    populateEntityFilter();
     const filtered = model.filterCatalog(effectiveTrails, {
       query: search.value,
       status: statusFilter.value,
+      entity: entityFilter.value,
       source: sourceFilter.value
     });
     visibleCount.textContent = `${filtered.length.toLocaleString("it-IT")} su ${effectiveTrails.length.toLocaleString("it-IT")}`;
@@ -143,7 +213,7 @@
           <td><strong>${escapeHtml(item.code || "Senza codice")} · ${escapeHtml(item.name)}</strong><small>${escapeHtml(geometryLabel)}${item.lastReason ? ` · Ultima nota: ${escapeHtml(item.lastReason)}` : ""}</small></td>
           <td><strong>${escapeHtml(DIFFICULTY_LABELS[item.difficulty] || "Non indicata")}</strong><small>${escapeHtml(formatLength(item.lengthMeters))} · ${escapeHtml(formatDuration(item.durationMinutes))}</small></td>
           <td><span class="trail-mode-tags">${modesFor(item).map((mode) => `<i>${escapeHtml(mode)}</i>`).join("")}</span></td>
-          <td><strong>${escapeHtml(item.source)}</strong><small>${item.official ? "Fonte PNALM" : item.custom ? "Dato del gestore" : "Fonte esterna"}</small></td>
+          <td><strong>${escapeHtml(item.source)}</strong><small>${item.official ? "Fonte ufficiale" : item.custom ? "Dato del gestore" : "Fonte esterna"}${item.entityCode ? ` · ${escapeHtml(item.entityCode)}` : ""}</small></td>
           <td><span class="trail-publication-status trail-publication-status--${escapeHtml(item.publicationStatus)}">${escapeHtml(STATUS_LABELS[item.publicationStatus])}</span></td>
           <td><div class="trail-row-actions"><button type="button" class="outline trail-row-action" data-action="edit" data-id="${escapeHtml(item.id)}">Modifica</button>${statusAction}</div></td>
         </tr>`;
@@ -230,7 +300,7 @@
     statusReason.focus();
   }
 
-  editorForm.addEventListener("submit", (event) => {
+  editorForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     const fields = editorFields();
     if (!editorForm.reportValidity() || model.validateFields(fields).length) {
@@ -238,6 +308,58 @@
       return;
     }
     try {
+      if (onlineMode) {
+        const existing = effectiveTrails.find((item) => item.id === editorId.value);
+        const difficultyLabel = {
+          easy: "Facile",
+          medium: "Medio",
+          hard: "Difficile",
+          expert: "Esperto"
+        }[fields.difficulty] || null;
+        const metadata = {
+          ...(existing?.remoteMetadata || {}),
+          difficulty: difficultyLabel,
+          duration_minutes: fields.durationMinutes,
+          length_meters: fields.lengthMeters,
+          elevation_gain_meters: fields.elevationGainMeters,
+          elevation_loss_meters: fields.elevationLossMeters,
+          modes: {
+            walking: fields.walking,
+            bike: fields.mountainBike,
+            ebike: fields.eBike,
+            horse: fields.horse
+          },
+          geometry_available: existing ? existing.geometryAvailable : false,
+          last_manager_note: editorReason.value.trim()
+        };
+        if (existing) {
+          await onlineApi.updateProduct(existing.id, {
+            code: fields.code || existing.code,
+            name: fields.name,
+            metadata
+          });
+        } else {
+          await onlineApi.createProduct({
+            id: `manager-${crypto.randomUUID()}`,
+            entity_code: "PNALM",
+            product_type: "trail",
+            code: fields.code || `GEST-${Date.now().toString().slice(-6)}`,
+            name: fields.name,
+            status: "draft",
+            official: false,
+            validation_status: "not_reviewed",
+            source_label: "Inserimento manuale gestore",
+            metadata
+          });
+        }
+        closeDialog(editor);
+        await loadRemoteCatalog();
+        catalogMessage.classList.remove("admin-message--error");
+        catalogMessage.textContent = existing
+          ? "Correzione salvata online; la fonte originale è rimasta invariata."
+          : "Nuovo percorso salvato online in bozza, in attesa della geometria.";
+        return;
+      }
       catalogState = model.saveManualTrail(
         catalogState,
         baseTrails,
@@ -260,9 +382,24 @@
     }
   });
 
-  statusForm.addEventListener("submit", (event) => {
+  statusForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     try {
+      if (onlineMode) {
+        const item = effectiveTrails.find((trail) => trail.id === statusId.value);
+        if (!item) throw new Error("TRAIL_NOT_FOUND");
+        await onlineApi.updateProduct(item.id, {
+          status: statusValue.value === "published" ? "active" : "archived",
+          metadata: { ...(item.remoteMetadata || {}), last_manager_note: statusReason.value.trim() }
+        });
+        closeDialog(statusDialog);
+        await loadRemoteCatalog();
+        catalogMessage.classList.remove("admin-message--error");
+        catalogMessage.textContent = statusValue.value === "published"
+          ? "Percorso ripubblicato online."
+          : "Percorso ritirato dall’app; dati e storico sono conservati.";
+        return;
+      }
       catalogState = model.setPublicationStatus(
         catalogState,
         statusId.value,
@@ -295,7 +432,7 @@
   closeEditor.addEventListener("click", () => closeDialog(editor));
   cancelEditor.addEventListener("click", () => closeDialog(editor));
   cancelStatus.addEventListener("click", () => closeDialog(statusDialog));
-  [search, statusFilter, sourceFilter].forEach((control) => control.addEventListener("input", renderCatalog));
+  [search, statusFilter, entityFilter, sourceFilter].forEach((control) => control.addEventListener("input", renderCatalog));
 
   resetButton.addEventListener("click", () => {
     if (!window.confirm("Azzerare correzioni, ritiri e nuovi percorsi creati in questa demo?")) return;
@@ -305,12 +442,15 @@
     catalogMessage.textContent = "Catalogo dimostrativo ripristinato.";
   });
 
+  window.addEventListener("sentieri:manager-online", loadRemoteCatalog);
+
   fetch("dati-parco/percorsi/catalogo-unificato/catalogo.geojson")
     .then((response) => {
       if (!response.ok) throw new Error(`Catalogo non disponibile (${response.status})`);
       return response.json();
     })
     .then((catalog) => {
+      if (onlineMode) return;
       baseTrails = catalog.features
         .map((feature) => model.normalizeBaseTrail(feature.properties))
         .filter((item) => item.id);
@@ -319,4 +459,5 @@
     .catch((error) => {
       tableBody.innerHTML = `<tr><td colspan="6" class="review-error">${escapeHtml(error.message)}. Avvia la console dal server locale.</td></tr>`;
     });
+  loadRemoteCatalog();
 })();
