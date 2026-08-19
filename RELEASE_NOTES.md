@@ -1,5 +1,17 @@
 # Note di versione
 
+## 0.18.0 rifinitura interfaccia — 19 agosto 2026
+
+- i comandi livelli, nord e posizione corrente restano allineati, leggermente piu grandi e con uno sfondo semitrasparente discreto;
+- l'apertura del pannello livelli non sposta piu i comandi sottostanti;
+- la linguetta del profilo chiusa occupa tutta la larghezza e il suo fondo copre correttamente l'area inferiore del telefono;
+- Copertura usa la mappa fino al bordo inferiore e rende omogenei e leggibili i testi della scheda riepilogativa;
+- Registra riusa per piedi, bicicletta, e-bike e cavallo gli stessi simboli adottati nei filtri del catalogo;
+- prosegue la preparazione del progetto iPhone con catalogo, panoramica, mappe, profilo, registrazione e storico; il pacchetto iOS verra distribuito soltanto dopo compilazione e firma su Mac.
+
+Gli APK mantengono application ID e certificato delle versioni precedenti e hanno un codice versione
+crescente: installare l'aggiornamento senza disinstallare Sentieri per conservare dati e tracce locali.
+
 ## 0.17.0 correzioni dal campo — 18 agosto 2026
 
 - eliminato il doppio avvio: resta soltanto lo splash riconoscibile con la scritta `Sentieri`;
