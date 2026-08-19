@@ -1,0 +1,186 @@
+.guide-topbar { gap: 24px; }
+.guide-back {
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: var(--forest);
+  font-size: .82rem;
+  font-weight: 850;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.guide-main { background: linear-gradient(180deg, #f5f1e6 0, #edf4ef 34rem, #f5f1e6 54rem); }
+.guide-hero {
+  display: grid;
+  grid-template-columns: 1.25fr .75fr;
+  gap: clamp(40px, 7vw, 100px);
+  align-items: center;
+  min-height: 660px;
+  padding-block: 90px 100px;
+}
+.guide-hero h1 { margin-bottom: 28px; }
+.guide-hero h1 em { color: var(--forest-2); font-weight: inherit; }
+.guide-lead { max-width: 750px; color: #45564e; font-size: clamp(1.08rem, 2vw, 1.3rem); }
+.print-button { cursor: pointer; font: inherit; }
+
+.identity-card {
+  padding: 30px;
+  border: 1px solid rgba(255,255,255,.32);
+  border-radius: 28px;
+  color: white;
+  background: var(--forest);
+  box-shadow: var(--shadow);
+}
+.identity-kicker { color: var(--warm); font-size: .72rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+.identity-card dl { margin: 24px 0; border-top: 1px solid rgba(255,255,255,.2); }
+.identity-card dl div { display: flex; justify-content: space-between; gap: 20px; padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,.16); }
+.identity-card dt { color: #c7d7cf; font-size: .82rem; }
+.identity-card dd { margin: 0; font-size: .88rem; font-weight: 850; text-align: right; }
+.identity-card > p:last-child { margin: 18px 0 0; color: #c7d7cf; font-size: .78rem; }
+
+.guide-layout { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: clamp(40px, 7vw, 95px); align-items: start; }
+.guide-index {
+  position: sticky;
+  top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: calc(100vh - 122px);
+  padding: 20px 0;
+  overflow: auto;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.guide-index strong { margin-bottom: 10px; color: var(--forest); font-size: .76rem; letter-spacing: .1em; text-transform: uppercase; }
+.guide-index a { padding: 7px 2px; color: var(--muted); font-size: .8rem; font-weight: 700; text-decoration: none; }
+.guide-index a:hover { color: var(--forest); }
+.guide-content { min-width: 0; }
+.guide-section { scroll-margin-top: 100px; padding: 10px 0 105px; }
+.guide-section + .guide-section { padding-top: 92px; border-top: 1px solid var(--line); }
+.guide-section h2 { max-width: 900px; font-size: clamp(2.55rem, 5vw, 4.7rem); }
+.guide-section h3 { color: var(--forest); font-family: Georgia, "Times New Roman", serif; font-size: 1.45rem; font-weight: 500; }
+.guide-section > p:not(.chapter):not(.section-intro):not(.fine-print) { max-width: 900px; color: #3f5048; font-size: 1.02rem; }
+.chapter { margin-bottom: 20px; color: var(--forest-2); font-size: .72rem; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; }
+.section-intro { max-width: 850px; margin-bottom: 35px; color: #3f5048; font-size: 1.18rem; }
+.fine-print { color: var(--muted); font-size: .82rem; }
+
+.principle-grid, .data-grid, .architecture, .roadmap { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 35px; }
+.principle-grid article, .data-grid article, .architecture article, .roadmap article {
+  padding: 25px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: rgba(255,255,255,.48);
+}
+.principle-grid article > span { color: var(--forest-2); font-size: .7rem; font-weight: 900; letter-spacing: .12em; }
+.principle-grid h3, .data-grid h3, .roadmap h3 { margin: 28px 0 10px; }
+.principle-grid p, .data-grid p, .architecture p, .roadmap p { margin: 0; color: var(--muted); font-size: .9rem; }
+.callout { margin-top: 28px; padding: 26px 30px; border-left: 5px solid var(--warm); border-radius: 0 18px 18px 0; background: #e3ece6; }
+.callout strong { color: var(--forest); font-size: 1.05rem; }
+.callout p { margin: 6px 0 0; }
+
+.module-list { margin-top: 35px; border-top: 1px solid var(--line); }
+.module-list article { display: grid; grid-template-columns: .72fr 1.28fr; gap: 35px; padding: 27px 0; border-bottom: 1px solid var(--line); }
+.module-list h3 { margin: 10px 0 0; }
+.module-list p { margin: 0; color: var(--muted); }
+.status { display: inline-flex; align-items: center; width: fit-content; padding: 5px 9px; border-radius: 999px; font-size: .66rem; font-weight: 900; letter-spacing: .05em; text-transform: uppercase; }
+.status.ready { color: #0d5a35; background: #d3eedf; }
+.status.partial { color: #6e5000; background: #f5e5a9; }
+.status.beta { color: #12566a; background: #d3ebf2; }
+.status.planned { color: #75413b; background: #f1d9d4; }
+
+.how-to { margin-top: 35px; }
+.how-to article { display: grid; grid-template-columns: 58px minmax(0,1fr); gap: 22px; padding: 27px 0; border-top: 1px solid var(--line); }
+.how-to article:last-child { border-bottom: 1px solid var(--line); }
+.how-to h3 { margin: 0 0 8px; }
+.how-to p { margin: 0; color: var(--muted); }
+.step-number { display: grid; width: 46px; height: 46px; place-items: center; border-radius: 50%; color: white; background: var(--forest); font-weight: 900; }
+.compact-steps { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; }
+.notice-box { margin-top: 30px; padding: 25px 28px; border-radius: 20px; color: #17382d; background: #dcebe2; }
+.notice-box.warning { color: #513c0d; background: #f5e6bb; }
+.notice-box p { margin: 7px 0 0; }
+
+.instruction-columns, .comparison, .status-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 32px 0; }
+.instruction-columns > div, .comparison article, .status-strip > div { padding: 25px; border: 1px solid var(--line); border-radius: 20px; background: rgba(255,255,255,.45); }
+.instruction-columns h3, .comparison h3 { margin: 0 0 15px; }
+.instruction-columns ol { margin: 0; padding-left: 20px; }
+.instruction-columns li + li { margin-top: 10px; }
+.comparison p, .status-strip p { margin: 8px 0 0; color: var(--muted); }
+.check-list { margin: 20px 0 0; padding: 0; list-style: none; }
+.check-list li { position: relative; padding: 14px 0 14px 34px; border-top: 1px solid var(--line); }
+.check-list li::before { position: absolute; left: 3px; color: var(--forest); content: "✓"; font-weight: 900; }
+.check-list li:last-child { border-bottom: 1px solid var(--line); }
+
+.flow-line { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin: 35px 0; }
+.flow-line span { padding: 10px 13px; border-radius: 10px; color: white; background: var(--forest); font-size: .82rem; font-weight: 850; }
+.flow-line i { color: var(--forest-2); font-style: normal; font-weight: 900; }
+
+.capability-table { margin-top: 35px; border-top: 1px solid var(--line); }
+.capability-table > div { display: grid; grid-template-columns: .55fr 1.45fr .42fr; gap: 20px; align-items: start; padding: 19px 0; border-bottom: 1px solid var(--line); }
+.capability-table .table-head { color: var(--muted); font-size: .68rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+.capability-table > div > span:nth-child(2) { color: var(--muted); font-size: .88rem; }
+
+.architecture article > span, .roadmap article > span { color: var(--forest-2); font-size: .68rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+.architecture strong { display: block; margin: 24px 0 10px; color: var(--forest); font-size: 1.05rem; }
+.roadmap article.done { color: white; background: var(--forest); }
+.roadmap article.done span, .roadmap article.done h3 { color: var(--warm); }
+.roadmap article.done p { color: #d3dfd8; }
+
+.document-section { padding-inline: clamp(20px, 4vw, 54px); border-radius: 26px; background: #ebe3cf; }
+.guide-section.document-section + .guide-section { border-top: 0; }
+.work-identity { margin: 32px 0; border-top: 1px solid rgba(22,63,51,.25); }
+.work-identity > div { display: grid; grid-template-columns: .45fr 1.55fr; gap: 25px; padding: 17px 0; border-bottom: 1px solid rgba(22,63,51,.2); }
+.work-identity strong { color: var(--forest); }
+.work-identity p { margin: 0; }
+.guide-links { padding-bottom: 120px; }
+
+@media (max-width: 960px) {
+  .guide-topbar nav { display: none; }
+  .guide-hero { grid-template-columns: 1fr; padding-top: 65px; }
+  .identity-card { max-width: 620px; }
+  .guide-layout { grid-template-columns: 1fr; }
+  .guide-index { position: static; display: grid; grid-template-columns: 1fr 1fr; max-height: none; margin-bottom: 45px; }
+  .guide-index strong { grid-column: 1 / -1; }
+}
+
+@media (max-width: 680px) {
+  .guide-topbar { min-height: 68px; }
+  .guide-back { padding: 8px 10px; font-size: .72rem; }
+  .guide-hero { min-height: auto; padding-block: 55px 75px; }
+  .guide-hero h1 { font-size: clamp(3.3rem, 16vw, 5rem); }
+  .guide-hero > * { min-width: 0; width: 100%; }
+  .guide-hero .actions, .guide-hero .button { width: 100%; min-width: 0; }
+  .guide-index { grid-template-columns: 1fr; }
+  .principle-grid, .data-grid, .architecture, .roadmap, .instruction-columns, .comparison, .status-strip, .compact-steps { grid-template-columns: 1fr; }
+  .module-list article { grid-template-columns: 1fr; gap: 8px; }
+  .how-to article { grid-template-columns: 48px minmax(0,1fr); gap: 14px; }
+  .capability-table .table-head { display: none; }
+  .capability-table > div { grid-template-columns: 1fr; gap: 8px; padding: 23px 0; }
+  .work-identity > div { grid-template-columns: 1fr; gap: 5px; }
+  .document-section { margin-inline: -10px; }
+}
+
+@media (max-width: 360px) {
+  .guide-topbar .brand span { display: none; }
+  .guide-back { font-size: 0; }
+  .guide-back::after { content: "Landing"; font-size: .7rem; }
+  .guide-hero h1 { font-size: 2.65rem; }
+}
+
+@media print {
+  :root { --paper: #fff; --ink: #111; --muted: #444; }
+  .no-print, .topbar, footer { display: none !important; }
+  body, .guide-main { background: white; }
+  .shell { width: 100%; }
+  .guide-hero { min-height: 0; padding: 0 0 36px; }
+  .guide-hero h1 { font-size: 52pt; }
+  .identity-card { color: #111; border: 1px solid #888; background: white; box-shadow: none; }
+  .identity-card dt, .identity-card > p:last-child { color: #333; }
+  .identity-card dl div { border-color: #bbb; }
+  .guide-layout { display: block; }
+  .guide-section, .guide-section + .guide-section { padding: 28px 0; break-inside: auto; }
+  .guide-section h2 { font-size: 30pt; }
+  .guide-section article, .notice-box, .callout { break-inside: avoid; }
+  .document-section { padding-inline: 24px; background: #f3f3f3; }
+  a { text-decoration: none; }
+}

@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#163f33" />
+    <meta
+      name="description"
+      content="Guida completa e descrizione tecnica di Sentieri: app escursionista, console gestore, Guardiaparco, dati territoriali, funzionamento offline e stato del progetto."
+    />
+    <title>Sentieri · Guida completa e descrizione tecnica</title>
+    <link rel="icon" href="../assets/sentieri-mark.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="guide.css?v=20260819" />
+  </head>
+  <body>
+    <header class="topbar guide-topbar">
+      <a class="brand" href="../" aria-label="Sentieri, torna alla pagina principale">
+        <img src="../assets/sentieri-mark.svg" alt="" />
+        <span>Sentieri</span>
+      </a>
+      <nav aria-label="Navigazione della guida">
+        <a href="#uso">Come si usa</a>
+        <a href="#ecosistema">Piattaforma</a>
+        <a href="#tecnica">Tecnologia</a>
+        <a href="#stato">Stato</a>
+      </nav>
+      <a class="guide-back" href="../">Torna alla landing</a>
+    </header>
+
+    <main id="inizio" class="guide-main">
+      <section class="guide-hero shell">
+        <div>
+          <p class="eyebrow"><span></span> Guida e descrizione tecnica · versione 0.19</p>
+          <h1>Sentieri,<br /><em>in profondità.</em></h1>
+          <p class="guide-lead">
+            Manuale d’uso, descrizione funzionale e scheda tecnica della piattaforma per la fruizione
+            regolata del territorio. La pagina distingue ciò che è già disponibile nella versione
+            sperimentale da ciò che richiede ancora sviluppo o validazione istituzionale.
+          </p>
+          <div class="actions no-print">
+            <a class="button primary" href="#uso">Inizia dalla guida all’app</a>
+            <button class="button secondary print-button" type="button" onclick="window.print()">Stampa o salva in PDF</button>
+          </div>
+        </div>
+        <aside class="identity-card" aria-label="Identità della versione descritta">
+          <p class="identity-kicker">Scheda della versione</p>
+          <dl>
+            <div><dt>Prodotto</dt><dd>Sentieri</dd></div>
+            <div><dt>Edizione</dt><dd>Sentieri d’Abruzzo</dd></div>
+            <div><dt>Versione Android</dt><dd>0.19.0</dd></div>
+            <div><dt>Catalogo</dt><dd>1.219 percorsi</dd></div>
+            <div><dt>Identità CAI</dt><dd>334 documentate</dd></div>
+            <div><dt>Aggiornamento documento</dt><dd>19 agosto 2026</dd></div>
+          </dl>
+          <p>Documento descrittivo del prototipo. Non sostituisce condizioni d’uso, informativa privacy o documentazione legale di deposito.</p>
+        </aside>
+      </section>
+
+      <div class="guide-layout shell">
+        <aside class="guide-index no-print" aria-label="Indice della guida">
+          <strong>Indice</strong>
+          <a href="#visione">1. Visione del prodotto</a>
+          <a href="#ecosistema">2. Componenti</a>
+          <a href="#uso">3. App escursionista</a>
+          <a href="#registrazione">4. Registrazione GPS</a>
+          <a href="#prenotazioni">5. Prenotazioni e QR</a>
+          <a href="#copertura">6. Copertura</a>
+          <a href="#gestore">7. Console gestore</a>
+          <a href="#guardia">8. Guardiaparco</a>
+          <a href="#dati">9. Dati e metodologia</a>
+          <a href="#tecnica">10. Architettura</a>
+          <a href="#privacy">11. Privacy e sicurezza</a>
+          <a href="#siae">12. Identità dell’opera</a>
+          <a href="#stato">13. Stato e sviluppi</a>
+        </aside>
+
+        <article class="guide-content">
+          <section id="visione" class="guide-section">
+            <p class="chapter">01 · Visione</p>
+            <h2>Un’infrastruttura digitale tra territorio e visitatore.</h2>
+            <p class="section-intro">
+              Sentieri è una piattaforma multi-ente per catalogare percorsi, aree e parcheggi, comunicarne
+              le condizioni di fruizione e, quando necessario, programmare gli accessi attraverso calendari,
+              capienze, prenotazioni e titoli d’ingresso verificabili.
+            </p>
+            <div class="principle-grid">
+              <article><span>01</span><h3>Orientamento</h3><p>Catalogo affidabile, mappe vettoriali e profili altimetrici disponibili anche senza rete.</p></article>
+              <article><span>02</span><h3>Regole chiare</h3><p>Accesso libero, chiuso o prenotabile reso comprensibile prima della partenza.</p></article>
+              <article><span>03</span><h3>Memoria personale</h3><p>Registrazioni private, storico, copertura territoriale, ricordi, stelle e fotografie.</p></article>
+              <article><span>04</span><h3>Governo del territorio</h3><p>Strumenti distinti per visitatori, gestori e operatori di controllo.</p></article>
+            </div>
+            <div class="callout">
+              <strong>Il nucleo concettuale</strong>
+              <p>Ente → prodotto territoriale → regime di accesso → calendario → capienza → prenotazione → titolo d’ingresso.</p>
+            </div>
+          </section>
+
+          <section id="ecosistema" class="guide-section">
+            <p class="chapter">02 · Ecosistema</p>
+            <h2>Quattro superfici, con responsabilità separate.</h2>
+            <div class="module-list">
+              <article>
+                <div><span class="status ready">Disponibile</span><h3>App Sentieri</h3></div>
+                <p>Applicazione Android per catalogo, mappe offline, profili, registrazione GPS, storico, copertura e primo flusso di prenotazione.</p>
+              </article>
+              <article>
+                <div><span class="status partial">Parziale</span><h3>Console gestore</h3></div>
+                <p>Web app per catalogo, calendari, capienze, prenotazioni, operatori, controlli e configurazione visiva. L’editor geografico completo è da realizzare.</p>
+              </article>
+              <article>
+                <div><span class="status beta">Beta</span><h3>App Guardiaparco</h3></div>
+                <p>App Android separata per account di servizio, scansione dei QR, verifica dei titoli e registro centrale dei controlli.</p>
+              </article>
+              <article>
+                <div><span class="status planned">Pianificato</span><h3>Portale verbali</h3></div>
+                <p>Interfaccia web pubblica prevista per consultazione, contestazione e pagamento degli accertamenti, dopo la necessaria validazione legale.</p>
+              </article>
+            </div>
+          </section>
+
+          <section id="uso" class="guide-section">
+            <p class="chapter">03 · App escursionista</p>
+            <h2>Come si usa Sentieri.</h2>
+            <div class="how-to">
+              <article>
+                <span class="step-number">1</span>
+                <div><h3>Installare senza perdere i dati</h3><p>Per una prima installazione si usa l’APK completo, che comprende la cartografia di prova. Se Sentieri è già presente, si installa l’APK di aggiornamento senza disinstallare la versione precedente: tracce e dati locali vengono conservati.</p></div>
+              </article>
+              <article>
+                <span class="step-number">2</span>
+                <div><h3>Cercare un percorso</h3><p>La home mostra le card dei percorsi ordinate secondo i dati di popolarità disponibili. La ricerca lavora su nome, codice e identità CAI. La pagina Filtri restringe l’elenco per area, difficoltà, durata, lunghezza, dislivello, mezzo e fonte.</p></div>
+              </article>
+              <article>
+                <span class="step-number">3</span>
+                <div><h3>Aprire la panoramica</h3><p>Toccando una card si accede alla scheda con codice, fonte, difficoltà, modalità consentite, metriche, mappa statica dell’intero itinerario e profilo altimetrico. Le icone sulle due anteprime aprono le viste approfondite.</p></div>
+              </article>
+              <article>
+                <span class="step-number">4</span>
+                <div><h3>Esplorare mappa e altimetria</h3><p>La mappa dinamica mantiene il profilo sincronizzato in una linguetta inferiore. Il punto sul profilo corrisponde al punto evidenziato sulla planimetria. Sono disponibili livelli per etichette, curve, cime e valichi, sentieri di contesto, ripristino del nord e centratura della posizione.</p></div>
+              </article>
+              <article>
+                <span class="step-number">5</span>
+                <div><h3>Avviare il percorso</h3><p>Il comando a freccia avvia la sessione sul percorso selezionato. Se la posizione è lontana dalla partenza, l’app mostra prima la distanza in linea d’aria; vicino all’itinerario può seguire la posizione e preparare gli avvisi di orientamento.</p></div>
+              </article>
+              <article>
+                <span class="step-number">6</span>
+                <div><h3>Usare il menu personale</h3><p>Dal menu si raggiungono Calendario, Prenotazioni, Storico, Registra, Copertura, Account e Informazioni. La freccia dell’app segue la stessa cronologia del comando Indietro del telefono.</p></div>
+              </article>
+            </div>
+            <div class="notice-box">
+              <strong>Uso offline</strong>
+              <p>Catalogo, cartografia incorporata, profili e registrazione continuano a funzionare senza connessione. Prenotazioni, backup remoto e aggiornamenti richiedono invece il collegamento al servizio.</p>
+            </div>
+          </section>
+
+          <section id="registrazione" class="guide-section">
+            <p class="chapter">04 · Registrazione GPS</p>
+            <h2>Una traccia personale resta prima di tutto dell’utente.</h2>
+            <p class="section-intro">La voce <strong>Registra</strong> permette di documentare un percorso libero, anche quando non corrisponde a un itinerario del catalogo.</p>
+            <div class="instruction-columns">
+              <div>
+                <h3>Prima della partenza</h3>
+                <ol>
+                  <li>Scegliere il mezzo: a piedi, bici, e-bike o cavallo.</li>
+                  <li>Scegliere il campionamento visibile: 30, 60 o 120 secondi.</li>
+                  <li>Concedere la posizione precisa e, per l’uso a schermo spento, il permesso di localizzazione richiesto da Android.</li>
+                  <li>Premere Avvia e verificare che la posizione compaia sulla mappa.</li>
+                </ol>
+              </div>
+              <div>
+                <h3>Durante e dopo</h3>
+                <ol>
+                  <li>La linea cresce sulla mappa mentre i punti vengono salvati progressivamente.</li>
+                  <li>Un arresto inatteso non elimina la sessione: alla riapertura viene proposto di proseguirla o conservarla come bozza.</li>
+                  <li>Al termine si assegna un nome, da una a cinque stelle, un ricordo e fino a cinque fotografie private.</li>
+                  <li>La traccia può essere salvata nello Storico oppure eliminata integralmente con conferma.</li>
+                </ol>
+              </div>
+            </div>
+            <h3>Correzioni automatiche prudenti</h3>
+            <ul class="check-list">
+              <li>I singoli salti che implicherebbero velocità superiori a 50 km/h vengono scartati come errori GPS.</li>
+              <li>Soste prolungate all’inizio o alla fine e code evidentemente percorse in automobile possono essere rimosse senza cancellare il corpo dell’escursione.</li>
+              <li>Frammenti compatibili possono essere riuniti; quelli dubbi vengono conservati come bozze separate.</li>
+              <li>Piccoli buchi tra posizioni affidabili vengono ricostruiti soltanto entro limiti di tempo, distanza e velocità compatibili con il mezzo.</li>
+              <li>La quota del telefono non diventa dato definitivo: profilo e dislivelli vengono arricchiti usando il modello del terreno disponibile.</li>
+            </ul>
+          </section>
+
+          <section id="prenotazioni" class="guide-section">
+            <p class="chapter">05 · Accessi, prenotazioni e QR</p>
+            <h2>Il permesso nasce dal calendario del prodotto territoriale.</h2>
+            <div class="flow-line" aria-label="Flusso della prenotazione">
+              <span>Percorso o area</span><i>→</i><span>Data</span><i>→</i><span>Persone</span><i>→</i><span>Disponibilità</span><i>→</i><span>Titolo QR</span>
+            </div>
+            <p>
+              Dalla scheda di un percorso configurato, l’icona di prenotazione apre il calendario specifico.
+              Ogni giorno può essere libero, chiuso, prenotabile o esaurito. Per un accesso di gruppo si indica
+              il numero delle persone; il server verifica e consuma la capienza in un’unica transazione, evitando
+              che due richieste contemporanee superino il limite.
+            </p>
+            <p>
+              Una prenotazione confermata genera un titolo distinto con codice e QR. Il QR non contiene dati
+              personali in chiaro e può essere mostrato dal telefono o stampato. Nella versione attuale il caso
+              pilota completo è il percorso A1; gli altri prodotti dichiarano correttamente quando non possiedono
+              ancora un regime pubblicato.
+            </p>
+            <div class="status-strip">
+              <div><span class="status ready">Operativo nel pilota</span><p>Disponibilità, capienza, prenotazione gratuita, titolo e verifica server.</p></div>
+              <div><span class="status planned">Da completare</span><p>Pagamenti, rimborsi, modifiche del gruppo, parcheggi reali e capienze condivise complesse.</p></div>
+            </div>
+          </section>
+
+          <section id="copertura" class="guide-section">
+            <p class="chapter">06 · Storico e copertura</p>
+            <h2>Lo Storico racconta le uscite; la Copertura misura il territorio conosciuto.</h2>
+            <div class="comparison">
+              <article><h3>Storico</h3><p>Elenco cronologico delle escursioni, anche ripetute sullo stesso percorso. Mostra data, traccia, percentuale coperta, ricordo, giudizio e fotografie private.</p></article>
+              <article><h3>Copertura</h3><p>Unione cumulativa degli esagoni territoriali attraversati. Non replica le singole uscite e visualizza il progresso complessivo su una mappa navigabile.</p></article>
+            </div>
+            <p>
+              La griglia usa esagoni reali di circa 100 metri. Nella demo la percentuale, i titoli e la classifica
+              considerano esclusivamente le celle della rete ufficiale PNALM; passaggi esterni restano nello storico
+              ma non aumentano la progressione. Gli esagoni visitati sono fucsia semitrasparente. Velocità e ripetizioni
+              non producono vantaggi artificiali.
+            </p>
+            <p class="fine-print">La classifica corrente è dimostrativa. Una versione reale richiederà soprannome pubblico, consenso esplicito e possibilità di non partecipare.</p>
+          </section>
+
+          <section id="gestore" class="guide-section">
+            <p class="chapter">07 · Console gestore</p>
+            <h2>Il pannello con cui un ente governa l’offerta territoriale.</h2>
+            <p class="section-intro">La console è una web app separata. Un operatore autenticato vede soltanto gli enti e i prodotti per i quali possiede un ruolo.</p>
+            <div class="capability-table" role="table" aria-label="Funzioni della console gestore">
+              <div class="table-head" role="row"><span>Modulo</span><span>Funzione</span><span>Stato</span></div>
+              <div role="row"><strong>Catalogo</strong><span>Ricerca, correzione dei dati, aggiunta di bozze, ritiro reversibile e validazione distinta dalla fonte.</span><span class="status ready">Collegato</span></div>
+              <div role="row"><strong>Calendario</strong><span>Giornate libere, chiuse o a numero chiuso; capienza da 1 a 999 e residuo disponibile.</span><span class="status ready">Collegato</span></div>
+              <div role="row"><strong>Prenotazioni</strong><span>Elenco completo, ricerca per persona, codice o percorso e apertura della giornata interessata.</span><span class="status ready">Collegato</span></div>
+              <div role="row"><strong>Operatori</strong><span>Abilitazione delle Guardie e consultazione degli esiti dei controlli QR.</span><span class="status beta">Prima versione</span></div>
+              <div role="row"><strong>Identità visiva</strong><span>Nome, logo, palette e area cartografica con anteprima mobile.</span><span class="status partial">Locale</span></div>
+              <div role="row"><strong>Geografia</strong><span>Disegno e modifica su mappa, import GPX/GeoJSON/KML, punti, linee, aree e parcheggi.</span><span class="status planned">Da realizzare</span></div>
+            </div>
+            <p class="fine-print">La console pubblica mantiene una modalità dimostrativa nel browser. Le operazioni collegate al server richiedono un account esplicitamente autorizzato.</p>
+          </section>
+
+          <section id="guardia" class="guide-section">
+            <p class="chapter">08 · Guardiaparco</p>
+            <h2>Controllare un titolo senza accedere alle funzioni amministrative.</h2>
+            <div class="how-to compact-steps">
+              <article><span class="step-number">1</span><div><h3>Accedere</h3><p>L’operatore usa un account di servizio che deve essere abilitato dal gestore per uno specifico ente.</p></div></article>
+              <article><span class="step-number">2</span><div><h3>Scansionare</h3><p>Il QR viene inquadrato dalla fotocamera; in alternativa è possibile digitare il codice.</p></div></article>
+              <article><span class="step-number">3</span><div><h3>Leggere l’esito</h3><p>L’app distingue titolo valido, sconosciuto, revocato, scaduto, non ancora valido o in attesa di pagamento.</p></div></article>
+              <article><span class="step-number">4</span><div><h3>Conservare l’audit</h3><p>Il controllo viene registrato con data, dispositivo ed esito e compare nella cronologia autorizzata.</p></div></article>
+            </div>
+            <div class="notice-box warning">
+              <strong>Limiti della beta</strong>
+              <p>La verifica richiede attualmente il server. Controllo offline firmato, posizioni volontariamente condivise, parcheggi, verbali, stampa portatile e pagamenti non sono ancora operativi.</p>
+            </div>
+          </section>
+
+          <section id="dati" class="guide-section">
+            <p class="chapter">09 · Dati e metodologia</p>
+            <h2>Una scheda pubblica, molte osservazioni conservate.</h2>
+            <p>
+              Sentieri separa il <strong>percorso canonico</strong> mostrato nell’app dalle osservazioni provenienti
+              dalle diverse fonti. Tracce coincidenti non generano automaticamente più card. La geometria e il nome
+              più autorevoli diventano il riferimento pubblico; fonti, varianti, revisioni e confronti rimangono
+              conservati per verifiche future.
+            </p>
+            <div class="data-grid">
+              <article><h3>Provenienza</h3><p>Fonte, indirizzo, data di acquisizione, identità originale e livello di affidabilità rimangono distinti dalla validazione del gestore.</p></article>
+              <article><h3>Identità CAI</h3><p>Codice, nome, sezione e segnavia bianco-rosso possono accompagnare una scheda anche quando la geometria primaria proviene da un ente parco.</p></article>
+              <article><h3>Quote</h3><p>Le quote originali vengono conservate. Dove mancano, il profilo può essere arricchito dal DEM TINITALY senza modificare le coordinate planimetriche.</p></article>
+              <article><h3>Pendenze</h3><p>Scala assoluta comune a mappa e profilo: celeste 0–5%, verde 5–10%, giallo 10–15%, arancio 15–20%, rosso dal 20%.</p></article>
+              <article><h3>Fatica</h3><p>Il modello usa un costo energetico non lineare rispetto alla pendenza e restituisce anche chilometri equivalenti in piano. È una stima, non un’indicazione medica.</p></article>
+              <article><h3>Fotografie</h3><p>Il modello prevede fino a cinque foto per recensione e una galleria curata dal gestore. Nella fase corrente le fotografie personali restano locali.</p></article>
+            </div>
+          </section>
+
+          <section id="tecnica" class="guide-section">
+            <p class="chapter">10 · Architettura tecnica</p>
+            <h2>Offline sul campo, autorità del server sulle decisioni condivise.</h2>
+            <div class="architecture">
+              <article><span>Mobile Android</span><strong>Kotlin · Jetpack Compose · MapLibre</strong><p>Interfaccia nativa, localizzazione in background, database e file locali, mappe MBTiles e logica di recupero delle sessioni.</p></article>
+              <article><span>Mobile iPhone</span><strong>SwiftUI · MapLibre · Core Location</strong><p>Base nativa condivisa sul catalogo; la parità funzionale con Android e la distribuzione TestFlight sono ancora da completare.</p></article>
+              <article><span>Console web</span><strong>HTML · CSS · JavaScript</strong><p>Applicazione web leggera pubblicata separatamente dal repository privato di sviluppo.</p></article>
+              <article><span>Servizi</span><strong>Supabase · PostgreSQL · Auth · RLS · RPC</strong><p>Dati multi-ente, autorizzazioni, sincronizzazione delle tracce, capienze transazionali, prenotazioni, titoli e audit dei controlli.</p></article>
+              <article><span>Dati territoriali</span><strong>GeoJSON · GPX/KML · MBTiles · DEM</strong><p>Catalogo versionato, mappe vettoriali, curve di livello, profili e pacchetti territoriali verificabili tramite SHA-256.</p></article>
+              <article><span>Distribuzione</span><strong>GitHub Pages · GitHub Releases</strong><p>Landing e documentazione pubbliche; APK aggiornamento, APK completo e Guardiaparco distribuiti come allegati versionati.</p></article>
+            </div>
+            <div class="callout">
+              <strong>Principio offline-first</strong>
+              <p>La mancanza di rete non deve interrompere orientamento e registrazione. Il server resta però l’unica autorità per posti disponibili, prenotazioni, pagamenti e titoli d’ingresso.</p>
+            </div>
+          </section>
+
+          <section id="privacy" class="guide-section">
+            <p class="chapter">11 · Privacy e sicurezza</p>
+            <h2>Prenotazione, posizione e controllo sono finalità diverse.</h2>
+            <ul class="check-list">
+              <li>Una prenotazione non autorizza automaticamente il monitoraggio della posizione.</li>
+              <li>La traccia personale viene salvata prima localmente e resta privata; la sincronizzazione non la rende un percorso pubblico.</li>
+              <li>Un eventuale accesso consentito soltanto con monitoraggio deve essere dichiarato prima della prenotazione, limitato nel tempo e avviato consapevolmente.</li>
+              <li>Le posizioni condivise per sicurezza non diventano automaticamente prove per una sanzione.</li>
+              <li>Ruoli e regole di sicurezza del database isolano utenti, gestori e operatori per ente.</li>
+              <li>Prima dell’uso pubblico servono informativa, consensi, tempi di conservazione, esportazione/cancellazione e valutazione giuridica.</li>
+            </ul>
+          </section>
+
+          <section id="siae" class="guide-section document-section">
+            <p class="chapter">12 · Identità dell’opera software</p>
+            <h2>Elementi caratterizzanti del prodotto.</h2>
+            <p>
+              Ai fini descrittivi, Sentieri è un sistema software modulare la cui originalità progettuale risiede
+              nell’integrazione coerente tra governo degli accessi, catalogo territoriale canonico, navigazione
+              offline, registrazione personale, copertura esagonale e strumenti distinti per enti e operatori.
+            </p>
+            <div class="work-identity">
+              <div><strong>Denominazione</strong><p>Sentieri; prima edizione configurata: Sentieri d’Abruzzo.</p></div>
+              <div><strong>Categoria</strong><p>Piattaforma software mobile e web per fruizione, gestione e controllo degli accessi territoriali.</p></div>
+              <div><strong>Struttura</strong><p>App utente, console gestore, app Guardiaparco, servizi dati e futuro portale verbali.</p></div>
+              <div><strong>Modello centrale</strong><p>Ente, prodotto territoriale, regime, calendario, capienza, prenotazione e titolo.</p></div>
+              <div><strong>Funzioni distintive</strong><p>Catalogo senza duplicazioni pubbliche, provenienza conservata, pacchetti offline, copertura esagonale e accessi regolati.</p></div>
+              <div><strong>Versione descritta</strong><p>Android 0.19.0, catalogo regionale del 19 agosto 2026 e corrispondente infrastruttura Supabase.</p></div>
+            </div>
+            <p class="fine-print">
+              Codice, interfacce, documentazione e modello applicativo costituiscono l’opera software. Banche dati,
+              cartografie, marchi e contenuti provenienti da terzi mantengono titolarità e licenze proprie e devono
+              essere elencati separatamente nell’eventuale documentazione di deposito.
+            </p>
+          </section>
+
+          <section id="stato" class="guide-section">
+            <p class="chapter">13 · Stato e prossimi sviluppi</p>
+            <h2>Cosa è pronto e cosa manca.</h2>
+            <div class="roadmap">
+              <article class="done"><span>Realizzato</span><h3>Prototipo Android da campo</h3><p>Catalogo, cartografia offline pilota, altimetria, registrazione GPS, recupero, storico, copertura e prenotazione A1.</p></article>
+              <article class="done"><span>Realizzato</span><h3>Nucleo server</h3><p>Catalogo multi-ente, ruoli, disponibilità, prenotazioni transazionali, titoli QR, sincronizzazione e controllo.</p></article>
+              <article><span>Priorità</span><h3>Pacchetti regionali</h3><p>Mappe, curve e DEM dell’intero Abruzzo da distribuire e aggiornare separatamente dall’app.</p></article>
+              <article><span>Priorità</span><h3>Editor GIS</h3><p>Disegno, modifica, importazione, validazione e pubblicazione delle geometrie dalla console.</p></article>
+              <article><span>Priorità</span><h3>Account e iPhone</h3><p>Login Google/Apple, recupero multi-dispositivo e parità iOS con distribuzione TestFlight.</p></article>
+              <article><span>Successivo</span><h3>Pagamenti e sanzioni</h3><p>Moduli da affrontare soltanto insieme a sicurezza, fiscalità, privacy e validazione legale.</p></article>
+            </div>
+            <div class="notice-box warning">
+              <strong>Stato sperimentale</strong>
+              <p>Sentieri non è ancora un’app ufficiale di un parco o comune e non deve essere usata come unico ausilio di navigazione, per emergenze, permessi reali o accertamenti.</p>
+            </div>
+          </section>
+
+          <section class="guide-section guide-links no-print">
+            <p class="chapter">Collegamenti</p>
+            <h2>Prova e approfondisci.</h2>
+            <div class="actions">
+              <a class="button primary" href="https://github.com/GuidoGentile/sentieri-download/releases/latest/download/Sentieri-Android-demo.apk">Scarica l’aggiornamento Android</a>
+              <a class="button secondary" href="../gestore/">Apri la console gestore</a>
+              <a class="button secondary" href="https://github.com/GuidoGentile/sentieri-download/releases/latest">Consulta la release</a>
+            </div>
+          </section>
+        </article>
+      </div>
+    </main>
+
+    <footer>
+      <div class="shell footer-inner">
+        <div class="brand footer-brand"><img src="../assets/sentieri-mark.svg" alt="" /><span>Sentieri</span></div>
+        <p>Guida completa · versione descritta 0.19.0 · progetto sperimentale</p>
+        <a href="../">Pagina principale</a>
+      </div>
+    </footer>
+  </body>
+</html>

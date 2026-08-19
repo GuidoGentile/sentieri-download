@@ -2,6 +2,10 @@
 
 Questo repository pubblico ospita la pagina di presentazione e le release dimostrative di Sentieri.
 
+La sezione [`guida/`](guida/) contiene il manuale d'uso e la descrizione tecnica approfondita della
+piattaforma. È pensata per gli utenti dell'app, per la presentazione a enti e potenziali clienti e come
+base descrittiva dell'opera software, mantenendo distinti componenti realizzati, dimostrativi e pianificati.
+
 ## Android
 
 La release attuale è una **build sperimentale 0.19.0 ARM64**, distribuita fuori
