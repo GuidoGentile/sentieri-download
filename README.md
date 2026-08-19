@@ -36,9 +36,9 @@ i dati aggiornare senza disinstallare. Il collegamento Google, necessario per ri
 account anche su un telefono nuovo, è il passo successivo e non è ancora operativo.
 
 1. Apri la pagina pubblica da Android.
-2. Tocca **Scarica Sentieri per Android**.
+2. Tocca **Scarica Sentieri d’Abruzzo**.
 3. Se richiesto, consenti al browser di installare app dalla sorgente corrente.
-4. Installa e apri `Sentieri`.
+4. Installa e apri `Sentieri d’Abruzzo`.
 
 Scarica soltanto dalla pagina pubblica e confronta, se necessario, il file SHA-256 allegato alla release.
 

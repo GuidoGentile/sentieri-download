@@ -5,7 +5,7 @@
   const SCHEMA = "sentieri/tenant-branding/v1";
   const DEFAULT_BRANDING = Object.freeze({
     schema: SCHEMA,
-    appName: "Sentieri",
+    appName: "Sentieri d’Abruzzo",
     organizationName: "Parco Nazionale d'Abruzzo, Lazio e Molise",
     colors: Object.freeze({
       background: "#edf8fc",
