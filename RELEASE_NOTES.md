@@ -10,7 +10,7 @@
 - l’app Guardiaparco adotta l’identificativo coerente `it.sentieri.abruzzo.guardiaparco` e lo stesso marchio di Sentieri.
 
 Ordine per chi possiede la 0.21 o una versione precedente: non disinstallare nulla, installare
-`01-Sentieri-legacy-track-bridge.apk`, quindi `02-Sentieri-Abruzzo.apk`, aprire Storico nella nuova app e
+`01-Ponte-Tracce-Sentieri.apk`, quindi `02-Sentieri-Abruzzo-0.22-arm64.apk`, aprire Storico nella nuova app e
 controllare le tracce. Per una prima installazione è sufficiente il secondo APK. Le fotografie locali non
 sono migrate perché i relativi indirizzi appartengono al vecchio spazio privato Android.
 
