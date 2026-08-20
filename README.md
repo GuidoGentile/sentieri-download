@@ -37,7 +37,7 @@ dimostrativi personali dalla nuova installazione.
 
 Per conservare le tracce reali presenti nella linea storica occorre installare, senza disinstallare la
 vecchia app, prima `01-Sentieri-legacy-track-bridge.apk` e poi `02-Sentieri-Abruzzo.apk`. La nuova app
-importa soltanto le registrazioni personali di `guido.gentile@uniroma1.it`; non trasferisce prenotazioni,
+importa soltanto le registrazioni dell’account proprietario verificato; non trasferisce prenotazioni,
 recensioni, copertura, eventi, impostazioni, cache o fotografie locali. Dopo aver verificato in Storico il
 cartello di recupero e almeno una traccia sulla mappa, la vecchia app può essere rimossa.
 

@@ -4,7 +4,7 @@
 
 - l’app utente adotta l’identificativo definitivo `it.sentieri.abruzzo`, separato dalla linea storica `it.sentieripnalm.mobile`;
 - una build ponte aggiorna la vecchia app senza cancellarne il database e rende disponibili in sola lettura le tracce personali;
-- la nuova app importa automaticamente le registrazioni di `guido.gentile@uniroma1.it`, le riunisce per sessione e applica nuovamente i filtri GPS correnti;
+- la nuova app importa automaticamente le registrazioni dell’account proprietario verificato, le riunisce per sessione e applica nuovamente i filtri GPS correnti;
 - Storico mostra un riscontro esplicito con il numero di tracce recuperate, da verificare prima di disinstallare la vecchia app;
 - prenotazioni, recensioni, escursioni, copertura, eventi e altri contenuti dimostrativi non vengono trasferiti e la nuova installazione parte pulita;
 - l’app Guardiaparco adotta l’identificativo coerente `it.sentieri.abruzzo.guardiaparco` e lo stesso marchio di Sentieri.
