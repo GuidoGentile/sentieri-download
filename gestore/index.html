@@ -4,41 +4,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Console di configurazione dell'ente in Sentieri" />
-    <title>Sentieri — Console gestore</title>
+    <title>Sentieri d'Abruzzo · Console Gestore</title>
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="admin.css?v=8" />
+    <link rel="stylesheet" href="admin.css?v=11" />
     <script defer src="theme-config.js"></script>
     <script defer src="map-config.js"></script>
     <script defer src="supabase-config.js"></script>
-    <script defer src="admin-supabase.js?v=1"></script>
-    <script defer src="admin-session.js?v=1"></script>
+    <script defer src="admin-supabase.js?v=2"></script>
+    <script defer src="admin-session.js?v=2"></script>
     <script defer src="admin-operations.js?v=1"></script>
+    <script defer src="admin-roles.js?v=1"></script>
     <script defer src="manager-access-model.js?v=1"></script>
     <script defer src="manager-catalog-model.js?v=1"></script>
-    <script defer src="admin-catalog.js?v=1"></script>
+    <script defer src="admin-catalog.js?v=2"></script>
     <script defer src="admin-access.js?v=1"></script>
-    <script defer src="admin.js?v=8"></script>
+    <script defer src="admin.js?v=9"></script>
   </head>
   <body class="admin-page">
     <header class="admin-header">
       <div>
-        <p class="eyebrow">Sentieri · console gestore</p>
-        <h1>Gestione del territorio</h1>
+        <h1>Sentieri d'Abruzzo · Console Gestore</h1>
         <p>Programma gli accessi, controlla le prenotazioni e governa il catalogo del territorio.</p>
       </div>
-      <a class="outline admin-user-link" href="../" target="_blank" rel="noopener">Apri anteprima utente</a>
+      <a class="outline admin-user-link" href="../" target="_blank" rel="noopener">Apri pagina utente</a>
     </header>
 
     <main class="admin-layout">
-      <nav class="manager-section-nav" aria-label="Sezioni della console gestore">
-        <a class="manager-section-nav__item manager-section-nav__item--active" href="#manager-trails">Percorsi</a>
-        <a class="manager-section-nav__item" href="#access-calendar">Calendario e capienze</a>
-        <a class="manager-section-nav__item" href="#manager-bookings">Prenotazioni</a>
-        <a class="manager-section-nav__item" href="#field-operations">Guardie e controlli</a>
-        <a class="manager-section-nav__item" href="#governance-title">Dati e fonti</a>
-        <a class="manager-section-nav__item" href="#branding-form">Configurazione</a>
-      </nav>
-
       <section class="card manager-session-panel" aria-labelledby="manager-session-title">
         <div>
           <p class="step-label">Collegamento sicuro</p>
@@ -48,7 +39,7 @@
         <form id="manager-login-form" class="manager-login-form">
           <label class="admin-field">
             <span>Email autorizzata</span>
-            <input id="manager-login-email" type="email" value="guido.gentile@uniroma1.it" autocomplete="email" required />
+            <input id="manager-login-email" type="email" placeholder="nome@ente.it" autocomplete="email" required />
           </label>
           <button type="submit" class="primary">Invia link di accesso</button>
         </form>
@@ -56,7 +47,18 @@
         <p id="manager-login-message" class="admin-message" aria-live="polite"></p>
       </section>
 
-      <section id="field-operations" class="card field-operations-panel" aria-labelledby="field-operations-title">
+      <nav class="manager-section-nav" aria-label="Sezioni della console gestore" role="tablist">
+        <a class="manager-section-nav__item manager-section-nav__item--active" href="#manager-trails" data-manager-tab="trails" role="tab" aria-selected="true" tabindex="0">Percorsi</a>
+        <a class="manager-section-nav__item" href="#access-calendar" data-manager-tab="calendar" role="tab" aria-selected="false" tabindex="-1">Calendario e capienze</a>
+        <a class="manager-section-nav__item" href="#manager-bookings" data-manager-tab="bookings" role="tab" aria-selected="false" tabindex="-1">Prenotazioni</a>
+        <a class="manager-section-nav__item" href="#field-operations" data-manager-tab="guards" role="tab" aria-selected="false" tabindex="-1">Guardie e controlli</a>
+        <a class="manager-section-nav__item" href="#staff-access" data-manager-tab="staff" role="tab" aria-selected="false" tabindex="-1">Utenti e ruoli</a>
+        <a class="manager-section-nav__item" href="#governance-title" data-manager-tab="data" role="tab" aria-selected="false" tabindex="-1">Dati e fonti</a>
+        <a class="manager-section-nav__item" href="#branding-form" data-manager-tab="configuration" role="tab" aria-selected="false" tabindex="-1">Configurazione</a>
+      </nav>
+
+      <div class="manager-folder-content">
+      <section id="field-operations" class="card field-operations-panel" data-manager-pane="guards" role="tabpanel" aria-labelledby="field-operations-title" hidden>
         <div class="section-head">
           <div>
             <p class="step-label">Presidio sul territorio</p>
@@ -83,7 +85,56 @@
         </div>
       </section>
 
-      <section id="manager-trails" class="card trail-catalog-panel" aria-labelledby="manager-trails-title">
+      <section id="staff-access" class="card staff-access-panel" data-manager-pane="staff" role="tabpanel" aria-labelledby="staff-access-title" hidden>
+        <div class="section-head">
+          <div>
+            <p class="step-label">Autorizzazioni tracciate</p>
+            <h2 id="staff-access-title">Utenti e ruoli</h2>
+            <p>Superadmin globali; Amministratori, Operatori e Lettori assegnati ai singoli enti.</p>
+          </div>
+          <span id="staff-access-badge" class="demo-badge">Accesso richiesto</span>
+        </div>
+
+        <p id="staff-current-access" class="staff-current-access">Accedi per consultare le autorizzazioni.</p>
+
+        <div class="staff-access-grid">
+          <section>
+            <div class="staff-subhead">
+              <div><p class="step-label">Ruoli per ente</p><h3>Personale della console</h3></div>
+              <label class="admin-field staff-entity-field"><span>Ente</span><select id="staff-entity-select"></select></label>
+            </div>
+            <form id="staff-member-form" class="staff-role-form">
+              <label class="admin-field"><span>Email personale</span><input id="staff-member-email" type="email" placeholder="nome@ente.it" required /></label>
+              <label class="admin-field"><span>Ruolo</span><select id="staff-member-role"><option value="admin">Amministratore</option><option value="operator">Operatore</option><option value="reader">Lettore</option></select></label>
+              <label class="admin-field"><span>Stato</span><select id="staff-member-active"><option value="true">Attivo</option><option value="false">Sospeso</option></select></label>
+              <label class="admin-field staff-reason-field"><span>Motivazione</span><input id="staff-member-reason" type="text" maxlength="240" placeholder="Obbligatoria per la sospensione" /></label>
+              <button type="submit" class="primary">Salva accesso</button>
+            </form>
+            <p id="staff-member-message" class="admin-message" aria-live="polite"></p>
+            <div id="staff-member-list" class="operations-list"><p class="muted">Seleziona un ente.</p></div>
+          </section>
+
+          <section id="superadmin-management" hidden>
+            <div class="staff-subhead"><div><p class="step-label">Piattaforma</p><h3>Superadmin</h3></div></div>
+            <form id="superadmin-form" class="staff-role-form">
+              <label class="admin-field"><span>Email personale</span><input id="superadmin-email" type="email" placeholder="nome@dominio.it" required /></label>
+              <label class="admin-field"><span>Operazione</span><select id="superadmin-active"><option value="true">Nomina</option><option value="false">Revoca</option></select></label>
+              <label class="admin-field staff-reason-field"><span>Motivazione</span><input id="superadmin-reason" type="text" maxlength="240" required /></label>
+              <button type="submit" class="primary">Conferma</button>
+            </form>
+            <p id="superadmin-message" class="admin-message" aria-live="polite"></p>
+            <div id="superadmin-list" class="operations-list"><p class="muted">Disponibile soltanto ai Superadmin.</p></div>
+            <p class="governance-local-note">La notifica viene registrata in uscita. L’invio email effettivo richiede ancora il collegamento a un servizio SMTP.</p>
+          </section>
+        </div>
+
+        <section class="staff-audit-section">
+          <div class="staff-subhead"><div><p class="step-label">Responsabilità</p><h3>Ultime operazioni amministrative</h3></div></div>
+          <div id="staff-audit-list" class="operations-list"><p class="muted">L’audit è visibile agli Amministratori e ai Superadmin.</p></div>
+        </section>
+      </section>
+
+      <section id="manager-trails" class="card trail-catalog-panel" data-manager-pane="trails" role="tabpanel" aria-labelledby="manager-trails-title">
         <div class="section-head trail-catalog-heading">
           <div>
             <p class="step-label">Catalogo pubblicato</p>
@@ -246,7 +297,7 @@
         </form>
       </dialog>
 
-      <section id="access-calendar" class="card access-panel" aria-labelledby="access-calendar-title">
+      <section id="access-calendar" class="card access-panel" data-manager-pane="calendar" role="tabpanel" aria-labelledby="access-calendar-title" hidden>
         <div class="section-head access-heading">
           <div>
             <p class="step-label">Accessi al territorio</p>
@@ -334,7 +385,7 @@
         </div>
       </section>
 
-      <section id="manager-bookings" class="card bookings-panel" aria-labelledby="manager-bookings-title">
+      <section id="manager-bookings" class="card bookings-panel" data-manager-pane="bookings" role="tabpanel" aria-labelledby="manager-bookings-title" hidden>
         <div class="section-head bookings-heading">
           <div>
             <p class="step-label">Controllo operativo</p>
@@ -389,7 +440,7 @@
         <p class="governance-local-note">Questa prima console usa prenotazioni sintetiche e salva le modifiche soltanto in questo browser. Il collegamento autenticato al server sarà indispensabile prima dell’uso reale.</p>
       </section>
 
-      <section class="card governance-panel" aria-labelledby="governance-title">
+      <section class="card governance-panel" data-manager-pane="data" role="tabpanel" aria-labelledby="governance-title" hidden>
         <div class="section-head governance-heading">
           <div>
             <p class="step-label">Catalogo percorsi</p>
@@ -425,7 +476,7 @@
         <p class="governance-local-note">Le decisioni di questa demo restano su questo computer. Saranno sincronizzate e autenticate quando collegheremo il server.</p>
       </section>
 
-      <form id="branding-form" class="card branding-editor" novalidate>
+      <form id="branding-form" class="card branding-editor" data-manager-pane="configuration" role="tabpanel" novalidate hidden>
         <section>
           <div class="section-head">
             <div>
@@ -521,7 +572,7 @@
         <p id="branding-message" class="admin-message" aria-live="polite"></p>
       </form>
 
-      <aside class="branding-preview-column">
+      <aside class="branding-preview-column" data-manager-pane="configuration" hidden>
         <div class="preview-sticky">
           <p class="step-label">Anteprima immediata</p>
           <article id="branding-preview" class="phone-preview">
@@ -555,6 +606,7 @@
           <p class="preview-note">L’anteprima mostra anche percorso, successo, avviso e pericolo per evitare combinazioni poco leggibili.</p>
         </div>
       </aside>
+      </div>
     </main>
   </body>
 </html>

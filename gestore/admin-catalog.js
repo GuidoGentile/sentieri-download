@@ -114,6 +114,7 @@
       geometryAvailable: metadata.geometry_available !== false,
       custom: row.source_label === "Inserimento manuale gestore",
       publicationStatus: row.status === "active" ? "published" : row.status === "draft" ? "draft" : "retired",
+      remoteValidationStatus: row.validation_status || "not_reviewed",
       lastReason: metadata.last_manager_note || null,
       remoteMetadata: metadata
     };
@@ -333,23 +334,28 @@
           last_manager_note: editorReason.value.trim()
         };
         if (existing) {
-          await onlineApi.updateProduct(existing.id, {
+          await onlineApi.saveProduct({
+            entityCode: existing.entityCode,
+            productId: existing.id,
             code: fields.code || existing.code,
             name: fields.name,
-            metadata
+            status: existing.publicationStatus === "published" ? "active" : existing.publicationStatus === "draft" ? "draft" : "archived",
+            validationStatus: existing.remoteValidationStatus,
+            sourceLabel: existing.source,
+            metadata,
+            reason: editorReason.value.trim()
           });
         } else {
-          await onlineApi.createProduct({
-            id: `manager-${crypto.randomUUID()}`,
-            entity_code: "PNALM",
-            product_type: "trail",
+          await onlineApi.saveProduct({
+            entityCode: "PNALM",
+            productId: null,
             code: fields.code || `GEST-${Date.now().toString().slice(-6)}`,
             name: fields.name,
             status: "draft",
-            official: false,
-            validation_status: "not_reviewed",
-            source_label: "Inserimento manuale gestore",
-            metadata
+            validationStatus: "not_reviewed",
+            sourceLabel: "Inserimento manuale gestore",
+            metadata,
+            reason: editorReason.value.trim()
           });
         }
         closeDialog(editor);
@@ -388,9 +394,16 @@
       if (onlineMode) {
         const item = effectiveTrails.find((trail) => trail.id === statusId.value);
         if (!item) throw new Error("TRAIL_NOT_FOUND");
-        await onlineApi.updateProduct(item.id, {
+        await onlineApi.saveProduct({
+          entityCode: item.entityCode,
+          productId: item.id,
+          code: item.code,
+          name: item.name,
           status: statusValue.value === "published" ? "active" : "archived",
-          metadata: { ...(item.remoteMetadata || {}), last_manager_note: statusReason.value.trim() }
+          validationStatus: item.remoteValidationStatus,
+          sourceLabel: item.source,
+          metadata: { ...(item.remoteMetadata || {}), last_manager_note: statusReason.value.trim() },
+          reason: statusReason.value.trim()
         });
         closeDialog(statusDialog);
         await loadRemoteCatalog();

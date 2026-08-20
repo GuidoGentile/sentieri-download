@@ -103,8 +103,8 @@
     });
   }
 
-  async function claimInitialAccess() {
-    return authenticatedRequest("/rest/v1/rpc/claim_initial_staff_access", { method: "POST", body: {} });
+  async function currentAccess() {
+    return authenticatedRequest("/rest/v1/rpc/manager_current_access", { method: "POST", body: {} });
   }
 
   async function availability(productId, from, to) {
@@ -143,19 +143,59 @@
     return authenticatedRequest(`/rest/v1/territorial_products?${query}`);
   }
 
-  async function updateProduct(productId, fields) {
-    return authenticatedRequest(`/rest/v1/territorial_products?id=eq.${encodeURIComponent(productId)}`, {
-      method: "PATCH",
-      body: fields,
-      headers: { Prefer: "return=representation" }
+  async function saveProduct(fields) {
+    return authenticatedRequest("/rest/v1/rpc/manager_save_product", {
+      method: "POST",
+      body: {
+        p_entity_code: fields.entityCode,
+        p_product_id: fields.productId || null,
+        p_code: fields.code || "",
+        p_name: fields.name,
+        p_status: fields.status,
+        p_validation_status: fields.validationStatus,
+        p_source_label: fields.sourceLabel || null,
+        p_metadata: fields.metadata || {},
+        p_reason: fields.reason
+      }
     });
   }
 
-  async function createProduct(fields) {
-    return authenticatedRequest("/rest/v1/territorial_products", {
+  async function entities() {
+    return authenticatedRequest("/rest/v1/managing_entities?select=code,name,active&active=eq.true&order=name.asc");
+  }
+
+  async function staffMembers(entityCode) {
+    return authenticatedRequest("/rest/v1/rpc/manager_staff_members", {
+      method: "POST", body: { p_entity_code: entityCode }
+    });
+  }
+
+  async function setStaffMember(entityCode, email, role, active, reason = "") {
+    return authenticatedRequest("/rest/v1/rpc/manager_set_staff_member", {
       method: "POST",
-      body: fields,
-      headers: { Prefer: "return=representation" }
+      body: {
+        p_entity_code: entityCode,
+        p_email: email,
+        p_role: role,
+        p_active: active,
+        p_reason: reason
+      }
+    });
+  }
+
+  async function superadmins() {
+    return authenticatedRequest("/rest/v1/rpc/platform_superadmin_list", { method: "POST", body: {} });
+  }
+
+  async function setSuperadmin(email, active, reason) {
+    return authenticatedRequest("/rest/v1/rpc/platform_set_superadmin", {
+      method: "POST", body: { p_email: email, p_active: active, p_reason: reason }
+    });
+  }
+
+  async function auditEvents(entityCode = null, limit = 100) {
+    return authenticatedRequest("/rest/v1/rpc/manager_admin_audit", {
+      method: "POST", body: { p_entity_code: entityCode, p_limit: limit }
     });
   }
 
@@ -188,20 +228,25 @@
   captureRedirectSession();
   root.SentieriSupabase = Object.freeze({
     availability,
+    auditEvents,
     bookings,
-    claimInitialAccess,
     configured,
+    currentAccess,
+    entities,
     loadSession,
     logout: () => saveSession(null),
     sendMagicLink,
-    createProduct,
     products,
+    saveProduct,
+    setStaffMember,
+    setSuperadmin,
+    staffMembers,
+    superadmins,
     fieldOperators,
     setCapacityDay,
     setBookingStatus,
     setFieldOperator,
     titleChecks,
-    updateProduct,
     validSession
   });
 })(typeof globalThis !== "undefined" ? globalThis : this);

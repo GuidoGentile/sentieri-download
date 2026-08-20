@@ -342,14 +342,21 @@
   "use strict";
 
   const items = [...document.querySelectorAll(".manager-section-nav__item")];
-  if (!items.length) return;
+  const panes = [...document.querySelectorAll("[data-manager-pane]")];
+  if (!items.length || !panes.length) return;
 
   function selectItem(item) {
+    const selectedTab = item.dataset.managerTab;
+
     items.forEach((candidate) => {
       const selected = candidate === item;
       candidate.classList.toggle("manager-section-nav__item--active", selected);
-      if (selected) candidate.setAttribute("aria-current", "location");
-      else candidate.removeAttribute("aria-current");
+      candidate.setAttribute("aria-selected", String(selected));
+      candidate.tabIndex = selected ? 0 : -1;
+    });
+
+    panes.forEach((pane) => {
+      pane.hidden = pane.dataset.managerPane !== selectedTab;
     });
   }
 
@@ -359,8 +366,26 @@
     selectItem(matchingItem || items[0]);
   }
 
-  items.forEach((item) => item.addEventListener("click", () => selectItem(item)));
+  items.forEach((item, index) => {
+    item.addEventListener("click", (event) => {
+      event.preventDefault();
+      if (window.location.hash !== item.hash) {
+        window.history.pushState(null, "", item.hash);
+      }
+      selectItem(item);
+    });
+
+    item.addEventListener("keydown", (event) => {
+      if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+      event.preventDefault();
+      const direction = event.key === "ArrowRight" ? 1 : -1;
+      const nextItem = items[(index + direction + items.length) % items.length];
+      nextItem.click();
+      nextItem.focus();
+    });
+  });
   window.addEventListener("hashchange", selectFromHash);
+  window.addEventListener("popstate", selectFromHash);
   selectFromHash();
 })();
 

@@ -19,14 +19,18 @@
     const signedInEmail = session?.user?.email;
     form.hidden = Boolean(session);
     logout.hidden = !session;
-    status.textContent = session
-      ? `Collegato come ${signedInEmail || "gestore autenticato"}. Calendario e prenotazioni possono usare i dati online.`
-      : "Non collegato. La console mostra ancora i dati dimostrativi locali.";
-    document.body.classList.toggle("manager-online", Boolean(session));
+    status.textContent = session ? "Verifica delle autorizzazioni in corso…" : "Non collegato. La console mostra ancora i dati dimostrativi locali.";
+    document.body.classList.remove("manager-online");
     if (session) {
       try {
-        await api.claimInitialAccess();
-        window.dispatchEvent(new CustomEvent("sentieri:manager-online"));
+        const access = await api.currentAccess();
+        if (!access.length) throw new Error("Account autenticato ma privo di un ruolo attivo.");
+        const superadmin = access.some((item) => item.staff_role === "superadmin");
+        const roleLabel = superadmin ? "Superadmin" : access.map((item) => item.staff_role).join(", ");
+        status.textContent = `Collegato come ${signedInEmail || "gestore autenticato"} · ${roleLabel}.`;
+        document.body.classList.add("manager-online");
+        showMessage("");
+        window.dispatchEvent(new CustomEvent("sentieri:manager-online", { detail: { access, session } }));
       } catch (error) {
         showMessage(error.message || "Account non autorizzato alla gestione.", true);
       }
