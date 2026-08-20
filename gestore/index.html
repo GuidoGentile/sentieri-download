@@ -32,22 +32,22 @@
     <main class="admin-layout">
       <section class="card manager-session-panel" aria-labelledby="manager-session-title">
         <div>
-          <p class="step-label">Collegamento sicuro</p>
-          <h2 id="manager-session-title">Account gestore</h2>
-          <p id="manager-session-status">Verifica della sessione in corso…</p>
+          <p class="step-label">Accesso alla console</p>
+          <h2 id="manager-session-title">Accedi</h2>
+          <p id="manager-session-status">Controllo dell’accesso in corso…</p>
         </div>
         <form id="manager-login-form" class="manager-login-form">
           <label class="admin-field">
-            <span>Email autorizzata</span>
+            <span>Email personale</span>
             <input id="manager-login-email" type="email" placeholder="nome@ente.it" autocomplete="email" required />
           </label>
-          <button type="submit" class="primary">Invia link di accesso</button>
+          <button type="submit" class="primary">Ricevi il link di accesso</button>
         </form>
         <button id="manager-logout" type="button" class="outline" hidden>Esci</button>
         <p id="manager-login-message" class="admin-message" aria-live="polite"></p>
       </section>
 
-      <nav class="manager-section-nav" aria-label="Sezioni della console gestore" role="tablist">
+      <nav class="manager-section-nav" aria-label="Sezioni della console gestore" role="tablist" hidden>
         <a class="manager-section-nav__item manager-section-nav__item--active" href="#manager-trails" data-manager-tab="trails" role="tab" aria-selected="true" tabindex="0">Percorsi</a>
         <a class="manager-section-nav__item" href="#access-calendar" data-manager-tab="calendar" role="tab" aria-selected="false" tabindex="-1">Calendario e capienze</a>
         <a class="manager-section-nav__item" href="#manager-bookings" data-manager-tab="bookings" role="tab" aria-selected="false" tabindex="-1">Prenotazioni</a>
@@ -57,7 +57,7 @@
         <a class="manager-section-nav__item" href="#branding-form" data-manager-tab="configuration" role="tab" aria-selected="false" tabindex="-1">Configurazione</a>
       </nav>
 
-      <div class="manager-folder-content">
+      <div class="manager-folder-content" hidden>
       <section id="field-operations" class="card field-operations-panel" data-manager-pane="guards" role="tabpanel" aria-labelledby="field-operations-title" hidden>
         <div class="section-head">
           <div>

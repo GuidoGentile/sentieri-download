@@ -6,8 +6,11 @@
   const email = document.getElementById("manager-login-email");
   const logout = document.getElementById("manager-logout");
   const status = document.getElementById("manager-session-status");
+  const title = document.getElementById("manager-session-title");
   const message = document.getElementById("manager-login-message");
-  if (!api || !form || !email || !logout || !status || !message) return;
+  const navigation = document.querySelector(".manager-section-nav");
+  const consoleContent = document.querySelector(".manager-folder-content");
+  if (!api || !form || !email || !logout || !status || !title || !message || !navigation || !consoleContent) return;
 
   function showMessage(text, error = false) {
     message.textContent = text;
@@ -19,7 +22,12 @@
     const signedInEmail = session?.user?.email;
     form.hidden = Boolean(session);
     logout.hidden = !session;
-    status.textContent = session ? "Verifica delle autorizzazioni in corso…" : "Non collegato. La console mostra ancora i dati dimostrativi locali.";
+    navigation.hidden = true;
+    consoleContent.hidden = true;
+    title.textContent = session ? "Verifica dell’accesso" : "Accedi";
+    status.textContent = session
+      ? "Controllo delle autorizzazioni in corso…"
+      : "Inserisci la tua email personale per ricevere il link di accesso.";
     document.body.classList.remove("manager-online");
     if (session) {
       try {
@@ -27,7 +35,10 @@
         if (!access.length) throw new Error("Account autenticato ma privo di un ruolo attivo.");
         const superadmin = access.some((item) => item.staff_role === "superadmin");
         const roleLabel = superadmin ? "Superadmin" : access.map((item) => item.staff_role).join(", ");
-        status.textContent = `Collegato come ${signedInEmail || "gestore autenticato"} · ${roleLabel}.`;
+        title.textContent = "Sessione attiva";
+        status.textContent = `${signedInEmail || "Account autenticato"} · ${roleLabel}`;
+        navigation.hidden = false;
+        consoleContent.hidden = false;
         document.body.classList.add("manager-online");
         showMessage("");
         window.dispatchEvent(new CustomEvent("sentieri:manager-online", { detail: { access, session } }));

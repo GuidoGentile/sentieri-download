@@ -749,6 +749,11 @@
   background: transparent;
 }
 
+.manager-section-nav[hidden],
+.manager-folder-content[hidden] {
+  display: none !important;
+}
+
 .manager-section-nav::-webkit-scrollbar {
   display: none;
 }
