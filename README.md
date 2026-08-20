@@ -8,7 +8,7 @@ base descrittiva dell'opera software, mantenendo distinti componenti realizzati,
 
 ## Android
 
-La release attuale è una **build sperimentale 0.19.0 ARM64**, distribuita fuori
+La release attuale è una **build sperimentale 0.20.0 ARM64**, distribuita fuori
 dal Play Store per test controllati. L’APK contiene un catalogo offline di 1.219 percorsi
 canonici abruzzesi, con 334 identità CAI documentate e fonti storiche conservate,
 cartografia vettoriale offline, profili altimetrici e registrazione GPS predisposta per continuare
@@ -28,10 +28,12 @@ si possono rinominare e consultare con la stessa sequenza panoramica, mappa dina
 offre inoltre ripristino del nord, centratura della posizione e livelli separati per cime e valichi.
 Sul percorso pilota A1 anche calendario, capienza, prenotazione gratuita e titolo QR provengono dal server;
 gli altri percorsi sono dichiarati non configurati finché il gestore non pubblica una regola.
-Sono disponibili un aggiornamento leggero da installare senza disinstallare l'app e un APK completo
+La 0.20.0 aggiunge inoltre 679 attrazioni turistiche ricercabili e filtrabili, organizzate in 28 aree
+cartografiche. Nomi, categorie, tag, coordinate e siti sono nel catalogo leggero; fotografie e siti
+vengono caricati online e non entrano nell'APK. Sono disponibili un aggiornamento leggero da installare senza disinstallare l'app e un APK completo
 con tutti i dati cartografici per la prima installazione.
 
-Il recupero della 0.19 usa l'identità anonima già conservata dalla versione installata. Per mantenere
+Il recupero della 0.20 usa l'identità anonima già conservata dalla versione installata. Per mantenere
 i dati aggiornare senza disinstallare. Il collegamento Google, necessario per ritrovare lo stesso
 account anche su un telefono nuovo, è il passo successivo e non è ancora operativo.
 

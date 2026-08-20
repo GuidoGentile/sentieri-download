@@ -1,5 +1,19 @@
 # Note di versione
 
+## 0.20.0 attrazioni e mappa turistica — 20 agosto 2026
+
+- debutta la sezione `Attrazioni` con 679 luoghi abruzzesi, ricerca per nome, comune, area e tag e filtri per categoria e destinazione;
+- una mappa regionale mostra 28 aree turistiche con il relativo conteggio e, dopo la selezione, inquadra le singole attrazioni cliccabili;
+- ogni scheda conserva un sito HTTPS ufficiale o istituzionale, provenienza e stato di validazione separato;
+- eventuali gallerie caricano riferimenti fotografici online senza incorporare immagini nel database, nell’APK o nei pacchetti territoriali;
+- le mappe dei sentieri e la navigazione continuano a funzionare offline: la sezione turistica è deliberatamente online e non indebolisce questa garanzia;
+- la console gestore rende più evidenti le sezioni con schede in rilievo e mantiene sincronizzato lo stato della scheda selezionata;
+- la landing adotta il messaggio “L’Abruzzo da vivere, passo dopo passo”.
+
+La 0.20.0 mantiene application ID, certificato e database delle versioni precedenti. Installare
+l'aggiornamento sopra Sentieri d’Abruzzo senza disinstallare l’app per conservare tracce, account locale
+e dati offline.
+
 ## 0.19.0 catalogo abruzzese — 19 agosto 2026
 
 - il catalogo cresce a 1.219 percorsi canonici dell'Abruzzo, organizzati per destinazioni e aree senza pubblicare doppioni geometrici come schede separate;
