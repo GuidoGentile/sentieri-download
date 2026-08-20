@@ -1,5 +1,16 @@
 # Note di versione
 
+## 0.21.0 nuova identità visiva — 20 agosto 2026
+
+- il nuovo marchio con impronta, montagna e sentiero sostituisce il simbolo provvisorio nel launcher, nello splash e nell'intestazione Android;
+- `Sentieri` resta il nome principale, mentre *d'Abruzzo* appare in corsivo e con colore distinto come declinazione territoriale;
+- landing, guida, favicon, console web e predisposizione dello splash iPhone usano la stessa identità;
+- restano invariati catalogo, mappe offline, 679 attrazioni, registrazioni personali, account locale e flussi di prenotazione della 0.20.
+
+La 0.21.0 mantiene application ID, certificato e database delle versioni precedenti. Installare
+l'aggiornamento sopra Sentieri d’Abruzzo senza disinstallare l’app per conservare tracce, account locale
+e dati offline.
+
 ## 0.20.0 attrazioni e mappa turistica — 20 agosto 2026
 
 - debutta la sezione `Attrazioni` con 679 luoghi abruzzesi, ricerca per nome, comune, area e tag e filtri per categoria e destinazione;

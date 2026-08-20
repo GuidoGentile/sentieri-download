@@ -95,6 +95,11 @@
       image.src = logo.dataUrl;
       image.alt = "Anteprima logo";
       host.appendChild(image);
+    } else if (host.dataset.defaultLogoSrc) {
+      const image = document.createElement("img");
+      image.src = host.dataset.defaultLogoSrc;
+      image.alt = "Logo predefinito Sentieri d’Abruzzo";
+      host.appendChild(image);
     } else {
       const fallback = document.createElement("span");
       if (host === previewLogo) {
