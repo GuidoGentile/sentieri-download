@@ -8,7 +8,7 @@ base descrittiva dell'opera software, mantenendo distinti componenti realizzati,
 
 ## Android
 
-La release attuale è una **build sperimentale 0.21.0 ARM64**, distribuita fuori
+La release attuale è una **build sperimentale 0.22.0 ARM64**, distribuita fuori
 dal Play Store per test controllati. L’APK contiene un catalogo offline di 1.219 percorsi
 canonici abruzzesi, con 334 identità CAI documentate e fonti storiche conservate,
 cartografia vettoriale offline, profili altimetrici e registrazione GPS predisposta per continuare
@@ -30,19 +30,21 @@ Sul percorso pilota A1 anche calendario, capienza, prenotazione gratuita e titol
 gli altri percorsi sono dichiarati non configurati finché il gestore non pubblica una regola.
 La 0.20.0 ha aggiunto 679 attrazioni turistiche ricercabili e filtrabili, organizzate in 28 aree
 cartografiche. Nomi, categorie, tag, coordinate e siti sono nel catalogo leggero; fotografie e siti
-vengono caricati online e non entrano nell'APK. La 0.21.0 introduce il nuovo marchio su launcher,
+vengono caricati online e non entrano nell'APK. La 0.21.0 ha introdotto il nuovo marchio su launcher,
 splash e intestazione, mantenendo `Sentieri` come nome principale e *d'Abruzzo* come declinazione
-territoriale. Sono disponibili un aggiornamento leggero da installare senza disinstallare l'app e un APK completo
-con tutti i dati cartografici per la prima installazione.
+territoriale. La 0.22.0 crea l'edizione regionale definitiva `it.sentieri.abruzzo` e rimuove i dati
+dimostrativi personali dalla nuova installazione.
 
-Il recupero della 0.21 usa l'identità anonima già conservata dalla versione installata. Per mantenere
-i dati aggiornare senza disinstallare. Il collegamento Google, necessario per ritrovare lo stesso
-account anche su un telefono nuovo, è il passo successivo e non è ancora operativo.
+Per conservare le tracce reali presenti nella linea storica occorre installare, senza disinstallare la
+vecchia app, prima `01-Sentieri-legacy-track-bridge.apk` e poi `02-Sentieri-Abruzzo.apk`. La nuova app
+importa soltanto le registrazioni personali di `guido.gentile@uniroma1.it`; non trasferisce prenotazioni,
+recensioni, copertura, eventi, impostazioni, cache o fotografie locali. Dopo aver verificato in Storico il
+cartello di recupero e almeno una traccia sulla mappa, la vecchia app può essere rimossa.
 
 1. Apri la pagina pubblica da Android.
-2. Tocca **Scarica Sentieri d’Abruzzo**.
+2. Se hai la vecchia app, installa i due APK nell'ordine numerato; per una prima installazione usa soltanto il secondo.
 3. Se richiesto, consenti al browser di installare app dalla sorgente corrente.
-4. Installa e apri `Sentieri d’Abruzzo`.
+4. Apri `Sentieri d’Abruzzo` e, in caso di migrazione, controlla subito lo Storico.
 
 Scarica soltanto dalla pagina pubblica e confronta, se necessario, il file SHA-256 allegato alla release.
 

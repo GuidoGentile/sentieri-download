@@ -46,7 +46,15 @@ a { color: inherit; }
 .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: -.03em; text-decoration: none; }
 .brand img { width: 42px; height: 42px; border-radius: 12px; box-shadow: 0 8px 24px rgba(22, 63, 51, .2); }
 .brand-name { color: var(--ink); font-size: 1.18rem; }
-.brand-name em { color: var(--forest-2); font-family: Georgia, "Times New Roman", serif; font-weight: 600; }
+.brand-name em {
+  color: var(--forest-2);
+  font-family: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
+  font-style: italic;
+  font-size: 1.08em;
+  font-weight: 900;
+  letter-spacing: 0;
+  text-shadow: .22px 0 currentColor, -.22px 0 currentColor;
+}
 
 .hero-mark {
   display: block;
@@ -155,6 +163,17 @@ h2 { margin-bottom: 20px; font-size: clamp(2.5rem, 5vw, 4.6rem); }
 .download-band { padding-block: 100px; color: white; background: var(--forest); }
 .download-grid { display: grid; grid-template-columns: 1fr .82fr; gap: clamp(50px, 9vw, 130px); align-items: center; }
 .download-grid > div > p:not(.eyebrow) { max-width: 650px; color: #cbdad1; }
+.download-grid code { color: #fff; font-size: .9em; }
+.migration-actions { margin-top: 24px; }
+.migration-actions .button { min-width: 250px; }
+.migration-note {
+  width: fit-content;
+  margin: 16px 0 0;
+  padding: 10px 14px;
+  border-left: 4px solid var(--warm);
+  color: #eef5f0 !important;
+  background: rgba(255, 255, 255, .08);
+}
 .steps { margin: 0; padding: 0; list-style: none; border-top: 1px solid rgba(255,255,255,.2); }
 .steps li { display: grid; grid-template-columns: 48px 1fr; gap: 14px; padding: 22px 0; border-bottom: 1px solid rgba(255,255,255,.2); }
 .steps li > span { display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid rgba(255,255,255,.35); border-radius: 50%; color: var(--warm); font-weight: 900; }

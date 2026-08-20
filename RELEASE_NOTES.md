@@ -1,5 +1,19 @@
 # Note di versione
 
+## 0.22.0 edizione Abruzzo e recupero tracce — 20 agosto 2026
+
+- l’app utente adotta l’identificativo definitivo `it.sentieri.abruzzo`, separato dalla linea storica `it.sentieripnalm.mobile`;
+- una build ponte aggiorna la vecchia app senza cancellarne il database e rende disponibili in sola lettura le tracce personali;
+- la nuova app importa automaticamente le registrazioni di `guido.gentile@uniroma1.it`, le riunisce per sessione e applica nuovamente i filtri GPS correnti;
+- Storico mostra un riscontro esplicito con il numero di tracce recuperate, da verificare prima di disinstallare la vecchia app;
+- prenotazioni, recensioni, escursioni, copertura, eventi e altri contenuti dimostrativi non vengono trasferiti e la nuova installazione parte pulita;
+- l’app Guardiaparco adotta l’identificativo coerente `it.sentieri.abruzzo.guardiaparco` e lo stesso marchio di Sentieri.
+
+Ordine per chi possiede la 0.21 o una versione precedente: non disinstallare nulla, installare
+`01-Sentieri-legacy-track-bridge.apk`, quindi `02-Sentieri-Abruzzo.apk`, aprire Storico nella nuova app e
+controllare le tracce. Per una prima installazione è sufficiente il secondo APK. Le fotografie locali non
+sono migrate perché i relativi indirizzi appartengono al vecchio spazio privato Android.
+
 ## 0.21.0 nuova identità visiva — 20 agosto 2026
 
 - il nuovo marchio con impronta, montagna e sentiero sostituisce il simbolo provvisorio nel launcher, nello splash e nell'intestazione Android;
