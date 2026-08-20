@@ -40,34 +40,6 @@
   align-items: start;
 }
 
-.governance-panel {
-  grid-column: 1 / -1;
-  padding: clamp(1rem, 3vw, 1.6rem);
-}
-
-.governance-heading h2,
-.governance-heading p {
-  margin-bottom: 0;
-}
-
-.governance-heading h2 {
-  margin-top: 0.2rem;
-}
-
-.governance-heading p:not(.step-label) {
-  color: var(--muted);
-}
-
-.governance-filter {
-  display: grid;
-  gap: 0.3rem;
-  min-width: min(100%, 230px);
-  color: var(--muted);
-  font-size: 0.8rem;
-  font-weight: 750;
-}
-
-.governance-filter select,
 .review-decision select,
 .review-reason {
   min-height: 44px;
@@ -76,64 +48,6 @@
   background: var(--surface);
   color: var(--text);
 }
-
-.governance-stats {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.75rem;
-}
-
-.governance-stats div {
-  padding: 0.9rem;
-  display: grid;
-  gap: 0.15rem;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: var(--surface-soft);
-}
-
-.governance-stats strong {
-  color: var(--primary);
-  font-size: 1.65rem;
-  line-height: 1;
-}
-
-.governance-stats span {
-  color: var(--muted);
-  font-size: 0.82rem;
-  font-weight: 700;
-}
-
-.governance-legend {
-  margin-top: 0.8rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.55rem 1rem;
-  color: var(--muted);
-  font-size: 0.83rem;
-  font-weight: 650;
-}
-
-.governance-legend span {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-.governance-panel .admin-message {
-  margin: 0.65rem 0;
-}
-
-.relation-dot {
-  width: 0.68rem;
-  height: 0.68rem;
-  display: inline-block;
-  border-radius: 50%;
-}
-
-.relation-dot--same { background: var(--success); }
-.relation-dot--variant { background: var(--warning); }
-.relation-dot--separate { background: var(--danger); }
 
 .governance-review-list {
   max-height: 560px;
@@ -831,7 +745,6 @@
 }
 
 .access-panel,
-.bookings-panel,
 .staff-access-panel {
   grid-column: 1 / -1;
   padding: clamp(1rem, 3vw, 1.6rem);
@@ -869,6 +782,7 @@
 }
 
 .staff-access-grid > section,
+.staff-operator-section,
 .staff-audit-section {
   min-width: 0;
   padding: 1rem;
@@ -907,24 +821,24 @@
   margin-top: 1rem;
 }
 
+.staff-operator-section {
+  margin-top: 1rem;
+}
+
 .staff-audit-row small {
   white-space: normal;
 }
 
 .access-heading h2,
-.access-heading p,
-.bookings-heading h2,
-.bookings-heading p {
+.access-heading p {
   margin-bottom: 0;
 }
 
-.access-heading h2,
-.bookings-heading h2 {
+.access-heading h2 {
   margin-top: 0.2rem;
 }
 
-.access-heading p:not(.step-label),
-.bookings-heading p:not(.step-label) {
+.access-heading p:not(.step-label) {
   color: var(--muted);
 }
 
@@ -941,8 +855,7 @@
   white-space: nowrap;
 }
 
-.access-toolbar,
-.booking-toolbar {
+.access-toolbar {
   display: grid;
   grid-template-columns: minmax(260px, 1.5fr) minmax(150px, 0.55fr) auto;
   gap: 0.75rem;
@@ -954,7 +867,6 @@
 }
 
 .access-toolbar select,
-.booking-toolbar select,
 .day-editor select,
 .day-editor input {
   min-height: 46px;
@@ -1033,6 +945,289 @@
   grid-template-columns: minmax(0, 1.7fr) minmax(290px, 0.65fr);
   gap: 0.8rem;
   align-items: start;
+}
+
+.manager-trail-detail {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.manager-trail-detail[hidden] {
+  display: none;
+}
+
+.trail-detail-header {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: center;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.trail-detail-header h2,
+.trail-detail-header p {
+  margin: 0;
+}
+
+.trail-detail-meta {
+  margin-top: 0.25rem !important;
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.trail-detail-toolbar,
+.summary-calendar-toolbar {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.65fr) minmax(280px, 1fr);
+  gap: 0.8rem;
+  align-items: end;
+}
+
+.trail-detail-toolbar .month-switcher {
+  grid-column: 2;
+}
+
+.trail-detail-calendar-workspace,
+.summary-calendar-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(310px, 0.72fr);
+  gap: 0.8rem;
+  align-items: start;
+}
+
+.trail-data-section {
+  display: grid;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.trail-data-header h3,
+.trail-data-section h4 {
+  margin: 0;
+}
+
+.trail-data-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.trail-data-grid > div,
+.trail-source-section > div {
+  min-width: 0;
+  padding: 0.8rem 0.9rem;
+  border-radius: 13px;
+  background: var(--surface-soft);
+}
+
+.trail-data-grid span,
+.trail-data-grid strong,
+.trail-source-section span,
+.trail-source-section strong {
+  display: block;
+}
+
+.trail-data-grid span,
+.trail-source-section span {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 750;
+}
+
+.trail-data-grid strong,
+.trail-source-section strong {
+  margin-top: 0.18rem;
+  overflow-wrap: anywhere;
+}
+
+.trail-source-section {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.trail-source-section a {
+  display: inline-block;
+  margin-top: 0.4rem;
+  color: var(--primary);
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.trail-source-list {
+  margin-top: 0.55rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.trail-source-list span {
+  padding: 0.38rem 0.58rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
+.trail-comparisons {
+  display: grid;
+  gap: 0.65rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--line);
+}
+
+.trail-comparisons .admin-message {
+  margin: 0;
+}
+
+.summary-calendar-kpis {
+  margin: 0.8rem 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.summary-calendar-kpis div,
+.summary-day-counts div {
+  padding: 0.75rem 0.85rem;
+  border-radius: 13px;
+  background: var(--surface-soft);
+}
+
+.summary-calendar-kpis span,
+.summary-day-counts span,
+.summary-calendar-kpis strong,
+.summary-day-counts strong {
+  display: block;
+}
+
+.summary-calendar-kpis span,
+.summary-day-counts span {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 750;
+}
+
+.summary-calendar-kpis strong,
+.summary-day-counts strong {
+  margin-top: 0.15rem;
+  color: var(--primary);
+  font-size: 1.45rem;
+}
+
+.summary-calendar-day {
+  min-height: 126px;
+}
+
+.summary-calendar-day strong {
+  font-size: 0.82rem;
+}
+
+.summary-day-panel {
+  position: sticky;
+  top: 76px;
+  max-height: calc(100vh - 96px);
+  overflow: auto;
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--surface);
+}
+
+.summary-day-panel h3,
+.summary-day-panel p {
+  margin: 0;
+}
+
+.summary-day-panel h3 {
+  text-transform: capitalize;
+}
+
+.summary-day-counts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.summary-day-products {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.summary-product-group {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: var(--surface);
+}
+
+.summary-product-group summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 0.8rem;
+  cursor: pointer;
+  color: var(--primary);
+  font-weight: 800;
+}
+
+.summary-product-group[open] summary {
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-soft);
+}
+
+.summary-product-link {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  align-items: center;
+  padding: 0.75rem 0.8rem;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+}
+
+.summary-product-link:last-child {
+  border-bottom: 0;
+}
+
+.summary-product-link:hover,
+.summary-product-link:focus-visible {
+  background: color-mix(in srgb, var(--primary) 7%, transparent);
+}
+
+.summary-product-link span,
+.summary-product-link strong,
+.summary-product-link small {
+  min-width: 0;
+  display: block;
+}
+
+.summary-product-link strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.summary-product-link small {
+  margin-top: 0.2rem;
+  color: var(--muted);
+}
+
+.summary-product-link i {
+  flex: 0 0 auto;
+  color: var(--primary);
+  font-size: 0.76rem;
+  font-style: normal;
+  font-weight: 800;
 }
 
 .manager-calendar,
@@ -1175,6 +1370,7 @@
 .calendar-dot--limited { background: var(--sky); }
 .calendar-dot--sold-out { background: var(--warning); }
 .calendar-dot--closed { background: var(--danger); }
+.calendar-dot--unconfigured { background: var(--muted); }
 
 .day-editor {
   position: sticky;
@@ -1235,6 +1431,14 @@
   font-size: 0.8rem;
 }
 
+.day-booking-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: end;
+  gap: 0.45rem;
+  align-items: center;
+}
+
 .admin-message--error {
   color: var(--danger) !important;
 }
@@ -1270,72 +1474,13 @@
   border-radius: 11px;
 }
 
-.day-booking-item div,
-.booking-table td > strong,
-.booking-table td > small {
+.day-booking-item div {
   display: block;
 }
 
-.day-booking-item small,
-.booking-table small {
+.day-booking-item small {
   color: var(--muted);
   font-size: 0.72rem;
-}
-
-.booking-toolbar {
-  grid-template-columns: minmax(260px, 1.4fr) minmax(180px, 0.5fr) minmax(180px, 0.5fr);
-}
-
-.booking-kpis {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  margin: 0.8rem 0;
-}
-
-.booking-kpis span {
-  padding: 0.45rem 0.7rem;
-  border-radius: 999px;
-  background: var(--surface-soft);
-  color: var(--muted);
-  font-size: 0.84rem;
-}
-
-.booking-kpis strong {
-  color: var(--primary);
-}
-
-.booking-table-wrap {
-  overflow-x: auto;
-  border: 1px solid var(--line);
-  border-radius: 15px;
-}
-
-.booking-table {
-  width: 100%;
-  min-width: 930px;
-  border-collapse: collapse;
-  background: var(--surface);
-}
-
-.booking-table th,
-.booking-table td {
-  padding: 0.75rem;
-  border-bottom: 1px solid var(--line);
-  text-align: left;
-  vertical-align: middle;
-}
-
-.booking-table th {
-  color: var(--muted);
-  background: var(--surface-soft);
-  font-size: 0.72rem;
-  font-weight: 850;
-  text-transform: uppercase;
-}
-
-.booking-table tbody tr:last-child td {
-  border-bottom: 0;
 }
 
 .booking-status {
@@ -1593,7 +1738,7 @@
 
 .trail-editor-dialog,
 .trail-status-dialog {
-  width: min(900px, calc(100vw - 2rem));
+  width: min(1120px, calc(100vw - 2rem));
   max-height: calc(100vh - 2rem);
   padding: 0;
   overflow: auto;
@@ -1699,6 +1844,102 @@
   line-height: 1.35;
 }
 
+.trail-geometry-editor {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+
+.trail-geometry-toolbar {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) auto;
+  gap: 0.75rem;
+  align-items: end;
+}
+
+.trail-file-field input[type="file"] {
+  padding: 0.5rem;
+}
+
+.trail-geometry-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: end;
+  gap: 0.45rem;
+}
+
+.trail-map-shell {
+  position: relative;
+  min-height: 360px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface-soft);
+}
+
+.trail-editor-map {
+  position: absolute;
+  inset: 0;
+}
+
+#trail-editor-map-empty {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  color: var(--muted);
+  font-weight: 800;
+  pointer-events: none;
+}
+
+.trail-geometry-metrics {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.trail-geometry-metrics[hidden] {
+  display: none;
+}
+
+.trail-geometry-metrics div {
+  padding: 0.6rem 0.7rem;
+  border-radius: 10px;
+  background: var(--surface-soft);
+}
+
+.trail-geometry-metrics dt {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.trail-geometry-metrics dd {
+  margin: 0.15rem 0 0;
+  overflow: hidden;
+  font-weight: 900;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.trail-vertex-marker {
+  width: 13px;
+  height: 13px;
+  border: 2px solid white;
+  border-radius: 50%;
+  background: var(--coral, #e46a44);
+  box-shadow: 0 1px 5px rgb(0 0 0 / 35%);
+}
+
+.trail-geometry-editor--editing .trail-map-shell {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--sky) 28%, transparent);
+}
+
 .trail-mode-editor {
   margin: 0;
   padding: 0.8rem;
@@ -1771,12 +2012,12 @@
   }
 
   .access-toolbar,
-  .booking-toolbar {
+  .summary-calendar-toolbar,
+  .trail-detail-toolbar {
     grid-template-columns: 1fr 1fr;
   }
 
   .access-trail-field,
-  .booking-search-field,
   .month-switcher {
     grid-column: 1 / -1;
   }
@@ -1785,8 +2026,15 @@
     grid-template-columns: 1fr;
   }
 
-  .day-editor {
+  .trail-detail-calendar-workspace,
+  .summary-calendar-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .day-editor,
+  .summary-day-panel {
     position: static;
+    max-height: none;
   }
 
   .trail-catalog-toolbar {
@@ -1799,6 +2047,14 @@
 
   .trail-editor-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .trail-geometry-toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .trail-geometry-actions {
+    justify-content: start;
   }
 
   .staff-access-grid {
@@ -1822,7 +2078,8 @@
     grid-template-columns: 1fr;
   }
 
-  .governance-stats,
+  .trail-data-grid,
+  .trail-source-section,
   .review-comparison,
   .review-decision {
     grid-template-columns: 1fr;
@@ -1833,8 +2090,9 @@
   }
 
   .access-toolbar,
-  .booking-toolbar,
   .access-kpis,
+  .summary-calendar-toolbar,
+  .summary-calendar-kpis,
   .trail-catalog-toolbar,
   .trail-catalog-kpis,
   .trail-editor-grid,
@@ -1852,9 +2110,19 @@
   }
 
   .access-trail-field,
-  .booking-search-field,
-  .month-switcher {
+  .month-switcher,
+  .trail-detail-toolbar .month-switcher {
     grid-column: auto;
+  }
+
+  .trail-detail-header {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .trail-data-grid,
+  .trail-source-section {
+    grid-template-columns: 1fr;
   }
 
   .calendar-weekdays,
@@ -1890,6 +2158,10 @@
   .trail-search-field,
   .trail-editor-name-field {
     grid-column: auto;
+  }
+
+  .trail-geometry-metrics {
+    grid-template-columns: 1fr 1fr;
   }
 
   .trail-catalog-summary {
@@ -1944,9 +2216,10 @@
   background: var(--surface-soft, #eef2ef);
 }
 .field-operations-panel { padding: 24px; }
-.field-operations-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
-.field-operations-grid h3 { font-size: 1.25rem; margin: 12px 0; }
-.operator-form { display: grid; grid-template-columns: 1.5fr 1fr auto; gap: 10px; align-items: end; }
+.field-operations-panel h3 { font-size: 1.25rem; margin: 18px 0 12px; }
+.field-checks-tools { display: flex; align-items: end; gap: 12px; }
+.field-checks-tools .admin-field { min-width: min(280px, 42vw); }
+.operator-form { display: grid; grid-template-columns: minmax(190px, 1.5fr) minmax(140px, 0.8fr) minmax(130px, 0.7fr) auto; gap: 10px; align-items: end; }
 .operations-list { display: grid; gap: 8px; margin-top: 14px; }
 .operation-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; border: 1px solid rgba(31, 79, 61, .14); border-radius: 14px; padding: 12px 14px; background: rgba(255,255,255,.72); }
 .operation-row div { display: grid; gap: 3px; }
@@ -1955,5 +2228,7 @@
 .operation-result--valid { color: #167345; }
 .operation-result--revoked, .operation-result--expired, .operation-result--not_found, .operation-result--cancelled { color: #b3261e; }
 @media (max-width: 850px) {
-  .field-operations-grid, .operator-form { grid-template-columns: 1fr; }
+  .operator-form { grid-template-columns: 1fr; }
+  .field-checks-tools { width: 100%; align-items: stretch; flex-direction: column; }
+  .field-checks-tools .admin-field { min-width: 0; }
 }

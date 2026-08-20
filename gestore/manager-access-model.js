@@ -27,7 +27,7 @@
   }
 
   function normalizeAccessEntry(entry) {
-    const kind = ACCESS_KINDS.has(entry?.kind) ? entry.kind : "free";
+    const kind = ACCESS_KINDS.has(entry?.kind) ? entry.kind : "unconfigured";
     const capacityValue = Number.parseInt(entry?.capacity, 10);
     const capacity = kind === "limited" && Number.isFinite(capacityValue) && capacityValue >= 0
       ? capacityValue
@@ -93,23 +93,6 @@
     return summary;
   }
 
-  function isDateInMonth(date, year, monthIndex) {
-    return typeof date === "string" && date.startsWith(`${year}-${pad(monthIndex + 1)}-`);
-  }
-
-  function filterBookings(bookings, options = {}) {
-    const query = String(options.query || "").trim().toLocaleLowerCase("it-IT");
-    return (Array.isArray(bookings) ? bookings : [])
-      .filter((booking) => options.status === "all" || !options.status || booking.status === options.status)
-      .filter((booking) => options.period !== "month" || isDateInMonth(booking.date, options.year, options.monthIndex))
-      .filter((booking) => {
-        if (!query) return true;
-        return [booking.code, booking.customerName, booking.email, booking.trailCode, booking.trailName]
-          .some((value) => String(value || "").toLocaleLowerCase("it-IT").includes(query));
-      })
-      .sort((first, second) => first.date.localeCompare(second.date) || first.customerName.localeCompare(second.customerName, "it"));
-  }
-
   return {
     ACTIVE_BOOKING_STATUSES,
     accessKey,
@@ -118,8 +101,6 @@
     bookingsForDay,
     dateKey,
     daysInMonth,
-    filterBookings,
-    isDateInMonth,
     monthSummary,
     normalizeAccessEntry
   };

@@ -343,6 +343,7 @@
 
   const items = [...document.querySelectorAll(".manager-section-nav__item")];
   const panes = [...document.querySelectorAll("[data-manager-pane]")];
+  const hashAliases = { "#manager-bookings": "#access-calendar" };
   if (!items.length || !panes.length) return;
 
   function selectItem(item) {
@@ -361,7 +362,7 @@
   }
 
   function selectFromHash() {
-    const hash = window.location.hash;
+    const hash = hashAliases[window.location.hash] || window.location.hash;
     const matchingItem = hash && items.find((item) => item.hash === hash);
     selectItem(matchingItem || items[0]);
   }
@@ -394,9 +395,8 @@
 
   const STORAGE_KEY = "sentieri.trail-link-decisions.v1";
   const list = document.getElementById("governance-review-list");
-  const filter = document.getElementById("governance-filter");
   const message = document.getElementById("governance-message");
-  if (!list || !filter) return;
+  if (!list || !message) return;
 
   const relationshipLabels = {
     "supporting-source": "Stesso sentiero",
@@ -411,6 +411,7 @@
   };
 
   let catalog = null;
+  let currentTrail = null;
   let decisions = loadDecisions();
 
   function loadDecisions() {
@@ -434,25 +435,15 @@
     return Number.isFinite(value) ? `${Math.round(value * 100)}%` : "non disponibile";
   }
 
-  function updateStats() {
-    const counts = catalog.counts;
-    document.getElementById("governance-canonical-count").textContent = counts.canonicalTrails;
-    document.getElementById("governance-observation-count").textContent = counts.sourceObservations;
-    document.getElementById("governance-match-count").textContent = counts.supportingSourcesCollapsed;
-    document.getElementById("governance-review-count").textContent =
-      catalog.reviewQueue.filter((item) => !decisions[item.canonicalTrailId]).length;
-  }
-
   function renderList() {
-    const selected = filter.value;
-    const entries = catalog.reviewQueue.filter((item) => {
-      const hasDecision = Boolean(decisions[item.canonicalTrailId]);
-      if (selected === "decided") return hasDecision;
-      if (selected === "all") return true;
-      return item.automaticRelationship === selected;
-    });
-    updateStats();
-    message.textContent = `${entries.length} confronti mostrati su ${catalog.reviewQueue.length}.`;
+    if (!currentTrail) return;
+    if (!catalog) {
+      message.textContent = "";
+      list.innerHTML = '<p class="muted">Caricamento in corso…</p>';
+      return;
+    }
+    const entries = catalog.reviewQueue.filter((item) => item.canonicalTrailId === currentTrail.id);
+    message.textContent = entries.length ? `${entries.length} ${entries.length === 1 ? "confronto collegato" : "confronti collegati"}.` : "";
     list.innerHTML = entries.length ? entries.map((item) => {
       const saved = decisions[item.canonicalTrailId] || {};
       const chosenDecision = saved.decision || "not-reviewed";
@@ -510,10 +501,12 @@
     else decisions[trailId] = { decision, reason, decidedAt: new Date().toISOString() };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(decisions));
     error.textContent = "Decisione salvata localmente.";
-    updateStats();
   });
 
-  filter.addEventListener("change", renderList);
+  window.addEventListener("sentieri:manager-trail-detail-opened", (event) => {
+    currentTrail = event.detail?.trail || null;
+    renderList();
+  });
 
   fetch("dati-parco/percorsi/governance/catalogo-governance.json")
     .then((response) => {
@@ -525,6 +518,8 @@
       renderList();
     })
     .catch((error) => {
-      list.innerHTML = `<p class="review-error">${escapeHtml(error.message)}. Avvia la console tramite il server locale.</p>`;
+      message.textContent = error.message || "Confronti non disponibili.";
+      message.classList.add("admin-message--error");
+      list.innerHTML = '<p class="muted">Confronti non disponibili.</p>';
     });
 })();

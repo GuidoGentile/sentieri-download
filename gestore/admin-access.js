@@ -2,39 +2,38 @@
   "use strict";
 
   const model = window.SentieriManagerAccessModel;
-  const onlineApi = window.SentieriSupabase;
-  const trailSelect = document.getElementById("access-trail-select");
-  const modeSelect = document.getElementById("access-mode-select");
-  const calendarGrid = document.getElementById("calendar-grid");
-  if (!model || !trailSelect || !modeSelect || !calendarGrid) return;
+  const api = window.SentieriSupabase;
+  const summaryGrid = document.getElementById("summary-calendar-grid");
+  const detailGrid = document.getElementById("calendar-grid");
+  if (!model || !api || !summaryGrid || !detailGrid) return;
 
-  const STORAGE_KEY = "sentieri.manager-access-demo.v1";
-  const MODE_LABELS = {
-    a_piedi: "A piedi",
-    bici: "Bici",
-    ebike: "E-bike",
-    cavallo: "Cavallo"
+  const STATUS_LABELS = { confermata: "Confermata", trattenuta: "In attesa", annullata: "Annullata" };
+  const GROUP_LABELS = {
+    booking_free: "Numero chiuso", booking_paid: "Numero chiuso", limited: "Numero chiuso",
+    closed: "Chiusi", free: "Liberi", unconfigured: "Da configurare"
   };
-  const STATUS_LABELS = {
-    confermata: "Confermata",
-    trattenuta: "In attesa",
-    annullata: "Annullata"
-  };
-  const FALLBACK_TRAILS = [
-    { id: "pnalm-sit-008-1", code: "A1", name: "Pescasseroli–Rifugio Prato Rosso–Bisegna", official: true },
-    { id: "pnalm-sit-040-1", code: "C1", name: "Bocca del Petroso–Forca d’Acero", official: true },
-    { id: "pnalm-sit-083-1", code: "E1", name: "La Madonnina–Portella", official: true },
-    { id: "pnalm-sit-075-1", code: "F1", name: "Grotta Fondillo–Monte Amaro", official: true },
-    { id: "pnalm-sit-087-1", code: "M1", name: "Le Forme–Passo dei Monaci–La Meta", official: true }
-  ];
 
-  const monthLabel = document.getElementById("calendar-month-label");
-  const previousMonth = document.getElementById("calendar-previous-month");
-  const nextMonth = document.getElementById("calendar-next-month");
-  const limitedDays = document.getElementById("calendar-limited-days");
-  const bookedPlaces = document.getElementById("calendar-booked-places");
-  const freePlaces = document.getElementById("calendar-free-places");
-  const soldOutDays = document.getElementById("calendar-sold-out-days");
+  const dataBadge = document.getElementById("access-data-badge");
+  const summaryEntity = document.getElementById("summary-calendar-entity");
+  const summaryMonthLabel = document.getElementById("summary-calendar-month-label");
+  const summaryPrevious = document.getElementById("summary-calendar-previous-month");
+  const summaryNext = document.getElementById("summary-calendar-next-month");
+  const summaryBookingCount = document.getElementById("summary-booking-count");
+  const summaryBookedPeople = document.getElementById("summary-booked-people");
+  const summaryDayTitle = document.getElementById("summary-day-title");
+  const summaryDayBookings = document.getElementById("summary-day-bookings");
+  const summaryDayPeople = document.getElementById("summary-day-people");
+  const summaryDayFree = document.getElementById("summary-day-free");
+  const summaryDayLimited = document.getElementById("summary-day-limited");
+  const summaryDayClosed = document.getElementById("summary-day-closed");
+  const summaryDayUnconfigured = document.getElementById("summary-day-unconfigured");
+  const summaryDaySearch = document.getElementById("summary-day-search");
+  const summaryDayProducts = document.getElementById("summary-day-products");
+  const summaryMessage = document.getElementById("summary-calendar-message");
+
+  const detailMonthLabel = document.getElementById("calendar-month-label");
+  const detailPrevious = document.getElementById("calendar-previous-month");
+  const detailNext = document.getElementById("calendar-next-month");
   const editorTitle = document.getElementById("day-editor-title");
   const editorTrail = document.getElementById("day-editor-trail");
   const accessKind = document.getElementById("day-access-kind");
@@ -46,437 +45,349 @@
   const editorMessage = document.getElementById("day-editor-message");
   const dayBookingCount = document.getElementById("day-booking-count");
   const dayBookingList = document.getElementById("day-booking-list");
-  const bookingSearch = document.getElementById("booking-search");
-  const bookingStatus = document.getElementById("booking-status-filter");
-  const bookingPeriod = document.getElementById("booking-period-filter");
-  const bookingTableBody = document.getElementById("booking-table-body");
-  const bookingEmpty = document.getElementById("booking-empty-state");
-  const bookingVisibleCount = document.getElementById("booking-visible-count");
-  const bookingVisiblePeople = document.getElementById("booking-visible-people");
-  const resetDemo = document.getElementById("reset-access-demo");
-  const dataBadge = document.getElementById("access-data-badge");
 
   const today = new Date();
-  let viewYear = today.getFullYear();
-  let viewMonth = today.getMonth();
-  let selectedDate = model.dateKey(viewYear, viewMonth, Math.min(17, model.daysInMonth(viewYear, viewMonth)));
-  let trails = FALLBACK_TRAILS;
-  let state = loadState();
-  let onlineMode = false;
-  let onlineLoading = false;
+  const todayKey = model.dateKey(today.getFullYear(), today.getMonth(), today.getDate());
+  let summaryYear = today.getFullYear();
+  let summaryMonth = today.getMonth();
+  let selectedSummaryDate = todayKey;
+  let summaryRows = [];
+  let selectedDayRows = [];
+  let availableEntities = [];
+  let summaryRequest = 0;
+  let summaryDayRequest = 0;
+
+  let detailTrail = null;
+  let detailYear = today.getFullYear();
+  let detailMonth = today.getMonth();
+  let selectedDetailDate = todayKey;
+  let detailCalendar = {};
+  let detailBookings = [];
+  let detailRequest = 0;
 
   function escapeHtml(value) {
-    return String(value ?? "")
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-  }
-
-  function monthDate(day) {
-    return model.dateKey(viewYear, viewMonth, Math.min(day, model.daysInMonth(viewYear, viewMonth)));
-  }
-
-  function createSeedState() {
-    const year = today.getFullYear();
-    const month = today.getMonth();
-    const makeDate = (day) => model.dateKey(year, month, Math.min(day, model.daysInMonth(year, month)));
-    const a1 = "pnalm-sit-008-1";
-    const c1 = "pnalm-sit-040-1";
-    const calendar = {};
-    [
-      [a1, "a_piedi", makeDate(3), "limited", 40],
-      [a1, "a_piedi", makeDate(8), "limited", 25],
-      [a1, "a_piedi", makeDate(12), "closed", null],
-      [a1, "a_piedi", makeDate(17), "limited", 60],
-      [a1, "a_piedi", makeDate(22), "limited", 20],
-      [a1, "a_piedi", makeDate(27), "limited", 35],
-      [a1, "bici", makeDate(17), "limited", 18],
-      [c1, "a_piedi", makeDate(10), "limited", 30],
-      [c1, "a_piedi", makeDate(24), "limited", 45]
-    ].forEach(([trailId, mode, date, kind, capacity]) => {
-      calendar[model.accessKey(trailId, mode, date)] = { kind, capacity };
-    });
-    return {
-      schema: "sentieri/manager-access-demo/v1",
-      calendar,
-      bookings: [
-        booking("PN-2401", "Anna Rossi", "anna.rossi@example.test", a1, "A1", "Pescasseroli–Rifugio Prato Rosso–Bisegna", makeDate(3), "a_piedi", 4, "confermata"),
-        booking("PN-2402", "Marco De Luca", "marco.deluca@example.test", a1, "A1", "Pescasseroli–Rifugio Prato Rosso–Bisegna", makeDate(3), "a_piedi", 2, "confermata"),
-        booking("PN-2403", "Giulia Bianchi", "giulia.bianchi@example.test", a1, "A1", "Pescasseroli–Rifugio Prato Rosso–Bisegna", makeDate(8), "a_piedi", 12, "confermata"),
-        booking("PN-2404", "Gruppo Montagna", "gruppo@example.test", a1, "A1", "Pescasseroli–Rifugio Prato Rosso–Bisegna", makeDate(8), "a_piedi", 8, "trattenuta"),
-        booking("PN-2405", "Paolo Neri", "paolo.neri@example.test", a1, "A1", "Pescasseroli–Rifugio Prato Rosso–Bisegna", makeDate(8), "a_piedi", 5, "confermata"),
-        booking("PN-2406", "Elena Conti", "elena.conti@example.test", a1, "A1", "Pescasseroli–Rifugio Prato Rosso–Bisegna", makeDate(17), "a_piedi", 3, "confermata"),
-        booking("PN-2407", "Luca Romano", "luca.romano@example.test", a1, "A1", "Pescasseroli–Rifugio Prato Rosso–Bisegna", makeDate(17), "a_piedi", 6, "confermata"),
-        booking("PN-2408", "Sara Gentili", "sara.gentili@example.test", a1, "A1", "Pescasseroli–Rifugio Prato Rosso–Bisegna", makeDate(17), "a_piedi", 2, "annullata"),
-        booking("PN-2409", "Associazione Cammini", "cammini@example.test", a1, "A1", "Pescasseroli–Rifugio Prato Rosso–Bisegna", makeDate(22), "a_piedi", 19, "confermata"),
-        booking("PN-2410", "Davide Serra", "davide.serra@example.test", a1, "A1", "Pescasseroli–Rifugio Prato Rosso–Bisegna", makeDate(17), "bici", 4, "confermata"),
-        booking("PN-2411", "Marta Ferri", "marta.ferri@example.test", c1, "C1", "Bocca del Petroso–Forca d’Acero", makeDate(10), "a_piedi", 5, "confermata"),
-        booking("PN-2412", "Enrico Villa", "enrico.villa@example.test", c1, "C1", "Bocca del Petroso–Forca d’Acero", makeDate(24), "a_piedi", 2, "confermata")
-      ]
-    };
-  }
-
-  function booking(code, customerName, email, trailId, trailCode, trailName, date, mode, quantity, status) {
-    return { id: code, code, customerName, email, trailId, trailCode, trailName, date, mode, quantity, status };
-  }
-
-  function loadState() {
-    try {
-      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
-      if (saved?.schema === "sentieri/manager-access-demo/v1" && saved.calendar && Array.isArray(saved.bookings)) return saved;
-    } catch {
-      // Un dato locale danneggiato viene sostituito dalla demo riproducibile.
-    }
-    const seeded = createSeedState();
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(seeded));
-    return seeded;
-  }
-
-  function saveState() {
-    if (onlineMode) return;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  }
-
-  function monthRange() {
-    return {
-      from: model.dateKey(viewYear, viewMonth, 1),
-      to: model.dateKey(viewYear, viewMonth, model.daysInMonth(viewYear, viewMonth))
-    };
-  }
-
-  async function loadOnlineState() {
-    const session = await onlineApi?.validSession();
-    if (!session || onlineLoading) return false;
-    onlineLoading = true;
-    try {
-      onlineMode = true;
-      modeSelect.value = "a_piedi";
-      modeSelect.disabled = true;
-      resetDemo.hidden = true;
-      dataBadge.textContent = "Dati online Supabase";
-      const trail = selectedTrail();
-      const range = monthRange();
-      const [availabilityRows, bookingRows] = await Promise.all([
-        onlineApi.availability(trail.id, range.from, range.to),
-        onlineApi.bookings("PNALM", range.from, range.to)
-      ]);
-      const calendar = {};
-      for (let day = 1; day <= model.daysInMonth(viewYear, viewMonth); day += 1) {
-        const date = model.dateKey(viewYear, viewMonth, day);
-        calendar[model.accessKey(trail.id, "a_piedi", date)] = { kind: "unconfigured", capacity: null, serverBooked: 0 };
-      }
-      (availabilityRows || []).forEach((row) => {
-        const kind = row.access_type === "free" ? "free" : row.access_type === "closed" ? "closed" : "limited";
-        calendar[model.accessKey(trail.id, "a_piedi", row.day)] = {
-          kind,
-          capacity: row.daily_capacity,
-          serverBooked: row.daily_capacity == null || row.remaining_places == null
-            ? 0
-            : Math.max(0, row.daily_capacity - row.remaining_places)
-        };
-      });
-      const bookings = (bookingRows || []).map((item) => booking(
-        item.booking_id,
-        item.customer_email || "Utente Sentieri",
-        item.customer_email || "—",
-        item.product_id,
-        item.product_code,
-        item.product_name,
-        item.access_date,
-        "a_piedi",
-        item.party_size,
-        item.booking_status === "confirmed" ? "confermata" : item.booking_status === "cancelled" ? "annullata" : "trattenuta"
-      ));
-      state = { schema: "sentieri/manager-access-online/v1", calendar, bookings };
-      renderAll();
-      return true;
-    } catch (error) {
-      editorMessage.textContent = error.message || "Dati online non raggiungibili.";
-      editorMessage.classList.add("admin-message--error");
-      return false;
-    } finally {
-      onlineLoading = false;
-    }
-  }
-
-  function selectedTrail() {
-    return trails.find((trail) => trail.id === trailSelect.value) || trails[0];
+    return String(value ?? "").replaceAll("&", "&amp;").replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
   }
 
   function formatDate(date, options = { weekday: "long", day: "numeric", month: "long", year: "numeric" }) {
     return new Intl.DateTimeFormat("it-IT", options).format(new Date(`${date}T12:00:00`));
   }
 
-  function populateTrailSelect() {
-    const current = trailSelect.value || FALLBACK_TRAILS[0].id;
-    trailSelect.innerHTML = trails.map((trail) => (
-      `<option value="${escapeHtml(trail.id)}">${escapeHtml(trail.code ? `${trail.code} · ` : "")}${escapeHtml(trail.name)}</option>`
-    )).join("");
-    trailSelect.value = trails.some((trail) => trail.id === current) ? current : trails[0].id;
+  function monthRange(year, month) {
+    return { from: model.dateKey(year, month, 1), to: model.dateKey(year, month, model.daysInMonth(year, month)) };
   }
 
-  function renderCalendar() {
-    const trail = selectedTrail();
-    const mode = modeSelect.value;
-    monthLabel.textContent = new Intl.DateTimeFormat("it-IT", { month: "long", year: "numeric" })
-      .format(new Date(viewYear, viewMonth, 1));
-    const summary = model.monthSummary(state, trail.id, mode, viewYear, viewMonth);
-    limitedDays.textContent = summary.limitedDays.toLocaleString("it-IT");
-    bookedPlaces.textContent = summary.booked.toLocaleString("it-IT");
-    freePlaces.textContent = summary.remaining.toLocaleString("it-IT");
-    soldOutDays.textContent = summary.soldOutDays.toLocaleString("it-IT");
+  function monthName(year, month) {
+    return new Intl.DateTimeFormat("it-IT", { month: "long", year: "numeric" }).format(new Date(year, month, 1));
+  }
 
-    const firstWeekday = (new Date(viewYear, viewMonth, 1).getDay() + 6) % 7;
-    const emptyCells = Array.from({ length: firstWeekday }, () => '<span class="calendar-day calendar-day--empty" aria-hidden="true"></span>');
-    const days = [];
-    for (let day = 1; day <= model.daysInMonth(viewYear, viewMonth); day += 1) {
-      const date = model.dateKey(viewYear, viewMonth, day);
-      const entry = state.calendar[model.accessKey(trail.id, mode, date)];
-      const availability = model.availabilityForDay(entry, state.bookings, trail.id, mode, date);
-      const selected = date === selectedDate;
-      const todayClass = date === model.dateKey(today.getFullYear(), today.getMonth(), today.getDate()) ? " calendar-day--today" : "";
-      let statusClass = "free";
-      let mainLabel = "Libero";
-      let detailLabel = "Nessuna prenotazione";
-      if (availability.kind === "closed") {
-        statusClass = "closed";
-        mainLabel = "Chiuso";
-        detailLabel = "Accesso non disponibile";
-      } else if (availability.kind === "unconfigured") {
-        statusClass = "unconfigured";
-        mainLabel = "Non configurato";
-        detailLabel = "Nessun regime pubblicato";
-      } else if (availability.kind === "limited") {
-        statusClass = availability.soldOut ? "sold-out" : "limited";
-        mainLabel = availability.soldOut ? "Esaurito" : `${availability.remaining} liberi`;
-        detailLabel = `${availability.booked} / ${availability.capacity} prenotati`;
-      }
-      days.push(`
-        <button type="button" class="calendar-day calendar-day--${statusClass}${todayClass}${selected ? " calendar-day--selected" : ""}" data-date="${date}" aria-pressed="${selected}">
-          <span class="calendar-day__number">${day}</span>
-          <strong>${mainLabel}</strong>
-          <small>${detailLabel}</small>
-        </button>`);
+  function number(value) {
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : 0;
+  }
+
+  function bookingFromRow(row, entityCode = null) {
+    return {
+      id: row.booking_id, code: row.permit_code || row.booking_id,
+      customerName: row.customer_email || "Utente Sentieri", email: row.customer_email || "—",
+      entityCode: entityCode || row.entity_code || null, trailId: row.product_id,
+      trailCode: row.product_code, trailName: row.product_name, date: row.access_date,
+      mode: "a_piedi", quantity: number(row.party_size),
+      status: row.booking_status === "confirmed" ? "confermata" : row.booking_status === "cancelled" ? "annullata" : "trattenuta"
+    };
+  }
+
+  async function loadEntities(access) {
+    const all = await api.entities();
+    const superadmin = access.some((item) => item.staff_role === "superadmin");
+    const allowed = new Set(access.map((item) => item.entity_code).filter(Boolean));
+    availableEntities = superadmin ? all : all.filter((item) => allowed.has(item.code));
+    summaryEntity.innerHTML = '<option value="">Tutti gli enti gestiti</option>'
+      + availableEntities.map((item) => `<option value="${escapeHtml(item.code)}">${escapeHtml(item.name)}</option>`).join("");
+    if (!superadmin && availableEntities.length === 1) summaryEntity.value = availableEntities[0].code;
+  }
+
+  function summaryRow(date) {
+    return summaryRows.find((row) => row.day === date) || {
+      day: date, booking_count: 0, booked_people: 0, free_trails: 0,
+      limited_trails: 0, closed_trails: 0, unconfigured_trails: 0
+    };
+  }
+
+  function renderSummaryDayCounts() {
+    const row = summaryRow(selectedSummaryDate);
+    summaryDayTitle.textContent = formatDate(selectedSummaryDate);
+    summaryDayBookings.textContent = number(row.booking_count).toLocaleString("it-IT");
+    summaryDayPeople.textContent = number(row.booked_people).toLocaleString("it-IT");
+    summaryDayFree.textContent = number(row.free_trails).toLocaleString("it-IT");
+    summaryDayLimited.textContent = number(row.limited_trails).toLocaleString("it-IT");
+    summaryDayClosed.textContent = number(row.closed_trails).toLocaleString("it-IT");
+    summaryDayUnconfigured.textContent = number(row.unconfigured_trails).toLocaleString("it-IT");
+  }
+
+  function renderSummary() {
+    summaryMonthLabel.textContent = monthName(summaryYear, summaryMonth);
+    summaryBookingCount.textContent = summaryRows.reduce((total, row) => total + number(row.booking_count), 0).toLocaleString("it-IT");
+    summaryBookedPeople.textContent = summaryRows.reduce((total, row) => total + number(row.booked_people), 0).toLocaleString("it-IT");
+    const firstWeekday = (new Date(summaryYear, summaryMonth, 1).getDay() + 6) % 7;
+    const cells = Array.from({ length: firstWeekday }, () => '<span class="calendar-day calendar-day--empty" aria-hidden="true"></span>');
+    for (let day = 1; day <= model.daysInMonth(summaryYear, summaryMonth); day += 1) {
+      const date = model.dateKey(summaryYear, summaryMonth, day);
+      const row = summaryRow(date);
+      const selected = date === selectedSummaryDate;
+      const todayClass = date === todayKey ? " calendar-day--today" : "";
+      cells.push(`<button type="button" class="calendar-day summary-calendar-day${todayClass}${selected ? " calendar-day--selected" : ""}" data-summary-date="${date}" aria-pressed="${selected}">
+        <span class="calendar-day__number">${day}</span><strong>${number(row.booking_count).toLocaleString("it-IT")} pren.</strong>
+        <small>${number(row.free_trails).toLocaleString("it-IT")} liberi · ${number(row.limited_trails).toLocaleString("it-IT")} numero chiuso</small>
+        <small>${number(row.closed_trails).toLocaleString("it-IT")} chiusi · ${number(row.unconfigured_trails).toLocaleString("it-IT")} da configurare</small>
+      </button>`);
     }
-    calendarGrid.innerHTML = [...emptyCells, ...days].join("");
-    renderEditor();
+    summaryGrid.innerHTML = cells.join("");
+    renderSummaryDayCounts();
   }
 
-  function renderEditor() {
-    const trail = selectedTrail();
-    const mode = modeSelect.value;
-    const entry = model.normalizeAccessEntry(state.calendar[model.accessKey(trail.id, mode, selectedDate)]);
-    const availability = model.availabilityForDay(entry, state.bookings, trail.id, mode, selectedDate);
-    const bookings = model.bookingsForDay(state.bookings, trail.id, mode, selectedDate, true);
-    editorTitle.textContent = formatDate(selectedDate);
-    editorTrail.textContent = `${trail.code ? `${trail.code} · ` : ""}${trail.name} · ${MODE_LABELS[mode]}`;
+  function normalizedAccessType(value) {
+    return value === "booking_free" || value === "booking_paid" ? "limited" : value || "unconfigured";
+  }
+
+  function renderSummaryDayProducts() {
+    const query = summaryDaySearch.value.trim().toLocaleLowerCase("it-IT");
+    const filtered = selectedDayRows.filter((row) => !query || [row.product_code, row.product_name, row.entity_code]
+      .some((value) => String(value || "").toLocaleLowerCase("it-IT").includes(query)));
+    const markup = ["limited", "closed", "free", "unconfigured"].map((kind) => {
+      const rows = filtered.filter((row) => normalizedAccessType(row.access_type) === kind);
+      if (!rows.length) return "";
+      const items = rows.map((row) => {
+        const metrics = kind === "limited" ? `${number(row.booked_people)} prenotati${row.remaining_places === null ? "" : ` · ${number(row.remaining_places)} liberi`}`
+          : kind === "unconfigured" ? "Regime da definire" : GROUP_LABELS[row.access_type] || kind;
+        return `<button type="button" class="summary-product-link" data-open-product="${escapeHtml(row.product_id)}"><span>
+          <strong>${escapeHtml(row.product_code || "Senza codice")} · ${escapeHtml(row.product_name)}</strong>
+          <small>${escapeHtml(row.entity_code)} · ${escapeHtml(metrics)}</small></span><i>Apri percorso</i></button>`;
+      }).join("");
+      const open = kind === "limited" || kind === "closed" || Boolean(query);
+      return `<details class="summary-product-group" ${open ? "open" : ""}><summary><span>${escapeHtml(GROUP_LABELS[kind])}</span><strong>${rows.length.toLocaleString("it-IT")}</strong></summary><div>${items}</div></details>`;
+    }).join("");
+    summaryDayProducts.innerHTML = markup || '<p class="muted">Nessun percorso corrisponde alla ricerca.</p>';
+  }
+
+  async function loadSummaryDay() {
+    const request = ++summaryDayRequest;
+    const requestedDate = selectedSummaryDate;
+    const requestedEntity = summaryEntity.value || null;
+    summaryDayProducts.innerHTML = '<p class="muted">Caricamento…</p>';
+    try {
+      const rows = await api.calendarDayProducts(requestedEntity, requestedDate);
+      if (request !== summaryDayRequest || requestedDate !== selectedSummaryDate || requestedEntity !== (summaryEntity.value || null)) return;
+      selectedDayRows = rows;
+      renderSummaryDayProducts();
+    } catch (error) {
+      if (request !== summaryDayRequest) return;
+      selectedDayRows = [];
+      summaryDayProducts.innerHTML = '<p class="muted">Elenco non disponibile.</p>';
+      summaryMessage.textContent = error.message || "Riepilogo giornaliero non disponibile.";
+      summaryMessage.classList.add("admin-message--error");
+    }
+  }
+
+  async function loadSummary() {
+    const request = ++summaryRequest;
+    summaryMessage.textContent = "";
+    summaryMessage.classList.remove("admin-message--error");
+    try {
+      const range = monthRange(summaryYear, summaryMonth);
+      const rows = await api.calendarOverview(summaryEntity.value || null, range.from, range.to);
+      if (request !== summaryRequest) return;
+      summaryRows = rows;
+      dataBadge.textContent = "Dati online";
+      renderSummary();
+      await loadSummaryDay();
+    } catch (error) {
+      if (request !== summaryRequest) return;
+      summaryRows = [];
+      renderSummary();
+      summaryMessage.textContent = error.message || "Calendario generale non disponibile.";
+      summaryMessage.classList.add("admin-message--error");
+    }
+  }
+
+  function detailEntry(date) {
+    return model.normalizeAccessEntry(detailCalendar[model.accessKey(detailTrail.id, "a_piedi", date)] || { kind: "unconfigured" });
+  }
+
+  function renderDetailEditor() {
+    if (!detailTrail) return;
+    const entry = detailEntry(selectedDetailDate);
+    const availability = model.availabilityForDay(entry, detailBookings, detailTrail.id, "a_piedi", selectedDetailDate);
+    const bookings = model.bookingsForDay(detailBookings, detailTrail.id, "a_piedi", selectedDetailDate, true);
+    editorTitle.textContent = formatDate(selectedDetailDate);
+    editorTrail.textContent = `${detailTrail.code ? `${detailTrail.code} · ` : ""}${detailTrail.name}`;
     accessKind.value = entry.kind;
     capacityInput.value = entry.capacity ?? "";
     capacityField.hidden = entry.kind !== "limited";
     dayBooked.textContent = availability.booked.toLocaleString("it-IT");
     dayRemaining.textContent = availability.remaining === null ? "—" : availability.remaining.toLocaleString("it-IT");
     dayBookingCount.textContent = bookings.length.toLocaleString("it-IT");
-    dayBookingList.innerHTML = bookings.length ? bookings.map((item) => `
-      <article class="day-booking-item">
-        <div><strong>${escapeHtml(item.customerName)}</strong><small>${escapeHtml(item.code)} · ${item.quantity} ${item.quantity === 1 ? "posto" : "posti"}</small></div>
-        <span class="booking-status booking-status--${escapeHtml(item.status)}">${escapeHtml(STATUS_LABELS[item.status] || item.status)}</span>
-      </article>`).join("") : '<p class="muted">Nessuna prenotazione.</p>';
+    dayBookingList.innerHTML = bookings.length ? bookings.map((item) => `<article class="day-booking-item">
+      <div><strong>${escapeHtml(item.customerName)}</strong><small>${escapeHtml(item.code)} · ${item.quantity} ${item.quantity === 1 ? "posto" : "posti"}</small></div>
+      <div class="day-booking-actions"><span class="booking-status booking-status--${escapeHtml(item.status)}">${escapeHtml(STATUS_LABELS[item.status])}</span>${item.status !== "annullata" ? `<button type="button" class="outline booking-cancel" data-booking-id="${escapeHtml(item.id)}">Annulla</button>` : ""}</div>
+    </article>`).join("") : '<p class="muted">Nessuna prenotazione.</p>';
     editorMessage.textContent = "";
+    editorMessage.classList.remove("admin-message--error");
   }
 
-  function renderBookings() {
-    const filtered = model.filterBookings(state.bookings, {
-      query: bookingSearch.value,
-      status: bookingStatus.value,
-      period: bookingPeriod.value,
-      year: viewYear,
-      monthIndex: viewMonth
-    });
-    bookingVisibleCount.textContent = filtered.length.toLocaleString("it-IT");
-    bookingVisiblePeople.textContent = filtered
-      .filter((item) => model.ACTIVE_BOOKING_STATUSES.has(item.status))
-      .reduce((total, item) => total + item.quantity, 0)
-      .toLocaleString("it-IT");
-    bookingTableBody.innerHTML = filtered.map((item) => `
-      <tr>
-        <td><strong>${escapeHtml(item.customerName)}</strong><small>${escapeHtml(item.email)}<br />${escapeHtml(item.code)}</small></td>
-        <td><strong>${escapeHtml(item.trailCode || "—")}</strong><small>${escapeHtml(item.trailName)}</small></td>
-        <td>${escapeHtml(formatDate(item.date, { day: "2-digit", month: "short", year: "numeric" }))}</td>
-        <td>${escapeHtml(MODE_LABELS[item.mode] || item.mode)}</td>
-        <td><strong>${item.quantity}</strong></td>
-        <td><span class="booking-status booking-status--${escapeHtml(item.status)}">${escapeHtml(STATUS_LABELS[item.status] || item.status)}</span></td>
-        <td><div class="trail-row-actions"><button type="button" class="outline booking-open-day" data-booking-id="${escapeHtml(item.id)}">Apri giorno</button>${onlineMode && item.status !== "annullata" ? `<button type="button" class="outline booking-cancel" data-booking-id="${escapeHtml(item.id)}">Annulla</button>` : ""}</div></td>
-      </tr>`).join("");
-    bookingEmpty.hidden = filtered.length > 0;
+  function renderDetailCalendar() {
+    if (!detailTrail) return;
+    detailMonthLabel.textContent = monthName(detailYear, detailMonth);
+    const firstWeekday = (new Date(detailYear, detailMonth, 1).getDay() + 6) % 7;
+    const cells = Array.from({ length: firstWeekday }, () => '<span class="calendar-day calendar-day--empty" aria-hidden="true"></span>');
+    for (let day = 1; day <= model.daysInMonth(detailYear, detailMonth); day += 1) {
+      const date = model.dateKey(detailYear, detailMonth, day);
+      const availability = model.availabilityForDay(detailEntry(date), detailBookings, detailTrail.id, "a_piedi", date);
+      let statusClass = availability.kind;
+      let main = availability.kind === "free" ? "Libero" : availability.kind === "closed" ? "Chiuso" : "Da configurare";
+      let note = availability.kind === "unconfigured" ? "Nessun regime" : "";
+      if (availability.kind === "limited") {
+        statusClass = availability.soldOut ? "sold-out" : "limited";
+        main = availability.soldOut ? "Esaurito" : `${availability.remaining} liberi`;
+        note = `${availability.booked} / ${availability.capacity} prenotati`;
+      }
+      cells.push(`<button type="button" class="calendar-day calendar-day--${statusClass}${date === todayKey ? " calendar-day--today" : ""}${date === selectedDetailDate ? " calendar-day--selected" : ""}" data-detail-date="${date}">
+        <span class="calendar-day__number">${day}</span><strong>${escapeHtml(main)}</strong><small>${escapeHtml(note)}</small></button>`);
+    }
+    detailGrid.innerHTML = cells.join("");
+    renderDetailEditor();
   }
 
-  function renderAll() {
-    renderCalendar();
-    renderBookings();
+  async function loadTrailDetail() {
+    if (!detailTrail) return;
+    const request = ++detailRequest;
+    const requestedTrail = detailTrail;
+    const requestedYear = detailYear;
+    const requestedMonth = detailMonth;
+    try {
+      const range = monthRange(requestedYear, requestedMonth);
+      const [availabilityRows, bookingRows] = await Promise.all([
+        api.availability(requestedTrail.id, range.from, range.to), api.productBookings(requestedTrail.id, range.from, range.to)
+      ]);
+      if (request !== detailRequest || requestedTrail.id !== detailTrail?.id || requestedYear !== detailYear || requestedMonth !== detailMonth) return;
+      detailCalendar = {};
+      for (let day = 1; day <= model.daysInMonth(requestedYear, requestedMonth); day += 1) {
+        const date = model.dateKey(requestedYear, requestedMonth, day);
+        detailCalendar[model.accessKey(requestedTrail.id, "a_piedi", date)] = { kind: "unconfigured", capacity: null, serverBooked: 0 };
+      }
+      availabilityRows.forEach((row) => {
+        const kind = row.access_type === "free" ? "free" : row.access_type === "closed" ? "closed" : "limited";
+        detailCalendar[model.accessKey(requestedTrail.id, "a_piedi", row.day)] = {
+          kind, capacity: row.daily_capacity,
+          serverBooked: row.daily_capacity == null || row.remaining_places == null ? 0 : Math.max(0, row.daily_capacity - row.remaining_places)
+        };
+      });
+      detailBookings = bookingRows.map((row) => bookingFromRow(row, requestedTrail.entityCode));
+      renderDetailCalendar();
+    } catch (error) {
+      if (request !== detailRequest) return;
+      editorMessage.textContent = error.message || "Calendario del percorso non disponibile.";
+      editorMessage.classList.add("admin-message--error");
+    }
   }
 
-  calendarGrid.addEventListener("click", (event) => {
-    const day = event.target.closest("[data-date]");
-    if (!day) return;
-    selectedDate = day.dataset.date;
-    renderCalendar();
+  async function cancelBooking(item) {
+    if (!item || !window.confirm(`Annullare la prenotazione ${item.code}?`)) return;
+    await api.setBookingStatus(item.entityCode, item.id, "cancelled", "Annullata dalla console gestore");
+    if (detailTrail?.id === item.trailId) await loadTrailDetail();
+    await loadSummary();
+  }
+
+  summaryGrid.addEventListener("click", async (event) => {
+    const button = event.target.closest("[data-summary-date]");
+    if (!button) return;
+    selectedSummaryDate = button.dataset.summaryDate;
+    renderSummary();
+    await loadSummaryDay();
+  });
+  summaryDaySearch.addEventListener("input", renderSummaryDayProducts);
+  summaryDayProducts.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-open-product]");
+    if (!button) return;
+    window.dispatchEvent(new CustomEvent("sentieri:open-manager-trail", { detail: { productId: button.dataset.openProduct, date: selectedSummaryDate } }));
   });
 
+  function changeSummaryMonth(offset) {
+    const next = new Date(summaryYear, summaryMonth + offset, 1);
+    summaryYear = next.getFullYear(); summaryMonth = next.getMonth();
+    selectedSummaryDate = model.dateKey(summaryYear, summaryMonth, 1);
+    loadSummary();
+  }
+  summaryPrevious.addEventListener("click", () => changeSummaryMonth(-1));
+  summaryNext.addEventListener("click", () => changeSummaryMonth(1));
+  summaryEntity.addEventListener("change", loadSummary);
+
+  detailGrid.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-detail-date]");
+    if (!button) return;
+    selectedDetailDate = button.dataset.detailDate;
+    renderDetailCalendar();
+  });
   accessKind.addEventListener("change", () => {
     capacityField.hidden = accessKind.value !== "limited";
     if (accessKind.value === "limited" && !capacityInput.value) capacityInput.value = "30";
   });
-
   saveDay.addEventListener("click", async () => {
-    const trail = selectedTrail();
-    const mode = modeSelect.value;
-    const currentBooked = model.bookedUnits(state.bookings, trail.id, mode, selectedDate);
+    if (!detailTrail) return;
+    const currentBooked = model.bookedUnits(detailBookings, detailTrail.id, "a_piedi", selectedDetailDate);
     const kind = accessKind.value;
     const capacity = Number.parseInt(capacityInput.value, 10);
-    if (kind === "limited" && (!Number.isFinite(capacity) || capacity < currentBooked)) {
-      editorMessage.textContent = `La capienza non può essere inferiore ai ${currentBooked} posti già impegnati.`;
-      editorMessage.classList.add("admin-message--error");
-      return;
+    if (kind === "limited" && (!Number.isFinite(capacity) || capacity < Math.max(1, currentBooked) || capacity > 999)) {
+      editorMessage.textContent = `La capienza deve essere compresa tra ${Math.max(1, currentBooked)} e 999 posti.`;
+      editorMessage.classList.add("admin-message--error"); return;
     }
     if (kind !== "limited" && currentBooked > 0) {
       editorMessage.textContent = `La giornata ha ${currentBooked} posti impegnati: prima occorre gestire quelle prenotazioni.`;
+      editorMessage.classList.add("admin-message--error"); return;
+    }
+    try {
+      saveDay.disabled = true;
+      await api.setCapacityDay(detailTrail.id, selectedDetailDate, kind === "limited" ? "booking_free" : kind, kind === "limited" ? capacity : null, "Modifica dalla scheda percorso");
+      await Promise.all([loadTrailDetail(), loadSummary()]);
+    } catch (error) {
+      editorMessage.textContent = error.message || "Salvataggio non riuscito.";
       editorMessage.classList.add("admin-message--error");
-      return;
-    }
-    if (onlineMode) {
-      try {
-        saveDay.disabled = true;
-        await onlineApi.setCapacityDay(
-          trail.id,
-          selectedDate,
-          kind === "limited" ? "booking_free" : kind,
-          kind === "limited" ? capacity : null,
-          "Modifica dalla console gestore"
-        );
-        editorMessage.classList.remove("admin-message--error");
-        editorMessage.textContent = "Giornata salvata online.";
-        await loadOnlineState();
-      } catch (error) {
-        editorMessage.textContent = error.message || "Salvataggio online non riuscito.";
-        editorMessage.classList.add("admin-message--error");
-      } finally {
-        saveDay.disabled = false;
-      }
-      return;
-    }
-    state.calendar[model.accessKey(trail.id, mode, selectedDate)] = {
-      kind,
-      capacity: kind === "limited" ? capacity : null
-    };
-    saveState();
-    renderCalendar();
-    editorMessage.classList.remove("admin-message--error");
-    editorMessage.textContent = "Giornata salvata su questo computer.";
+    } finally { saveDay.disabled = false; }
   });
-
-  function changeMonth(offset) {
-    const next = new Date(viewYear, viewMonth + offset, 1);
-    viewYear = next.getFullYear();
-    viewMonth = next.getMonth();
-    selectedDate = monthDate(1);
-    if (onlineMode) loadOnlineState();
-    else renderAll();
-  }
-
-  previousMonth.addEventListener("click", () => changeMonth(-1));
-  nextMonth.addEventListener("click", () => changeMonth(1));
-  trailSelect.addEventListener("change", () => onlineMode ? loadOnlineState() : renderAll());
-  modeSelect.addEventListener("change", renderAll);
-  [bookingSearch, bookingStatus, bookingPeriod].forEach((control) => control.addEventListener("input", renderBookings));
-
-  bookingTableBody.addEventListener("click", async (event) => {
-    const cancel = event.target.closest(".booking-cancel");
-    if (cancel && onlineMode) {
-      const item = state.bookings.find((bookingItem) => bookingItem.id === cancel.dataset.bookingId);
-      if (!item || !window.confirm(`Annullare la prenotazione ${item.code}?`)) return;
-      try {
-        await onlineApi.setBookingStatus("PNALM", item.id, "cancelled", "Annullata dalla console gestore");
-        await loadOnlineState();
-      } catch (error) { window.alert(error.message || "Annullamento non riuscito."); }
-      return;
-    }
-    const button = event.target.closest(".booking-open-day");
+  dayBookingList.addEventListener("click", async (event) => {
+    const button = event.target.closest(".booking-cancel");
     if (!button) return;
-    const item = state.bookings.find((bookingItem) => bookingItem.id === button.dataset.bookingId);
-    if (!item) return;
-    const [year, month] = item.date.split("-").map(Number);
-    viewYear = year;
-    viewMonth = month - 1;
-    selectedDate = item.date;
-    trailSelect.value = item.trailId;
-    modeSelect.value = item.mode;
-    renderAll();
-    document.getElementById("access-calendar").scrollIntoView({ behavior: "smooth", block: "start" });
+    const item = detailBookings.find((booking) => booking.id === button.dataset.bookingId);
+    try { await cancelBooking(item); } catch (error) { window.alert(error.message || "Annullamento non riuscito."); }
   });
 
-  resetDemo.addEventListener("click", () => {
-    if (!window.confirm("Ripristinare calendario e prenotazioni dimostrative? Le modifiche locali verranno perse.")) return;
-    localStorage.removeItem(STORAGE_KEY);
-    state = loadState();
-    viewYear = today.getFullYear();
-    viewMonth = today.getMonth();
-    selectedDate = monthDate(17);
-    trailSelect.value = FALLBACK_TRAILS[0].id;
-    modeSelect.value = "a_piedi";
-    bookingSearch.value = "";
-    bookingStatus.value = "all";
-    bookingPeriod.value = "all";
-    renderAll();
+  function changeDetailMonth(offset) {
+    const next = new Date(detailYear, detailMonth + offset, 1);
+    detailYear = next.getFullYear(); detailMonth = next.getMonth();
+    selectedDetailDate = model.dateKey(detailYear, detailMonth, 1);
+    loadTrailDetail();
+  }
+  detailPrevious.addEventListener("click", () => changeDetailMonth(-1));
+  detailNext.addEventListener("click", () => changeDetailMonth(1));
+
+  window.addEventListener("sentieri:manager-trail-detail-opened", (event) => {
+    detailTrail = event.detail?.trail || null;
+    const requestedDate = event.detail?.date || todayKey;
+    const [year, month] = requestedDate.split("-").map(Number);
+    detailYear = year; detailMonth = month - 1; selectedDetailDate = requestedDate;
+    loadTrailDetail();
   });
 
-  window.addEventListener("sentieri:manager-catalog-updated", (event) => {
-    const published = Array.isArray(event.detail?.catalog)
-      ? event.detail.catalog.filter((item) => item.publicationStatus === "published" && item.geometryAvailable)
-      : [];
-    if (!published.length) return;
-    trails = published.map((item) => ({
-      id: item.id,
-      code: item.code,
-      name: item.name,
-      official: item.official
-    }));
-    populateTrailSelect();
-    if (onlineMode) loadOnlineState();
-    else renderAll();
+  window.addEventListener("sentieri:manager-online", async (event) => {
+    try {
+      await loadEntities(event.detail?.access || []);
+      await loadSummary();
+    } catch (error) {
+      summaryMessage.textContent = error.message || "Dati gestore non disponibili.";
+      summaryMessage.classList.add("admin-message--error");
+    }
   });
 
-  window.addEventListener("sentieri:manager-online", loadOnlineState);
-
-  populateTrailSelect();
-  renderAll();
-
-  fetch("dati-parco/percorsi/catalogo-unificato/catalogo.geojson")
-    .then((response) => {
-      if (!response.ok) throw new Error("Catalogo non disponibile");
-      return response.json();
-    })
-    .then((catalog) => {
-      const loadedTrails = catalog.features
-        .map((feature) => feature.properties)
-        .filter((properties) => properties?.id && properties?.name)
-        .map((properties) => ({
-          id: properties.id,
-          code: properties.code,
-          name: properties.name,
-          official: Boolean(properties.official)
-        }))
-        .sort((first, second) => Number(second.official) - Number(first.official)
-          || String(first.code || "ZZZ").localeCompare(String(second.code || "ZZZ"), "it", { numeric: true })
-          || first.name.localeCompare(second.name, "it"));
-      if (!loadedTrails.length) return;
-      trails = loadedTrails;
-      populateTrailSelect();
-      renderAll();
-    })
-    .catch(() => {
-      // I percorsi principali restano disponibili anche aprendo la demo senza catalogo completo.
-    });
-  loadOnlineState();
+  renderSummary();
 })();

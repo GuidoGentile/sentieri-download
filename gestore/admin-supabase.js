@@ -95,6 +95,29 @@
     return rawRequest(path, { ...options, accessToken: session.accessToken });
   }
 
+  function encodedObjectPath(path) {
+    return String(path || "").split("/").map(encodeURIComponent).join("/");
+  }
+
+  async function storageRequest(path, { method = "GET", body = null, contentType = null } = {}) {
+    const session = await validSession();
+    if (!session) throw new Error("Accedi come gestore per usare i dati online");
+    const response = await fetch(`${configuration.url.replace(/\/$/, "")}${path}`, {
+      method,
+      headers: {
+        apikey: configuration.publishableKey,
+        Authorization: `Bearer ${session.accessToken}`,
+        ...(contentType ? { "Content-Type": contentType } : {})
+      },
+      ...(body === null ? {} : { body })
+    });
+    const text = await response.text();
+    let value;
+    try { value = text ? JSON.parse(text) : null; } catch { value = text; }
+    if (!response.ok) throw new Error(value?.message || value?.error || String(value || `Errore HTTP ${response.status}`));
+    return value;
+  }
+
   async function sendMagicLink(email) {
     const redirectTo = `${location.origin}${location.pathname}`;
     await rawRequest("/auth/v1/otp", {
@@ -114,10 +137,24 @@
     });
   }
 
-  async function bookings(entityCode, from, to) {
-    return authenticatedRequest("/rest/v1/rpc/manager_bookings", {
+  async function calendarOverview(entityCode, from, to) {
+    return authenticatedRequest("/rest/v1/rpc/manager_calendar_overview", {
       method: "POST",
-      body: { p_entity_code: entityCode, p_from: from, p_to: to }
+      body: { p_entity_code: entityCode || null, p_from: from, p_to: to }
+    });
+  }
+
+  async function calendarDayProducts(entityCode, day) {
+    return authenticatedRequest("/rest/v1/rpc/manager_calendar_day_products", {
+      method: "POST",
+      body: { p_entity_code: entityCode || null, p_day: day }
+    });
+  }
+
+  async function productBookings(productId, from, to) {
+    return authenticatedRequest("/rest/v1/rpc/manager_product_bookings", {
+      method: "POST",
+      body: { p_product_id: productId, p_from: from, p_to: to }
     });
   }
 
@@ -157,6 +194,59 @@
         p_metadata: fields.metadata || {},
         p_reason: fields.reason
       }
+    });
+  }
+
+  async function uploadTrailSource(objectPath, file) {
+    const allowedTypes = new Set([
+      "application/gpx+xml", "application/geo+json", "application/json",
+      "application/xml", "text/xml", "application/octet-stream"
+    ]);
+    return storageRequest(`/storage/v1/object/trail-source-files/${encodedObjectPath(objectPath)}`, {
+      method: "POST",
+      body: file,
+      contentType: allowedTypes.has(file.type) ? file.type : "application/octet-stream"
+    });
+  }
+
+  async function deleteTrailSource(objectPath) {
+    return storageRequest(`/storage/v1/object/trail-source-files/${encodedObjectPath(objectPath)}`, { method: "DELETE" });
+  }
+
+  async function createTrailWithGeometry(fields) {
+    return authenticatedRequest("/rest/v1/rpc/manager_create_trail_with_geometry", {
+      method: "POST",
+      body: {
+        p_entity_code: fields.entityCode,
+        p_product_id: fields.productId,
+        p_code: fields.code || "",
+        p_name: fields.name,
+        p_difficulty: fields.difficulty || null,
+        p_duration_minutes: fields.durationMinutes,
+        p_modes: fields.modes || {},
+        p_source_label: fields.sourceLabel,
+        p_source_url: fields.sourceUrl || null,
+        p_source_license: fields.sourceLicense,
+        p_acquired_on: fields.acquiredOn,
+        p_original_object_path: fields.originalObjectPath,
+        p_original_file_name: fields.originalFileName,
+        p_original_mime_type: fields.originalMimeType || null,
+        p_original_sha256: fields.originalSha256,
+        p_geometry: fields.geometry,
+        p_reason: fields.reason
+      }
+    });
+  }
+
+  async function trailGeometry(productId) {
+    return authenticatedRequest("/rest/v1/rpc/manager_trail_geometry", {
+      method: "POST", body: { p_product_id: productId }
+    });
+  }
+
+  async function validateAndPublishTrail(productId, reason) {
+    return authenticatedRequest("/rest/v1/rpc/manager_validate_and_publish_trail", {
+      method: "POST", body: { p_product_id: productId, p_reason: reason }
     });
   }
 
@@ -229,14 +319,18 @@
   root.SentieriSupabase = Object.freeze({
     availability,
     auditEvents,
-    bookings,
+    calendarDayProducts,
+    calendarOverview,
+    createTrailWithGeometry,
     configured,
     currentAccess,
+    deleteTrailSource,
     entities,
     loadSession,
     logout: () => saveSession(null),
     sendMagicLink,
     products,
+    productBookings,
     saveProduct,
     setStaffMember,
     setSuperadmin,
@@ -247,6 +341,9 @@
     setBookingStatus,
     setFieldOperator,
     titleChecks,
+    trailGeometry,
+    uploadTrailSource,
+    validateAndPublishTrail,
     validSession
   });
 })(typeof globalThis !== "undefined" ? globalThis : this);
