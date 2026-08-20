@@ -40,15 +40,6 @@
   align-items: start;
 }
 
-.review-decision select,
-.review-reason {
-  min-height: 44px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: var(--surface);
-  color: var(--text);
-}
-
 .governance-review-list {
   max-height: 560px;
   overflow: auto;
@@ -89,7 +80,6 @@
 }
 
 .review-title small,
-.review-recommendation,
 .review-metrics,
 .governance-local-note {
   color: var(--muted);
@@ -141,24 +131,6 @@
 .review-comparison small,
 .review-comparison strong {
   display: block;
-}
-
-.review-decision {
-  display: grid;
-  grid-template-columns: minmax(180px, 0.55fr) minmax(220px, 1fr) auto;
-  gap: 0.6rem;
-  align-items: end;
-}
-
-.review-decision label {
-  display: grid;
-  gap: 0.3rem;
-  font-size: 0.8rem;
-  font-weight: 750;
-}
-
-.review-decision button {
-  min-height: 44px;
 }
 
 .review-error {
@@ -2080,8 +2052,7 @@
 
   .trail-data-grid,
   .trail-source-section,
-  .review-comparison,
-  .review-decision {
+  .review-comparison {
     grid-template-columns: 1fr;
   }
 
@@ -2118,11 +2089,6 @@
   .trail-detail-header {
     grid-template-columns: 1fr;
     align-items: start;
-  }
-
-  .trail-data-grid,
-  .trail-source-section {
-    grid-template-columns: 1fr;
   }
 
   .calendar-weekdays,

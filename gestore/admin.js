@@ -393,7 +393,6 @@
 (function setupTrailGovernance() {
   "use strict";
 
-  const STORAGE_KEY = "sentieri.trail-link-decisions.v1";
   const list = document.getElementById("governance-review-list");
   const message = document.getElementById("governance-message");
   if (!list || !message) return;
@@ -403,24 +402,8 @@
     "variant-candidate": "Possibile variante",
     "review-required": "Da confrontare"
   };
-  const recommendationLabels = {
-    "same-trail": "unire come seconda fonte",
-    variant: "conservare come variante",
-    separate: "tenere come percorso distinto",
-    "manual-review": "confrontare le tracce sulla mappa"
-  };
-
   let catalog = null;
   let currentTrail = null;
-  let decisions = loadDecisions();
-
-  function loadDecisions() {
-    try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-    } catch {
-      return {};
-    }
-  }
 
   function escapeHtml(value) {
     return String(value ?? "")
@@ -445,8 +428,6 @@
     const entries = catalog.reviewQueue.filter((item) => item.canonicalTrailId === currentTrail.id);
     message.textContent = entries.length ? `${entries.length} ${entries.length === 1 ? "confronto collegato" : "confronti collegati"}.` : "";
     list.innerHTML = entries.length ? entries.map((item) => {
-      const saved = decisions[item.canonicalTrailId] || {};
-      const chosenDecision = saved.decision || "not-reviewed";
       const metrics = item.metrics;
       return `
         <details class="review-item" data-trail-id="${escapeHtml(item.canonicalTrailId)}">
@@ -464,44 +445,10 @@
               <div><small>Copertura PNALM entro 50 m</small><strong>${percentage(metrics.primaryCoverageWithin50m)}</strong></div>
               <div><small>Copertura CAI entro 50 m</small><strong>${percentage(metrics.observedCoverageWithin50m)}</strong></div>
             </div>
-            <p class="review-recommendation">Suggerimento automatico: <strong>${escapeHtml(recommendationLabels[item.recommendedDecision])}</strong>. Il suggerimento non vale come validazione.</p>
-            <div class="review-decision">
-              <label>Decisione del gestore
-                <select class="review-decision-select">
-                  <option value="not-reviewed" ${chosenDecision === "not-reviewed" ? "selected" : ""}>Da esaminare</option>
-                  <option value="same-trail" ${chosenDecision === "same-trail" ? "selected" : ""}>È lo stesso sentiero</option>
-                  <option value="variant" ${chosenDecision === "variant" ? "selected" : ""}>È una variante</option>
-                  <option value="separate" ${chosenDecision === "separate" ? "selected" : ""}>Sono percorsi distinti</option>
-                </select>
-              </label>
-              <label>Motivazione
-                <input class="review-reason" maxlength="300" value="${escapeHtml(saved.reason || "")}" placeholder="Perché viene presa questa decisione" />
-              </label>
-              <button type="button" class="primary review-save">Conferma</button>
-            </div>
-            <p class="review-error" aria-live="polite"></p>
           </div>
         </details>`;
-    }).join("") : '<p class="muted">Nessun confronto in questa categoria.</p>';
+    }).join("") : '<p class="muted">Nessun confronto o variante collegato.</p>';
   }
-
-  list.addEventListener("click", (event) => {
-    const button = event.target.closest(".review-save");
-    if (!button) return;
-    const item = button.closest(".review-item");
-    const trailId = item.dataset.trailId;
-    const decision = item.querySelector(".review-decision-select").value;
-    const reason = item.querySelector(".review-reason").value.trim();
-    const error = item.querySelector(".review-error");
-    if (decision !== "not-reviewed" && !reason) {
-      error.textContent = "Inserisci una motivazione prima di confermare.";
-      return;
-    }
-    if (decision === "not-reviewed") delete decisions[trailId];
-    else decisions[trailId] = { decision, reason, decidedAt: new Date().toISOString() };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(decisions));
-    error.textContent = "Decisione salvata localmente.";
-  });
 
   window.addEventListener("sentieri:manager-trail-detail-opened", (event) => {
     currentTrail = event.detail?.trail || null;
