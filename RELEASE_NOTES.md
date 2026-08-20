@@ -1,5 +1,18 @@
 # Note di versione
 
+## 0.23.0 qualità dei cataloghi — 20 agosto 2026
+
+- la sezione Attrazioni mantiene la stessa vista passando da mappa a elenco e mostra sempre quanti luoghi risultano visibili sul totale;
+- categorie, aree e tag sono filtri multipli riconoscibili tramite checkbox; le card restano pulite e mostrano tutti i tag soltanto nel dettaglio;
+- le coordinate delle attrazioni sono confrontate con i confini comunali ISTAT 2026, conservando posizione originale, motivazione e provenienza delle correzioni;
+- i casi geografici estesi, costieri o dubbi restano in code di revisione distinte e non vengono corretti alla cieca;
+- il catalogo dei percorsi conserva varianti e confronti geometrici per il gestore, ma non mostra all'escursionista diciture tecniche come `geometria concorde`;
+- undici doppioni geometrici forti vengono assorbiti nel relativo percorso canonico: il catalogo pubblico passa da 1.219 a 1.208 card senza perdere fonti e osservazioni;
+- la console gestore consolida accesso con email e password, sessione persistente, catalogo multi-ente, calendario, prenotazioni, ruoli e audit.
+
+La 0.23.0 mantiene application ID e certificato della 0.22. Installarla sopra Sentieri d'Abruzzo
+senza disinstallare l'app conserva tracce, database e dati territoriali già presenti sul telefono.
+
 ## 0.22.0 edizione Abruzzo e recupero tracce — 20 agosto 2026
 
 - l’app utente adotta l’identificativo definitivo `it.sentieri.abruzzo`, separato dalla linea storica `it.sentieripnalm.mobile`;

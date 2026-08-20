@@ -8,8 +8,8 @@ base descrittiva dell'opera software, mantenendo distinti componenti realizzati,
 
 ## Android
 
-La release attuale è una **build sperimentale 0.22.0 ARM64**, distribuita fuori
-dal Play Store per test controllati. L’APK contiene un catalogo offline di 1.219 percorsi
+La release attuale è una **build sperimentale 0.23.0 ARM64**, distribuita fuori
+dal Play Store per test controllati. L’APK contiene un catalogo offline di 1.208 percorsi
 canonici abruzzesi, con 334 identità CAI documentate e fonti storiche conservate,
 cartografia vettoriale offline, profili altimetrici e registrazione GPS predisposta per continuare
 anche a schermo spento. Dal menu `Registra` si può creare un percorso personale privato e vederlo
@@ -33,10 +33,12 @@ cartografiche. Nomi, categorie, tag, coordinate e siti sono nel catalogo leggero
 vengono caricati online e non entrano nell'APK. La 0.21.0 ha introdotto il nuovo marchio su launcher,
 splash e intestazione, mantenendo `Sentieri` come nome principale e *d'Abruzzo* come declinazione
 territoriale. La 0.22.0 crea l'edizione regionale definitiva `it.sentieri.abruzzo` e rimuove i dati
-dimostrativi personali dalla nuova installazione.
+dimostrativi personali dalla nuova installazione. La 0.23.0 corregge e documenta le coordinate
+delle attrazioni, rende coerenti le viste mappa ed elenco, usa checkbox nei filtri multipli e
+semplifica per l'escursionista le informazioni tecniche sulle geometrie dei percorsi.
 
 Per conservare le tracce reali presenti nella linea storica occorre installare, senza disinstallare la
-vecchia app, prima `01-Ponte-Tracce-Sentieri.apk` e poi `02-Sentieri-Abruzzo-0.22-arm64.apk`. La nuova app
+vecchia app, prima `01-Ponte-Tracce-Sentieri.apk` e poi `02-Sentieri-Abruzzo-0.23-arm64.apk`. La nuova app
 importa soltanto le registrazioni dell’account proprietario verificato; non trasferisce prenotazioni,
 recensioni, copertura, eventi, impostazioni, cache o fotografie locali. Dopo aver verificato in Storico il
 cartello di recupero e almeno una traccia sulla mappa, la vecchia app può essere rimossa.
