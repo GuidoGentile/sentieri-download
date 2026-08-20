@@ -50,25 +50,26 @@ Scarica soltanto dalla pagina pubblica e confronta, se necessario, il file SHA-2
 
 ## Console gestore
 
-La landing collega anche una demo web della console gestore. Sono già esplorabili:
+La landing collega anche la console web gestore. Sono già disponibili:
 
 - nome dell’app, ente, logo e palette configurabile;
 - anteprima mobile e controllo del contrasto;
 - centro e dimensioni dei pacchetti cartografici;
-- elenco dei percorsi presenti nell'app, con aggiunta, correzione ed esclusione locale;
-- calendario delle disponibilità, capienze giornaliere, prenotazioni e posti liberi;
-- coda di confronto tra sentieri coincidenti, varianti e casi da verificare;
-- importazione ed esportazione locale della configurazione.
+- catalogo regionale filtrabile e scheda del singolo percorso;
+- creazione da GPX o GeoJSON con originale privato, geometria e validazione;
+- calendario aggregato e gestione di capienze e prenotazioni per percorso;
+- utenti, ruoli, Guardiaparco e audit delle operazioni amministrative.
 
-Senza accesso la console salva le modifiche dimostrative soltanto nel browser. Con l'account
-autorizzato usa Supabase per catalogo regionale multi-ente, calendari, capienze, prenotazioni,
-abilitazione delle Guardie e registro dei controlli. Editor GIS e import GPX/GeoJSON restano da collegare.
+La console richiede un account personale autorizzato con email e password. La
+conferma email serve soltanto al primo accesso e il collegamento di recupero
+soltanto quando richiesto. La sessione resta memorizzata nel dispositivo; una
+perdita di rete non la cancella.
 
 ## Stato delle applicazioni
 
 - app utente Android: build installabile con catalogo, mappe offline, profili e prima registrazione GPS sul campo;
 - prototipo web utente: esplorativo, non pubblicato come servizio operativo;
-- console web gestore: demo pubblica con configurazione locale e governo iniziale delle tracce;
+- console web gestore: prototipo autenticato con catalogo, prenotazioni, ruoli e audit online;
 - app Guardiaparco: prima beta Android separata con accesso di servizio, scansione QR, verifica server e cronologia dei controlli;
 - portale verbali: modello definito, implementazione non iniziata.
 

@@ -30,6 +30,13 @@
   background: var(--surface);
 }
 
+.admin-header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.65rem;
+}
+
 .admin-layout {
   max-width: 1240px;
   margin: 0 auto;
@@ -623,7 +630,8 @@
   grid-column: 1 / -1;
   position: sticky;
   top: 0;
-  z-index: 20;
+  z-index: 100;
+  isolation: isolate;
   display: flex;
   align-items: end;
   gap: 0.2rem;
@@ -632,7 +640,7 @@
   padding: 0.35rem 0 0;
   margin-bottom: -1.25rem;
   border: 0;
-  background: transparent;
+  background: var(--bg);
 }
 
 .manager-section-nav[hidden],
@@ -2148,8 +2156,9 @@
 }
 .manager-session-panel {
   grid-column: 1 / -1;
+  min-width: 0;
   display: grid;
-  grid-template-columns: minmax(220px, 1fr) minmax(320px, 1.3fr) auto;
+  grid-template-columns: minmax(220px, 0.8fr) minmax(480px, 1.6fr) auto;
   gap: 20px;
   align-items: end;
 }
@@ -2160,21 +2169,72 @@
 }
 
 .manager-login-form {
-  display: flex;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(190px, 1fr) minmax(170px, 0.8fr) auto;
   gap: 12px;
   align-items: end;
 }
 
-.manager-login-form .admin-field {
-  flex: 1;
+.manager-session-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.45rem;
+}
+
+.manager-session-actions .text-button {
+  border: 0;
+  background: transparent;
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  padding: 0.4rem;
+  cursor: pointer;
+}
+
+.manager-password-form {
+  grid-column: 2 / -1;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(180px, 1fr) auto;
+  gap: 12px;
+  align-items: end;
+}
+
+.manager-password-form[hidden] {
+  display: none;
+}
+
+.manager-session-panel > .admin-message {
+  grid-column: 1 / -1;
 }
 
 @media (max-width: 800px) {
   .manager-session-panel,
-  .manager-login-form {
+  .manager-login-form,
+  .manager-password-form {
     display: flex;
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .manager-login-form .admin-field,
+  .manager-login-form input,
+  .manager-password-form .admin-field,
+  .manager-password-form input {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .admin-header-actions {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .admin-header-actions a {
+    flex: 1;
+    text-align: center;
   }
 }
 .calendar-day--unconfigured {

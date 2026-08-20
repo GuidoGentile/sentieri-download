@@ -31,17 +31,31 @@
     }
   }
 
+  function authRedirectUrl() {
+    return `${location.origin}${location.pathname}`;
+  }
+
+  function sessionFromResponse(response, extras = {}) {
+    if (!response?.access_token || !response?.refresh_token) return null;
+    return {
+      accessToken: response.access_token,
+      refreshToken: response.refresh_token,
+      expiresAt: Math.floor(Date.now() / 1000) + Number(response.expires_in || 3600),
+      user: response.user || decodeUser(response.access_token),
+      recovery: Boolean(extras.recovery)
+    };
+  }
+
   function captureRedirectSession() {
     const parameters = new URLSearchParams(location.hash.replace(/^#/, ""));
     const accessToken = parameters.get("access_token");
     const refreshToken = parameters.get("refresh_token");
     if (!accessToken || !refreshToken) return loadSession();
-    const session = {
-      accessToken,
-      refreshToken,
-      expiresAt: Math.floor(Date.now() / 1000) + Number(parameters.get("expires_in") || 3600),
-      user: decodeUser(accessToken)
-    };
+    const session = sessionFromResponse({
+      access_token: accessToken,
+      refresh_token: refreshToken,
+      expires_in: parameters.get("expires_in")
+    }, { recovery: parameters.get("type") === "recovery" });
     saveSession(session);
     history.replaceState(null, "", `${location.pathname}${location.search}`);
     return session;
@@ -70,28 +84,28 @@
     let session = loadSession();
     if (!session?.accessToken) return null;
     if (session.expiresAt > Math.floor(Date.now() / 1000) + 60) return session;
+    if (!session.refreshToken) {
+      return { ...session, refreshPending: true };
+    }
     try {
       const refreshed = await rawRequest("/auth/v1/token?grant_type=refresh_token", {
         method: "POST",
         body: { refresh_token: session.refreshToken }
       });
-      session = {
-        accessToken: refreshed.access_token,
-        refreshToken: refreshed.refresh_token,
-        expiresAt: Math.floor(Date.now() / 1000) + Number(refreshed.expires_in || 3600),
-        user: refreshed.user || decodeUser(refreshed.access_token)
-      };
+      session = sessionFromResponse(refreshed, { recovery: session.recovery });
       saveSession(session);
       return session;
     } catch {
-      saveSession(null);
-      return null;
+      // La rete o un rinnovo fallito non devono cancellare l'identità ricordata.
+      // Soltanto l'uscita esplicita rimuove la sessione dal dispositivo.
+      return { ...session, refreshPending: true };
     }
   }
 
   async function authenticatedRequest(path, options = {}) {
     const session = await validSession();
     if (!session) throw new Error("Accedi come gestore per usare i dati online");
+    if (session.refreshPending) throw new Error("Sessione ricordata. Riconnettiti a internet per aggiornare i dati.");
     return rawRequest(path, { ...options, accessToken: session.accessToken });
   }
 
@@ -102,6 +116,7 @@
   async function storageRequest(path, { method = "GET", body = null, contentType = null } = {}) {
     const session = await validSession();
     if (!session) throw new Error("Accedi come gestore per usare i dati online");
+    if (session.refreshPending) throw new Error("Sessione ricordata. Riconnettiti a internet per aggiornare i dati.");
     const response = await fetch(`${configuration.url.replace(/\/$/, "")}${path}`, {
       method,
       headers: {
@@ -118,12 +133,47 @@
     return value;
   }
 
-  async function sendMagicLink(email) {
-    const redirectTo = `${location.origin}${location.pathname}`;
-    await rawRequest("/auth/v1/otp", {
+  async function signInWithPassword(email, password) {
+    const response = await rawRequest("/auth/v1/token?grant_type=password", {
       method: "POST",
-      body: { email, options: { emailRedirectTo: redirectTo } }
+      body: { email, password }
     });
+    const session = sessionFromResponse(response);
+    if (!session) throw new Error("Accesso non riuscito");
+    saveSession(session);
+    return session;
+  }
+
+  async function createPasswordAccount(email, password) {
+    const redirectTo = encodeURIComponent(authRedirectUrl());
+    const response = await rawRequest(`/auth/v1/signup?redirect_to=${redirectTo}`, {
+      method: "POST",
+      body: { email, password }
+    });
+    const session = sessionFromResponse(response);
+    if (session) saveSession(session);
+    return { confirmationRequired: !session, session };
+  }
+
+  async function sendPasswordRecovery(email) {
+    const redirectTo = encodeURIComponent(authRedirectUrl());
+    await rawRequest(`/auth/v1/recover?redirect_to=${redirectTo}`, {
+      method: "POST",
+      body: { email }
+    });
+  }
+
+  async function updatePassword(password) {
+    const session = await validSession();
+    if (!session || session.refreshPending) throw new Error("Apri di nuovo il collegamento di recupero con internet attivo.");
+    const user = await rawRequest("/auth/v1/user", {
+      method: "PUT",
+      accessToken: session.accessToken,
+      body: { password }
+    });
+    const updatedSession = { ...session, user: user || session.user, recovery: false };
+    saveSession(updatedSession);
+    return updatedSession;
   }
 
   async function currentAccess() {
@@ -321,6 +371,7 @@
     auditEvents,
     calendarDayProducts,
     calendarOverview,
+    createPasswordAccount,
     createTrailWithGeometry,
     configured,
     currentAccess,
@@ -328,7 +379,8 @@
     entities,
     loadSession,
     logout: () => saveSession(null),
-    sendMagicLink,
+    sendPasswordRecovery,
+    signInWithPassword,
     products,
     productBookings,
     saveProduct,
@@ -343,6 +395,7 @@
     titleChecks,
     trailGeometry,
     uploadTrailSource,
+    updatePassword,
     validateAndPublishTrail,
     validSession
   });

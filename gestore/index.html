@@ -7,13 +7,13 @@
     <title>Sentieri d'Abruzzo · Console Gestore</title>
     <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.5.0/dist/maplibre-gl.css" />
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="admin.css?v=16" />
+    <link rel="stylesheet" href="admin.css?v=19" />
     <script defer src="https://unpkg.com/maplibre-gl@5.5.0/dist/maplibre-gl.js"></script>
     <script defer src="theme-config.js"></script>
     <script defer src="map-config.js"></script>
-    <script defer src="supabase-config.js"></script>
-    <script defer src="admin-supabase.js?v=5"></script>
-    <script defer src="admin-session.js?v=2"></script>
+    <script defer src="supabase-config.js?v=2"></script>
+    <script defer src="admin-supabase.js?v=6"></script>
+    <script defer src="admin-session.js?v=4"></script>
     <script defer src="admin-operations.js?v=2"></script>
     <script defer src="admin-roles.js?v=2"></script>
     <script defer src="manager-access-model.js?v=3"></script>
@@ -28,7 +28,10 @@
       <div>
         <h1>Sentieri d'Abruzzo · Console Gestore</h1>
       </div>
-      <a class="outline admin-user-link" href="../" target="_blank" rel="noopener">Apri pagina utente</a>
+      <div class="admin-header-actions">
+        <a class="outline admin-user-link" data-local-user-app href="../#download" target="_blank" rel="noopener">Scarica app utente</a>
+        <a class="outline admin-user-link" data-landing-page href="../" target="_blank" rel="noopener">Landing page</a>
+      </div>
     </header>
 
     <main class="admin-layout">
@@ -42,9 +45,28 @@
             <span>Email personale</span>
             <input id="manager-login-email" type="email" placeholder="nome@ente.it" autocomplete="email" required />
           </label>
-          <button type="submit" class="primary">Ricevi il link di accesso</button>
+          <label class="admin-field">
+            <span>Password</span>
+            <input id="manager-login-password" type="password" autocomplete="current-password" required />
+          </label>
+          <button type="submit" class="primary">Accedi</button>
         </form>
-        <button id="manager-logout" type="button" class="outline" hidden>Esci</button>
+        <div class="manager-session-actions">
+          <button id="manager-first-access" type="button" class="outline">Primo accesso</button>
+          <button id="manager-forgot-password" type="button" class="text-button">Password dimenticata</button>
+          <button id="manager-logout" type="button" class="outline" hidden>Esci</button>
+        </div>
+        <form id="manager-password-form" class="manager-password-form" hidden>
+          <label class="admin-field">
+            <span>Nuova password</span>
+            <input id="manager-new-password" type="password" autocomplete="new-password" minlength="8" required />
+          </label>
+          <label class="admin-field">
+            <span>Ripeti la password</span>
+            <input id="manager-confirm-password" type="password" autocomplete="new-password" minlength="8" required />
+          </label>
+          <button type="submit" class="primary">Salva nuova password</button>
+        </form>
         <p id="manager-login-message" class="admin-message" aria-live="polite"></p>
       </section>
 
