@@ -33,7 +33,7 @@
     }
     if (source.includes("password") && source.includes("least")) return "Scegli una password di almeno 8 caratteri.";
     if (!navigator.onLine || source.includes("failed to fetch") || source.includes("network")) {
-      if (firstAccess) return "Per il primo accesso serve internet. Controlla la connessione e riprova.";
+      if (firstAccess) return "Per registrarti serve internet. Controlla la connessione e riprova.";
       return "Nessuna connessione. La sessione già memorizzata non viene cancellata.";
     }
     return error?.message || fallback;
