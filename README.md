@@ -40,11 +40,9 @@ La 0.24.0 rende più leggibili mappa e profilo, usa la scala delle pendenze dal 
 sincronizza correttamente il cursore planimetrico e altimetrico, irrobustisce la pulizia dei punti GPS
 e completa modifica e cancellazione sincronizzata dei percorsi personali.
 
-Per conservare le tracce reali presenti nella linea storica occorre installare, senza disinstallare la
-vecchia app, prima `01-Ponte-Tracce-Sentieri.apk` e poi `02-Sentieri-Abruzzo-0.24-arm64.apk`. La nuova app
-importa soltanto le registrazioni dell’account proprietario verificato; non trasferisce prenotazioni,
-recensioni, copertura, eventi, impostazioni, cache o fotografie locali. Dopo aver verificato in Storico il
-cartello di recupero e almeno una traccia sulla mappa, la vecchia app può essere rimossa.
+La distribuzione usa un solo APK completo: `02-Sentieri-Abruzzo-0.24-arm64.apk`. Il pacchetto include
+applicazione, mappe e dati territoriali offline. Installato sopra una versione precedente della stessa
+edizione, conserva tracce, profilo e dati personali.
 
 1. Apri la pagina pubblica da Android.
 2. Se hai la vecchia app, installa i due APK nell'ordine numerato; per una prima installazione usa soltanto il secondo.
