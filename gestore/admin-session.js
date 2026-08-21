@@ -8,6 +8,7 @@
   const socialLogin = document.getElementById("manager-social-login");
   const googleLogin = document.getElementById("manager-login-google");
   const facebookLogin = document.getElementById("manager-login-facebook");
+  const appleLogin = document.getElementById("manager-login-apple");
   const firstAccess = document.getElementById("manager-first-access");
   const forgotPassword = document.getElementById("manager-forgot-password");
   const passwordForm = document.getElementById("manager-password-form");
@@ -35,7 +36,7 @@
   const message = document.getElementById("manager-login-message");
   const navigation = document.querySelector(".manager-section-nav");
   const consoleContent = document.querySelector(".manager-folder-content");
-  if (!api || !form || !email || !password || !socialLogin || !googleLogin || !facebookLogin ||
+  if (!api || !form || !email || !password || !socialLogin || !googleLogin || !facebookLogin || !appleLogin ||
       !firstAccess || !forgotPassword || !passwordForm ||
       !newPassword || !confirmPassword || !logout || !sessionPanel || !account || !accountToggle ||
       !accountMenu || !accountAvatar || !accountEmail || !accountRole || !accountLink || !profileForm ||
@@ -52,7 +53,8 @@
       const settings = await api.authSettings();
       googleLogin.hidden = !settings?.external?.google;
       facebookLogin.hidden = !settings?.external?.facebook;
-      socialLogin.hidden = googleLogin.hidden && facebookLogin.hidden;
+      appleLogin.hidden = !settings?.external?.apple;
+      socialLogin.hidden = googleLogin.hidden && facebookLogin.hidden && appleLogin.hidden;
     } catch {
       socialLogin.hidden = true;
     }
@@ -261,6 +263,7 @@
 
   googleLogin.addEventListener("click", () => api.signInWithSocial("google"));
   facebookLogin.addEventListener("click", () => api.signInWithSocial("facebook"));
+  appleLogin.addEventListener("click", () => api.signInWithSocial("apple"));
 
   document.querySelectorAll("[data-password-toggle]").forEach((toggle) => {
     toggle.addEventListener("click", () => {

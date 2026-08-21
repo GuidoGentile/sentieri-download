@@ -149,7 +149,7 @@
   }
 
   function signInWithSocial(provider) {
-    if (!new Set(["google", "facebook"]).has(provider)) throw new Error("Provider di accesso non supportato");
+    if (!new Set(["google", "facebook", "apple"]).has(provider)) throw new Error("Provider di accesso non supportato");
     if (!configured()) throw new Error("Supabase non configurato");
     const authorizeUrl = new URL(configuration.url.replace(/\/$/, "") + "/auth/v1/authorize");
     authorizeUrl.searchParams.set("provider", provider);

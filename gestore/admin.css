@@ -2449,6 +2449,11 @@
   color: #ffffff;
 }
 
+.social-login-button--apple {
+  background: #000000;
+  color: #ffffff;
+}
+
 .manager-login-divider {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
