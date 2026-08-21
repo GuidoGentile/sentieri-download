@@ -139,7 +139,7 @@
       const result = await api.createPasswordAccount(email.value.trim(), password.value);
       password.value = "";
       if (result.confirmationRequired) {
-        showMessage("Account creato. Conferma una sola volta l’indirizzo dall’email ricevuta, poi usa la password.");
+        showMessage("Se l’indirizzo è nuovo, riceverai l’email di conferma. Se eri già registrato, premi Accedi: non viene inviata un’altra email.");
       } else {
         await renderSession();
       }
