@@ -2203,7 +2203,13 @@
 }
 
 .manager-password-form[hidden] {
-  display: none;
+  display: none !important;
+}
+
+.manager-login-form[hidden],
+.manager-session-actions [hidden],
+#manager-session-status[hidden] {
+  display: none !important;
 }
 
 .manager-session-panel > .admin-message {
