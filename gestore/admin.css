@@ -6,10 +6,10 @@
 .admin-header {
   max-width: 1240px;
   margin: 0 auto;
-  padding: 2rem 1.25rem 1.2rem;
+  padding: 0.9rem 1.25rem 0.7rem;
   display: flex;
   justify-content: space-between;
-  align-items: end;
+  align-items: center;
   gap: 1rem;
 }
 
@@ -19,15 +19,43 @@
 }
 
 .admin-header h1 {
-  font-size: clamp(2rem, 5vw, 3.6rem);
-  line-height: 1;
-  margin: 0.35rem 0 0.7rem;
+  min-width: 0;
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  line-height: 1.15;
+  margin: 0;
+  white-space: nowrap;
 }
 
-.admin-user-link {
-  min-height: 46px;
-  padding-inline: 1rem;
-  background: var(--surface);
+.admin-header-brand {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.admin-header-logo {
+  width: 56px;
+  height: 56px;
+  flex: 0 0 56px;
+  object-fit: contain;
+}
+
+.admin-external-link {
+  color: var(--primary);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+}
+
+.admin-external-link::after {
+  content: " \2197";
+  font-size: 0.8em;
+}
+
+.admin-external-link:hover,
+.admin-external-link:focus-visible {
+  text-decoration-thickness: 2px;
 }
 
 .admin-header-actions {
@@ -2049,6 +2077,31 @@
     flex-direction: column;
   }
 
+  .admin-header {
+    gap: 0.65rem;
+    padding-inline: 1rem;
+  }
+
+  .admin-header-brand {
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  .admin-header-logo {
+    width: 40px;
+    height: 40px;
+    flex-basis: 40px;
+  }
+
+  .admin-header h1 {
+    font-size: clamp(0.74rem, 3.8vw, 1rem);
+  }
+
+  .admin-header-actions {
+    align-self: flex-end;
+    font-size: 0.9rem;
+  }
+
   .two-columns,
   .color-grid {
     grid-template-columns: 1fr;
@@ -2156,11 +2209,13 @@
 }
 .manager-session-panel {
   grid-column: 1 / -1;
+  width: min(100%, 640px);
+  margin: 1rem auto;
   min-width: 0;
   display: grid;
-  grid-template-columns: minmax(220px, 0.8fr) minmax(480px, 1.6fr) auto;
-  gap: 20px;
-  align-items: end;
+  grid-template-columns: 1fr;
+  gap: 1.15rem;
+  align-items: stretch;
 }
 
 .manager-session-panel h2,
@@ -2168,33 +2223,49 @@
   margin-bottom: 0;
 }
 
+.manager-session-panel h2 {
+  font-size: clamp(1.65rem, 4vw, 2.2rem);
+}
+
 .manager-login-form {
   min-width: 0;
   display: grid;
-  grid-template-columns: minmax(190px, 1fr) minmax(170px, 0.8fr) auto;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  align-items: stretch;
+}
+
+.manager-login-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 12px;
-  align-items: end;
+  margin-top: 0.25rem;
+}
+
+.manager-login-actions button {
+  width: 100%;
+}
+
+.manager-forgot-password {
+  justify-self: end;
+  border: 0;
+  background: transparent;
+  color: var(--primary);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  padding: 0.2rem 0;
+  cursor: pointer;
 }
 
 .manager-session-actions {
   display: flex;
-  flex-direction: column;
-  align-items: stretch;
+  justify-content: flex-end;
   gap: 0.45rem;
 }
 
-.manager-session-actions .text-button {
-  border: 0;
-  background: transparent;
-  color: var(--primary);
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
-  padding: 0.4rem;
-  cursor: pointer;
-}
-
 .manager-password-form {
-  grid-column: 2 / -1;
   min-width: 0;
   display: grid;
   grid-template-columns: minmax(180px, 1fr) minmax(180px, 1fr) auto;
@@ -2234,13 +2305,7 @@
   }
 
   .admin-header-actions {
-    width: 100%;
-    justify-content: stretch;
-  }
-
-  .admin-header-actions a {
-    flex: 1;
-    text-align: center;
+    width: auto;
   }
 }
 .calendar-day--unconfigured {
