@@ -1,5 +1,18 @@
 # Note di versione
 
+## 0.24.0 affidabilità sul campo — 21 agosto 2026
+
+- le mappe aumentano la leggibilità di etichette, cime, curve di livello e rete dei sentieri; bussola, freccia e scala chilometrica seguono correttamente orientamento e zoom;
+- mappa e profilo altimetrico usano la stessa posizione lungo il percorso e una scala assoluta a sei fasce: blu 0–5%, celeste 5–10%, verde 10–15%, giallo 15–20%, arancio 20–25%, rosso oltre il 25%;
+- la registrazione scarta punti con precisione insufficiente, salti oltre 50 km/h e brevi escursioni GPS impossibili, mantenendo recuperabili le sessioni interrotte;
+- i percorsi personali possono sempre cambiare nome, giudizio, ricordo e fotografie oppure essere eliminati integralmente; una cancellazione offline resta in attesa e viene applicata anche alla copia Supabase;
+- il catalogo pubblico consolida ulteriori fasce duplicate e contiene 1.163 card canoniche, 339 identità CAI e profili altimetrici completi, senza perdere osservazioni e varianti destinate al gestore;
+- Attrazioni mantiene la stessa pagina tra lista e mappa, mostra il conteggio come informazione secondaria, semplifica i filtri per area e dispone di 973 riferimenti fotografici remoti senza incorporare immagini nell’APK;
+- la galleria delle attrazioni elimina l’etichetta ridondante `Online`.
+
+La 0.24.0 usa `it.sentieri.abruzzo`, `versionCode 34` e lo stesso certificato della 0.23. Può quindi
+essere installata sopra Sentieri d’Abruzzo senza disinstallare l’app e senza perdere database, tracce o dati offline.
+
 ## 0.23.0 qualità dei cataloghi — 20 agosto 2026
 
 - la sezione Attrazioni mantiene la stessa vista passando da mappa a elenco e mostra sempre quanti luoghi risultano visibili sul totale;

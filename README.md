@@ -8,9 +8,9 @@ base descrittiva dell'opera software, mantenendo distinti componenti realizzati,
 
 ## Android
 
-La release attuale è una **build sperimentale 0.23.0 ARM64**, distribuita fuori
-dal Play Store per test controllati. L’APK contiene un catalogo offline di 1.208 percorsi
-canonici abruzzesi, con 334 identità CAI documentate e fonti storiche conservate,
+La release attuale è una **build sperimentale 0.24.0 ARM64**, distribuita fuori
+dal Play Store per test controllati. L’APK contiene un catalogo offline di 1.163 percorsi
+canonici abruzzesi, con 339 identità CAI documentate e fonti storiche conservate,
 cartografia vettoriale offline, profili altimetrici e registrazione GPS predisposta per continuare
 anche a schermo spento. Dal menu `Registra` si può creare un percorso personale privato e vederlo
 crescere sulla mappa; al termine può essere completato con stelle, ricordo e fino a 5 foto private,
@@ -24,7 +24,7 @@ prolungate agli estremi e code in automobile successive a una sosta. La copia
 resta sul telefono e, quando torna la rete, viene copiata nell'identità privata su Supabase. Dalla pagina
 `Account` si vede lo stato del backup, si può sincronizzare subito e si recuperano nel database locale
 le tracce già inviate. Una copia remota più vecchia non sostituisce mai quella locale. Le tracce personali
-si possono rinominare e consultare con la stessa sequenza panoramica, mappa dinamica e profilo. La mappa
+si possono modificare nel nome, nel giudizio, nel ricordo e nelle foto, eliminare anche dal backup e consultare con la stessa sequenza panoramica, mappa dinamica e profilo. La mappa
 offre inoltre ripristino del nord, centratura della posizione e livelli separati per cime e valichi.
 Sul percorso pilota A1 anche calendario, capienza, prenotazione gratuita e titolo QR provengono dal server;
 gli altri percorsi sono dichiarati non configurati finché il gestore non pubblica una regola.
@@ -36,9 +36,12 @@ territoriale. La 0.22.0 crea l'edizione regionale definitiva `it.sentieri.abruzz
 dimostrativi personali dalla nuova installazione. La 0.23.0 corregge e documenta le coordinate
 delle attrazioni, rende coerenti le viste mappa ed elenco, usa checkbox nei filtri multipli e
 semplifica per l'escursionista le informazioni tecniche sulle geometrie dei percorsi.
+La 0.24.0 rende più leggibili mappa e profilo, usa la scala delle pendenze dal blu al rosso,
+sincronizza correttamente il cursore planimetrico e altimetrico, irrobustisce la pulizia dei punti GPS
+e completa modifica e cancellazione sincronizzata dei percorsi personali.
 
 Per conservare le tracce reali presenti nella linea storica occorre installare, senza disinstallare la
-vecchia app, prima `01-Ponte-Tracce-Sentieri.apk` e poi `02-Sentieri-Abruzzo-0.23-arm64.apk`. La nuova app
+vecchia app, prima `01-Ponte-Tracce-Sentieri.apk` e poi `02-Sentieri-Abruzzo-0.24-arm64.apk`. La nuova app
 importa soltanto le registrazioni dell’account proprietario verificato; non trasferisce prenotazioni,
 recensioni, copertura, eventi, impostazioni, cache o fotografie locali. Dopo aver verificato in Storico il
 cartello di recupero e almeno una traccia sulla mappa, la vecchia app può essere rimossa.
