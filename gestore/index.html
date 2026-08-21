@@ -7,13 +7,13 @@
     <title>Sentieri d'Abruzzo · Console Gestore</title>
     <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.5.0/dist/maplibre-gl.css" />
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="admin.css?v=21" />
+    <link rel="stylesheet" href="admin.css?v=22" />
     <script defer src="https://unpkg.com/maplibre-gl@5.5.0/dist/maplibre-gl.js"></script>
     <script defer src="theme-config.js"></script>
     <script defer src="map-config.js"></script>
     <script defer src="supabase-config.js?v=2"></script>
     <script defer src="admin-supabase.js?v=6"></script>
-    <script defer src="admin-session.js?v=5"></script>
+    <script defer src="admin-session.js?v=6"></script>
     <script defer src="admin-operations.js?v=2"></script>
     <script defer src="admin-roles.js?v=2"></script>
     <script defer src="manager-access-model.js?v=3"></script>
@@ -29,10 +29,23 @@
         <img class="admin-header-logo" src="../assets/sentieri-mark.png" alt="" width="56" height="56" />
         <h1>Sentieri d'Abruzzo · Console Gestore</h1>
       </div>
-      <nav class="admin-header-actions" aria-label="Collegamenti esterni">
-        <a class="admin-external-link" data-local-user-app href="../#download" target="_blank" rel="noopener">App utente</a>
-        <a class="admin-external-link" data-landing-page href="../" target="_blank" rel="noopener">Landing page</a>
-      </nav>
+      <div class="admin-header-tools">
+        <nav class="admin-header-actions" aria-label="Collegamenti esterni">
+          <a class="admin-external-link" data-local-user-app href="../#download" target="_blank" rel="noopener">App utente</a>
+          <a class="admin-external-link" data-landing-page href="../" target="_blank" rel="noopener">Landing page</a>
+        </nav>
+        <div id="manager-account" class="manager-account" hidden>
+          <button id="manager-account-toggle" class="manager-account-toggle" type="button" aria-label="Apri account" aria-expanded="false" aria-controls="manager-account-menu">
+            <span id="manager-account-avatar" aria-hidden="true">A</span>
+          </button>
+          <div id="manager-account-menu" class="manager-account-menu" hidden>
+            <span>Account</span>
+            <strong id="manager-account-email">—</strong>
+            <small id="manager-account-role">—</small>
+            <button id="manager-logout" type="button" class="outline">Esci</button>
+          </div>
+        </div>
+      </div>
     </header>
 
     <main class="admin-layout">
@@ -56,9 +69,7 @@
           </div>
           <button id="manager-forgot-password" type="button" class="manager-forgot-password">Password dimenticata?</button>
         </form>
-        <div class="manager-session-actions">
-          <button id="manager-logout" type="button" class="outline" hidden>Esci</button>
-        </div>
+
         <form id="manager-password-form" class="manager-password-form" hidden>
           <label class="admin-field">
             <span>Nuova password</span>
@@ -164,7 +175,7 @@
           <div>
             <h2 id="manager-trails-title">Percorsi nell’app</h2>
           </div>
-          <button id="add-manager-trail" type="button" class="primary">Aggiungi percorso</button>
+
         </div>
 
         <div class="trail-catalog-kpis" aria-live="polite">
@@ -200,6 +211,7 @@
               <option value="all">Tutte le fonti</option>
             </select>
           </label>
+          <button id="add-manager-trail" type="button" class="primary trail-add-button">Aggiungi percorso</button>
         </div>
 
         <div class="trail-catalog-summary">

@@ -11,13 +11,40 @@
   const newPassword = document.getElementById("manager-new-password");
   const confirmPassword = document.getElementById("manager-confirm-password");
   const logout = document.getElementById("manager-logout");
+  const sessionPanel = document.querySelector(".manager-session-panel");
+  const account = document.getElementById("manager-account");
+  const accountToggle = document.getElementById("manager-account-toggle");
+  const accountMenu = document.getElementById("manager-account-menu");
+  const accountAvatar = document.getElementById("manager-account-avatar");
+  const accountEmail = document.getElementById("manager-account-email");
+  const accountRole = document.getElementById("manager-account-role");
   const status = document.getElementById("manager-session-status");
   const title = document.getElementById("manager-session-title");
   const message = document.getElementById("manager-login-message");
   const navigation = document.querySelector(".manager-section-nav");
   const consoleContent = document.querySelector(".manager-folder-content");
   if (!api || !form || !email || !password || !firstAccess || !forgotPassword || !passwordForm ||
-      !newPassword || !confirmPassword || !logout || !status || !title || !message || !navigation || !consoleContent) return;
+      !newPassword || !confirmPassword || !logout || !sessionPanel || !account || !accountToggle ||
+      !accountMenu || !accountAvatar || !accountEmail || !accountRole || !status || !title ||
+      !message || !navigation || !consoleContent) return;
+
+  function closeAccountMenu() {
+    accountMenu.hidden = true;
+    accountToggle.setAttribute("aria-expanded", "false");
+  }
+
+  function hideAccount() {
+    closeAccountMenu();
+    account.hidden = true;
+  }
+
+  function showAccount(signedInEmail, roleLabel = "Account autenticato") {
+    const label = signedInEmail || "Account autenticato";
+    accountEmail.textContent = label;
+    accountRole.textContent = roleLabel;
+    accountAvatar.textContent = label.trim().charAt(0).toUpperCase() || "A";
+    account.hidden = false;
+  }
 
   function showMessage(text, error = false) {
     message.textContent = text;
@@ -45,6 +72,8 @@
   }
 
   function setSignedOutControls() {
+    sessionPanel.hidden = false;
+    hideAccount();
     form.hidden = false;
     firstAccess.hidden = false;
     forgotPassword.hidden = false;
@@ -63,6 +92,7 @@
       setSignedOutControls();
       title.textContent = "Login";
       showStatus();
+      showMessage("");
       return;
     }
 
@@ -70,32 +100,31 @@
     firstAccess.hidden = true;
     forgotPassword.hidden = true;
     logout.hidden = false;
+    passwordForm.hidden = true;
+    sessionPanel.hidden = true;
+    showAccount(signedInEmail, "Verifica dell’accesso…");
 
     if (session.recovery) {
+      sessionPanel.hidden = false;
       passwordForm.hidden = false;
       title.textContent = "Nuova password";
       showStatus(signedInEmail || "Account verificato");
+      showAccount(signedInEmail, "Recupero password");
       showMessage("");
       return;
     }
 
-    passwordForm.hidden = true;
     if (session.refreshPending) {
-      title.textContent = "Sessione ricordata";
-      showStatus(`${signedInEmail || "Account autenticato"} · riconnettiti per aggiornare i dati`);
-      showMessage("La sessione resta memorizzata su questo dispositivo.");
+      showAccount(signedInEmail, "Sessione memorizzata · dati online non disponibili");
       return;
     }
 
-    title.textContent = "Verifica dell’accesso";
-    showStatus("Controllo delle autorizzazioni in corso…");
     try {
       const access = await api.currentAccess();
       if (!access.length) throw new Error("Account autenticato ma privo di un ruolo attivo.");
       const superadmin = access.some((item) => item.staff_role === "superadmin");
       const roleLabel = superadmin ? "Superadmin" : access.map((item) => item.staff_role).join(", ");
-      title.textContent = "Sessione attiva";
-      showStatus(`${signedInEmail || "Account autenticato"} · ${roleLabel}`);
+      showAccount(signedInEmail, roleLabel);
       navigation.hidden = false;
       consoleContent.hidden = false;
       document.body.classList.add("manager-online");
@@ -103,9 +132,13 @@
       window.dispatchEvent(new CustomEvent("sentieri:manager-online", { detail: { access, session } }));
     } catch (error) {
       if (!navigator.onLine || String(error?.message || "").includes("Sessione ricordata")) {
-        title.textContent = "Sessione ricordata";
-        showStatus(`${signedInEmail || "Account autenticato"} · dati online non disponibili`);
+        sessionPanel.hidden = true;
+        showAccount(signedInEmail, "Sessione memorizzata · dati online non disponibili");
+        return;
       }
+      sessionPanel.hidden = false;
+      title.textContent = "Accesso non autorizzato";
+      showStatus(signedInEmail || "Account autenticato");
       showMessage(readableError(error, "Account non autorizzato alla gestione."), true);
     }
   }
@@ -178,9 +211,24 @@
   });
 
   logout.addEventListener("click", () => {
+    closeAccountMenu();
     api.logout();
     showMessage("");
     renderSession();
+  });
+
+  accountToggle.addEventListener("click", () => {
+    const open = accountMenu.hidden;
+    accountMenu.hidden = !open;
+    accountToggle.setAttribute("aria-expanded", String(open));
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!account.contains(event.target)) closeAccountMenu();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeAccountMenu();
   });
 
   window.addEventListener("online", renderSession);
