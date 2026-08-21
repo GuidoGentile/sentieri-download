@@ -24,6 +24,11 @@
     message.classList.toggle("admin-message--error", error);
   }
 
+  function showStatus(text = "") {
+    status.textContent = text;
+    status.hidden = !text;
+  }
+
   function readableError(error, fallback, { firstAccess = false } = {}) {
     const source = String(error?.message || "").toLowerCase();
     if (source.includes("invalid login credentials")) return "Email o password non corrette.";
@@ -57,7 +62,7 @@
     if (!session) {
       setSignedOutControls();
       title.textContent = "Accedi";
-      status.textContent = "Email personale e password.";
+      showStatus();
       return;
     }
 
@@ -69,7 +74,7 @@
     if (session.recovery) {
       passwordForm.hidden = false;
       title.textContent = "Nuova password";
-      status.textContent = signedInEmail || "Account verificato";
+      showStatus(signedInEmail || "Account verificato");
       showMessage("");
       return;
     }
@@ -77,20 +82,20 @@
     passwordForm.hidden = true;
     if (session.refreshPending) {
       title.textContent = "Sessione ricordata";
-      status.textContent = `${signedInEmail || "Account autenticato"} · riconnettiti per aggiornare i dati`;
+      showStatus(`${signedInEmail || "Account autenticato"} · riconnettiti per aggiornare i dati`);
       showMessage("La sessione resta memorizzata su questo dispositivo.");
       return;
     }
 
     title.textContent = "Verifica dell’accesso";
-    status.textContent = "Controllo delle autorizzazioni in corso…";
+    showStatus("Controllo delle autorizzazioni in corso…");
     try {
       const access = await api.currentAccess();
       if (!access.length) throw new Error("Account autenticato ma privo di un ruolo attivo.");
       const superadmin = access.some((item) => item.staff_role === "superadmin");
       const roleLabel = superadmin ? "Superadmin" : access.map((item) => item.staff_role).join(", ");
       title.textContent = "Sessione attiva";
-      status.textContent = `${signedInEmail || "Account autenticato"} · ${roleLabel}`;
+      showStatus(`${signedInEmail || "Account autenticato"} · ${roleLabel}`);
       navigation.hidden = false;
       consoleContent.hidden = false;
       document.body.classList.add("manager-online");
@@ -99,7 +104,7 @@
     } catch (error) {
       if (!navigator.onLine || String(error?.message || "").includes("Sessione ricordata")) {
         title.textContent = "Sessione ricordata";
-        status.textContent = `${signedInEmail || "Account autenticato"} · dati online non disponibili`;
+        showStatus(`${signedInEmail || "Account autenticato"} · dati online non disponibili`);
       }
       showMessage(readableError(error, "Account non autorizzato alla gestione."), true);
     }
