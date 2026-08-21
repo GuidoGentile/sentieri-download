@@ -1,5 +1,18 @@
 # Note di versione
 
+## 0.25.0 rete e cartografia regionale — 21 agosto 2026
+
+- un unico APK completo sostituisce definitivamente il vecchio flusso con build ponte; l’installazione sopra la 0.24 conserva database, tracce e dati personali;
+- la base vettoriale offline copre un contesto di 280 km e un dettaglio di 180 km centrati sull’Abruzzo, senza fasce vuote a nord o a sud e senza sparizioni passando agli zoom superiori;
+- tutte le dodici tile DEM TINITALY disponibili generano curve ogni 10 m e direttrici ogni 50 m; allo zoom ravvicinato ogni curva può mostrare la quota;
+- il catalogo diventa una rete: 1.256 bivi reali sono riconosciuti dalle geometrie e mostrano i codici dei percorsi collegati;
+- 8.905 cartellini sentiero sono distribuiti sui tratti tra i bivi; il tratteggio rosso e bianco usa segmenti più lunghi e leggibili;
+- l’identità ufficiale resta separata dalla geometria: 28 tracciati ufficiali adottano OpenStreetMap soltanto quando la coincidenza è forte e il rilievo è sensibilmente più preciso, conservando sempre l’originale per il gestore;
+- il confine dell’Abruzzo e le 28 aree operative sono livelli autonomi; la mappa generale mantiene costa, Roma e Tavoliere come riferimenti di contesto;
+- le testate con azione a destra centrano il titolo nello spazio tra i comandi; il controllo informativo MapLibre non occupa più la mappa.
+
+La 0.25.0 usa `it.sentieri.abruzzo`, `versionCode 35` e lo stesso certificato della 0.24. Il solo file da scaricare è `02-Sentieri-Abruzzo-0.25-arm64.apk`.
+
 ## 0.24.0 affidabilità sul campo — 21 agosto 2026
 
 - le mappe aumentano la leggibilità di etichette, cime, curve di livello e rete dei sentieri; bussola, freccia e scala chilometrica seguono correttamente orientamento e zoom;
