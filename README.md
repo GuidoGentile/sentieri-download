@@ -8,7 +8,7 @@ base descrittiva dell'opera software, mantenendo distinti componenti realizzati,
 
 ## Android
 
-La release attuale è una **build sperimentale 0.25.0 ARM64**, distribuita fuori
+La release attuale è una **build sperimentale 0.26.0 ARM64**, distribuita fuori
 dal Play Store per test controllati. L’APK contiene un catalogo offline di 1.163 percorsi
 canonici abruzzesi, con 339 identità CAI documentate e fonti storiche conservate,
 cartografia vettoriale offline, profili altimetrici e registrazione GPS predisposta per continuare
@@ -39,13 +39,14 @@ semplifica per l'escursionista le informazioni tecniche sulle geometrie dei perc
 La 0.25.0 estende la base vettoriale e le curve TINITALY a tutto l’Abruzzo, introduce bivi di rete e codici sentiero meglio distribuiti, e usa la scala delle pendenze dal blu al rosso,
 sincronizza correttamente il cursore planimetrico e altimetrico, irrobustisce la pulizia dei punti GPS
 e completa modifica e cancellazione sincronizzata dei percorsi personali.
+La 0.26.0 amplia le gallerie delle 679 attrazioni a 1.350 riferimenti fotografici remoti, mantenendo immagini e relativi file fuori dal database e dall’APK.
 
-La distribuzione usa un solo APK completo: `02-Sentieri-Abruzzo-0.25-arm64.apk`. Non esiste più un APK ponte: il pacchetto unico include
+La distribuzione usa un solo APK completo: `02-Sentieri-Abruzzo-0.26-arm64.apk`. Non esiste più un APK ponte: il pacchetto unico include
 applicazione, mappe e dati territoriali offline. Installato sopra una versione precedente della stessa
 edizione, conserva tracce, profilo e dati personali.
 
 1. Apri la pagina pubblica da Android.
-2. Se hai la vecchia app, installa i due APK nell'ordine numerato; per una prima installazione usa soltanto il secondo.
+2. Scarica l’unico APK completo; se Sentieri d’Abruzzo è già installata, installalo sopra la versione corrente senza disinstallare.
 3. Se richiesto, consenti al browser di installare app dalla sorgente corrente.
 4. Apri `Sentieri d’Abruzzo` e, in caso di migrazione, controlla subito lo Storico.
 

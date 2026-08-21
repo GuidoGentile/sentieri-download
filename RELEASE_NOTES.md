@@ -1,5 +1,15 @@
 # Note di versione
 
+## 0.26.0 gallerie delle attrazioni — 21 agosto 2026
+
+- il catalogo conserva 679 attrazioni e passa da 973 a 1.350 riferimenti fotografici remoti;
+- 481 attrazioni dispongono ora di almeno due immagini, senza riempire le lacune con stemmi, mappe amministrative o immagini generiche;
+- Abruzzo Turismo resta la fonte principale e Wikimedia Commons integra le gallerie conservando pagina sorgente, autore e licenza;
+- le immagini restano esterne all’app e richiedono connessione: non entrano nel database, nell’APK o nei pacchetti territoriali;
+- cache, segnaposto, riprova manuale e rispetto delle attese richieste dalla fonte rendono più robusto il caricamento.
+
+La 0.26.0 usa `it.sentieri.abruzzo`, `versionCode 36` e lo stesso certificato della 0.25. Il solo file da scaricare è `02-Sentieri-Abruzzo-0.26-arm64.apk`.
+
 ## 0.25.0 rete e cartografia regionale — 21 agosto 2026
 
 - un unico APK completo sostituisce definitivamente il vecchio flusso con build ponte; l’installazione sopra la 0.24 conserva database, tracce e dati personali;
