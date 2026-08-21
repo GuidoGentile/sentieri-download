@@ -61,7 +61,7 @@
 
     if (!session) {
       setSignedOutControls();
-      title.textContent = "Accedi";
+      title.textContent = "Login";
       showStatus();
       return;
     }
