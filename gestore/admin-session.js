@@ -27,6 +27,13 @@
   const profileBack = document.getElementById("manager-account-back");
   const profileAvatar = document.getElementById("manager-profile-avatar");
   const profilePhoto = document.getElementById("manager-profile-photo");
+  const profileCamera = document.getElementById("manager-profile-camera");
+  const profileCameraPanel = document.getElementById("manager-profile-camera-panel");
+  const profileCameraVideo = document.getElementById("manager-profile-camera-video");
+  const profileCameraCanvas = document.getElementById("manager-profile-camera-canvas");
+  const profileCameraCapture = document.getElementById("manager-profile-camera-capture");
+  const profileCameraClose = document.getElementById("manager-profile-camera-close");
+  const profileCameraMessage = document.getElementById("manager-profile-camera-message");
   const profileName = document.getElementById("manager-profile-name");
   const profileEmail = document.getElementById("manager-profile-email");
   const profileRole = document.getElementById("manager-profile-role");
@@ -40,13 +47,42 @@
       !firstAccess || !forgotPassword || !passwordForm ||
       !newPassword || !confirmPassword || !logout || !sessionPanel || !account || !accountToggle ||
       !accountMenu || !accountAvatar || !accountEmail || !accountRole || !accountLink || !profileForm ||
-      !profileBack || !profileAvatar || !profilePhoto || !profileName || !profileEmail || !profileRole ||
+      !profileBack || !profileAvatar || !profilePhoto || !profileCamera || !profileCameraPanel ||
+      !profileCameraVideo || !profileCameraCanvas || !profileCameraCapture || !profileCameraClose ||
+      !profileCameraMessage || !profileName || !profileEmail || !profileRole ||
       !profileMessage || !status || !title ||
       !message || !navigation || !consoleContent) return;
 
   let activeSession = null;
   let activeRoleLabel = "Account autenticato";
   let activeAvatarUrl = "";
+  let pendingProfilePhoto = null;
+  let profilePreviewUrl = "";
+  let profileCameraStream = null;
+
+  function releaseProfilePreview() {
+    if (profilePreviewUrl) URL.revokeObjectURL(profilePreviewUrl);
+    profilePreviewUrl = "";
+  }
+
+  function previewProfilePhoto(file) {
+    releaseProfilePreview();
+    if (!file) {
+      renderProfile();
+      return;
+    }
+    profilePreviewUrl = URL.createObjectURL(file);
+    profileAvatar.style.backgroundImage = "url(" + JSON.stringify(profilePreviewUrl) + ")";
+    profileAvatar.textContent = "";
+  }
+
+  function stopProfileCamera() {
+    profileCameraStream?.getTracks().forEach((track) => track.stop());
+    profileCameraStream = null;
+    profileCameraVideo.srcObject = null;
+    profileCameraPanel.hidden = true;
+    profileCameraMessage.textContent = "";
+  }
 
   async function renderSocialProviders() {
     try {
@@ -308,28 +344,83 @@
   });
 
   profileBack.addEventListener("click", () => {
+    stopProfileCamera();
+    pendingProfilePhoto = null;
+    profilePhoto.value = "";
+    releaseProfilePreview();
     document.querySelector('[data-manager-tab="trails"]')?.click();
   });
 
   profilePhoto.addEventListener("change", () => {
-    const file = profilePhoto.files?.[0];
-    if (!file) {
-      renderProfile();
-      return;
-    }
-    const previewUrl = URL.createObjectURL(file);
-    profileAvatar.style.backgroundImage = `url(${JSON.stringify(previewUrl)})`;
-    profileAvatar.textContent = "";
+    pendingProfilePhoto = profilePhoto.files?.[0] || null;
+    previewProfilePhoto(pendingProfilePhoto);
   });
 
+  profileCamera.addEventListener("click", async () => {
+    profileCameraPanel.hidden = false;
+    profileCameraMessage.textContent = "Apertura della fotocamera…";
+    profileCameraMessage.classList.remove("admin-message--error");
+    try {
+      if (!navigator.mediaDevices?.getUserMedia) throw new Error("Fotocamera non disponibile in questo browser.");
+      stopProfileCamera();
+      profileCameraPanel.hidden = false;
+      profileCameraMessage.textContent = "Autorizza l’uso della fotocamera.";
+      profileCameraStream = await navigator.mediaDevices.getUserMedia({
+        audio: false,
+        video: { facingMode: "user", width: { ideal: 1280 }, height: { ideal: 1280 } }
+      });
+      profileCameraVideo.srcObject = profileCameraStream;
+      await profileCameraVideo.play();
+      profileCameraMessage.textContent = "Inquadra il volto e premi Scatta.";
+    } catch (error) {
+      stopProfileCamera();
+      profileCameraPanel.hidden = false;
+      profileCameraMessage.textContent = error?.message || "Impossibile aprire la fotocamera.";
+      profileCameraMessage.classList.add("admin-message--error");
+    }
+  });
+
+  profileCameraCapture.addEventListener("click", async () => {
+    const sourceWidth = profileCameraVideo.videoWidth;
+    const sourceHeight = profileCameraVideo.videoHeight;
+    if (!sourceWidth || !sourceHeight) {
+      profileCameraMessage.textContent = "La fotocamera non è ancora pronta.";
+      profileCameraMessage.classList.add("admin-message--error");
+      return;
+    }
+    const scale = Math.min(1, 1024 / Math.max(sourceWidth, sourceHeight));
+    profileCameraCanvas.width = Math.max(1, Math.round(sourceWidth * scale));
+    profileCameraCanvas.height = Math.max(1, Math.round(sourceHeight * scale));
+    const context = profileCameraCanvas.getContext("2d");
+    if (!context) {
+      profileCameraMessage.textContent = "Impossibile acquisire la foto.";
+      profileCameraMessage.classList.add("admin-message--error");
+      return;
+    }
+    context.drawImage(profileCameraVideo, 0, 0, profileCameraCanvas.width, profileCameraCanvas.height);
+    const blob = await new Promise((resolve) => profileCameraCanvas.toBlob(resolve, "image/jpeg", 0.88));
+    if (!blob) {
+      profileCameraMessage.textContent = "Impossibile acquisire la foto.";
+      profileCameraMessage.classList.add("admin-message--error");
+      return;
+    }
+    pendingProfilePhoto = new File([blob], "avatar-" + Date.now() + ".jpg", { type: "image/jpeg" });
+    profilePhoto.value = "";
+    previewProfilePhoto(pendingProfilePhoto);
+    stopProfileCamera();
+  });
+
+  profileCameraClose.addEventListener("click", stopProfileCamera);
   profileForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     profileMessage.textContent = "Salvataggio…";
     profileMessage.classList.remove("admin-message--error");
     try {
-      activeSession = await api.updateProfile(profileName.value, profilePhoto.files?.[0] || null);
+      activeSession = await api.updateProfile(profileName.value, pendingProfilePhoto);
       activeAvatarUrl = await api.profileAvatarUrl(activeSession.user) || activeAvatarUrl;
       profilePhoto.value = "";
+      pendingProfilePhoto = null;
+      releaseProfilePreview();
       renderProfile();
       showAccount(activeSession?.user?.email, activeRoleLabel);
       profileMessage.textContent = "Account aggiornato.";
@@ -358,6 +449,7 @@
     renderSession();
   });
   window.addEventListener("sentieri:supabase-session-changed", renderSession);
+  window.addEventListener("pagehide", stopProfileCamera);
   renderSocialProviders();
   renderSession();
 })();

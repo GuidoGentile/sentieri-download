@@ -7,13 +7,13 @@
     <title>Sentieri d'Abruzzo · Console Gestore</title>
     <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.5.0/dist/maplibre-gl.css" />
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="admin.css?v=24" />
+    <link rel="stylesheet" href="admin.css?v=25" />
     <script defer src="https://unpkg.com/maplibre-gl@5.5.0/dist/maplibre-gl.js"></script>
     <script defer src="theme-config.js"></script>
     <script defer src="map-config.js"></script>
     <script defer src="supabase-config.js?v=2"></script>
     <script defer src="admin-supabase.js?v=8"></script>
-    <script defer src="admin-session.js?v=8"></script>
+    <script defer src="admin-session.js?v=9"></script>
     <script defer src="admin-operations.js?v=2"></script>
     <script defer src="admin-roles.js?v=2"></script>
     <script defer src="manager-access-model.js?v=3"></script>
@@ -183,20 +183,34 @@
         <form id="manager-profile-form" class="manager-profile-form">
           <div class="manager-profile-avatar-wrap">
             <span id="manager-profile-avatar" class="manager-profile-avatar" aria-hidden="true">A</span>
-            <label class="admin-field">
-              <span>Foto profilo</span>
-              <input id="manager-profile-photo" type="file" accept="image/jpeg,image/png,image/webp" />
-              <small>JPG, PNG o WebP, massimo 2 MB.</small>
-            </label>
+            <div class="manager-profile-photo-controls">
+              <label class="admin-field">
+                <span>Foto profilo</span>
+                <input id="manager-profile-photo" type="file" accept="image/jpeg,image/png,image/webp" />
+                <small>JPG, PNG o WebP, massimo 2 MB.</small>
+              </label>
+              <button id="manager-profile-camera" type="button" class="outline">Scatta una foto</button>
+            </div>
+          </div>
+          <div id="manager-profile-camera-panel" class="manager-profile-camera-panel" hidden>
+            <video id="manager-profile-camera-video" autoplay muted playsinline></video>
+            <canvas id="manager-profile-camera-canvas" hidden></canvas>
+            <div class="manager-profile-camera-actions">
+              <button id="manager-profile-camera-capture" type="button" class="primary">Scatta</button>
+              <button id="manager-profile-camera-close" type="button" class="outline">Annulla</button>
+              <p id="manager-profile-camera-message" class="admin-message" aria-live="polite"></p>
+            </div>
           </div>
           <div class="manager-profile-fields">
             <label class="admin-field"><span>Nome</span><input id="manager-profile-name" type="text" maxlength="100" autocomplete="name" /></label>
             <label class="admin-field"><span>Email</span><input id="manager-profile-email" type="email" readonly /></label>
             <label class="admin-field"><span>Ruolo</span><input id="manager-profile-role" type="text" readonly /></label>
           </div>
-          <button type="submit" class="primary">Salva account</button>
+          <div class="manager-profile-actions">
+            <button type="submit" class="primary">Salva</button>
+            <p id="manager-profile-message" class="admin-message" aria-live="polite"></p>
+          </div>
         </form>
-        <p id="manager-profile-message" class="admin-message" aria-live="polite"></p>
       </section>
 
       <section id="manager-trails" class="card trail-catalog-panel" data-manager-pane="trails" role="tabpanel" aria-labelledby="manager-trails-title">
