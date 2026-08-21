@@ -144,6 +144,19 @@
     return session;
   }
 
+  async function authSettings() {
+    return rawRequest("/auth/v1/settings");
+  }
+
+  function signInWithSocial(provider) {
+    if (!new Set(["google", "facebook"]).has(provider)) throw new Error("Provider di accesso non supportato");
+    if (!configured()) throw new Error("Supabase non configurato");
+    const authorizeUrl = new URL(configuration.url.replace(/\/$/, "") + "/auth/v1/authorize");
+    authorizeUrl.searchParams.set("provider", provider);
+    authorizeUrl.searchParams.set("redirect_to", authRedirectUrl());
+    location.assign(authorizeUrl.toString());
+  }
+
   async function createPasswordAccount(email, password) {
     const redirectTo = encodeURIComponent(authRedirectUrl());
     const response = await rawRequest(`/auth/v1/signup?redirect_to=${redirectTo}`, {
@@ -174,6 +187,50 @@
     const updatedSession = { ...session, user: user || session.user, recovery: false };
     saveSession(updatedSession);
     return updatedSession;
+  }
+
+  async function updateProfile(fullName, avatarFile = null) {
+    const session = await validSession();
+    if (!session || session.refreshPending) throw new Error("Per salvare l’account serve una connessione attiva.");
+    const currentUser = session.user?.id ? session.user : await rawRequest("/auth/v1/user", { accessToken: session.accessToken });
+    if (!currentUser?.id) throw new Error("Identità dell’account non disponibile.");
+    const metadata = { ...(currentUser.user_metadata || {}), full_name: String(fullName || "").trim() };
+
+    if (avatarFile) {
+      const types = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp" };
+      const extension = types[avatarFile.type];
+      if (!extension) throw new Error("Formato foto non supportato.");
+      if (avatarFile.size > 2 * 1024 * 1024) throw new Error("La foto supera 2 MB.");
+      const objectPath = `${currentUser.id}/${Date.now()}.${extension}`;
+      await storageRequest(`/storage/v1/object/manager-avatars/${encodedObjectPath(objectPath)}`, {
+        method: "POST",
+        body: avatarFile,
+        contentType: avatarFile.type
+      });
+      metadata.avatar_path = objectPath;
+    }
+
+    const user = await rawRequest("/auth/v1/user", {
+      method: "PUT",
+      accessToken: session.accessToken,
+      body: { data: metadata }
+    });
+    const updatedSession = { ...session, user: user || { ...currentUser, user_metadata: metadata } };
+    saveSession(updatedSession);
+    return updatedSession;
+  }
+
+  async function profileAvatarUrl(user) {
+    const metadata = user?.user_metadata || {};
+    if (!metadata.avatar_path) return metadata.avatar_url || metadata.picture || "";
+    const signed = await storageRequest(`/storage/v1/object/sign/manager-avatars/${encodedObjectPath(metadata.avatar_path)}`, {
+      method: "POST",
+      body: JSON.stringify({ expiresIn: 3600 }),
+      contentType: "application/json"
+    });
+    const path = signed?.signedURL || signed?.signedUrl || "";
+    if (!path) return "";
+    return path.startsWith("http") ? path : `${configuration.url.replace(/\/$/, "")}/storage/v1${path.startsWith("/") ? path : `/${path}`}`;
   }
 
   async function currentAccess() {
@@ -368,6 +425,7 @@
   captureRedirectSession();
   root.SentieriSupabase = Object.freeze({
     availability,
+    authSettings,
     auditEvents,
     calendarDayProducts,
     calendarOverview,
@@ -381,7 +439,9 @@
     logout: () => saveSession(null),
     sendPasswordRecovery,
     signInWithPassword,
+    signInWithSocial,
     products,
+    profileAvatarUrl,
     productBookings,
     saveProduct,
     setStaffMember,
@@ -396,6 +456,7 @@
     trailGeometry,
     uploadTrailSource,
     updatePassword,
+    updateProfile,
     validateAndPublishTrail,
     validSession
   });

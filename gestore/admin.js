@@ -361,8 +361,23 @@
     });
   }
 
+  function selectAccount() {
+    items.forEach((candidate) => {
+      candidate.classList.remove("manager-section-nav__item--active");
+      candidate.setAttribute("aria-selected", "false");
+      candidate.tabIndex = -1;
+    });
+    panes.forEach((pane) => {
+      pane.hidden = pane.dataset.managerPane !== "account";
+    });
+  }
+
   function selectFromHash() {
     const hash = hashAliases[window.location.hash] || window.location.hash;
+    if (hash === "#manager-profile") {
+      selectAccount();
+      return;
+    }
     const matchingItem = hash && items.find((item) => item.hash === hash);
     selectItem(matchingItem || items[0]);
   }
@@ -384,6 +399,10 @@
       nextItem.click();
       nextItem.focus();
     });
+  });
+  window.addEventListener("sentieri:open-manager-account", () => {
+    if (window.location.hash !== "#manager-profile") window.history.pushState(null, "", "#manager-profile");
+    selectAccount();
   });
   window.addEventListener("hashchange", selectFromHash);
   window.addEventListener("popstate", selectFromHash);

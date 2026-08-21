@@ -16,6 +16,14 @@
     expert: "Esperto"
   };
   const STATUS_LABELS = { published: "Pubblicato", draft: "Bozza", retired: "Ritirato" };
+  const ENTITY_LABELS = {
+    PNALM: "PNALM",
+    PNMAIELLA: "Parco Nazionale della Maiella",
+    PRSIRENTEVELINO: "Parco Sirente Velino",
+    PNGRANSASSOLAGA: "Parco Gran Sasso e Laga",
+    ABRUZZO_CENTRALE: "Abruzzo centrale · fonti candidate",
+    REGIONE_ABRUZZO: "Regione Abruzzo"
+  };
   const VALIDATION_LABELS = {
     not_reviewed: "Da verificare", "not-reviewed": "Da verificare", in_review: "In verifica",
     validated: "Validato", rejected: "Respinto", needs_revalidation: "Da riverificare"
@@ -24,7 +32,8 @@
   const search = document.getElementById("manager-trail-search");
   const statusFilter = document.getElementById("manager-trail-status-filter");
   const entityFilter = document.getElementById("manager-trail-entity-filter");
-  const sourceFilter = document.getElementById("manager-trail-source-filter");
+
+  const areaFilter = document.getElementById("manager-trail-area-filter");
   const visibleCount = document.getElementById("manager-trail-visible-count");
   const emptyState = document.getElementById("manager-trail-empty-state");
   const catalogMessage = document.getElementById("manager-trail-message");
@@ -33,7 +42,7 @@
   const retiredCount = document.getElementById("trail-retired-count");
   const customCount = document.getElementById("trail-custom-count");
   const addButton = document.getElementById("add-manager-trail");
-  const resetButton = document.getElementById("reset-trail-catalog-demo");
+
   const trailListView = document.getElementById("manager-trail-list-view");
   const trailDetail = document.getElementById("manager-trail-detail");
   const trailDetailCode = document.getElementById("manager-trail-detail-code");
@@ -172,6 +181,7 @@
       publicationStatus: row.status === "active" ? "published" : row.status === "draft" ? "draft" : "retired",
       remoteValidationStatus: row.validation_status || "not_reviewed",
       lastReason: metadata.last_manager_note || null,
+      areas: Array.isArray(metadata.territory_area_names) ? metadata.territory_area_names.filter(Boolean) : [],
       remoteMetadata: metadata
     };
   }
@@ -180,7 +190,7 @@
     const session = await onlineApi?.validSession();
     if (!session) return false;
     onlineMode = true;
-    resetButton.hidden = true;
+
     catalogState = model.emptyState();
     baseTrails = [];
     renderCatalog();
@@ -218,28 +228,22 @@
     return modes.length ? modes : ["Non indicate"];
   }
 
-  function populateSourceFilter() {
-    const selected = sourceFilter.value || "all";
-    const sources = [...new Set(effectiveTrails.map((item) => item.source))].sort((a, b) => a.localeCompare(b, "it"));
-    sourceFilter.innerHTML = '<option value="all">Tutte le fonti</option>'
-      + sources.map((source) => `<option value="${escapeHtml(source)}">${escapeHtml(source)}</option>`).join("");
-    sourceFilter.value = sources.includes(selected) ? selected : "all";
+
+  function populateAreaFilter() {
+    const selected = areaFilter.value || "all";
+    const areas = [...new Set(effectiveTrails.flatMap((item) => item.areas || []))]
+      .sort((a, b) => a.localeCompare(b, "it"));
+    areaFilter.innerHTML = '<option value="all">Tutte le aree</option>'
+      + areas.map((area) => `<option value="${escapeHtml(area)}">${escapeHtml(area)}</option>`).join("");
+    areaFilter.value = areas.includes(selected) ? selected : "all";
   }
 
   function populateEntityFilter() {
     const selected = entityFilter.value || "all";
-    const labels = {
-      PNALM: "PNALM",
-      PNMAIELLA: "Parco Nazionale della Maiella",
-      PRSIRENTEVELINO: "Parco Sirente Velino",
-      PNGRANSASSOLAGA: "Parco Gran Sasso e Laga",
-      ABRUZZO_CENTRALE: "Abruzzo centrale · fonti candidate",
-      REGIONE_ABRUZZO: "Regione Abruzzo"
-    };
     const entities = [...new Set(effectiveTrails.map((item) => item.entityCode).filter(Boolean))]
-      .sort((a, b) => (labels[a] || a).localeCompare(labels[b] || b, "it"));
+      .sort((a, b) => (ENTITY_LABELS[a] || a).localeCompare(ENTITY_LABELS[b] || b, "it"));
     entityFilter.innerHTML = '<option value="all">Tutti gli enti gestiti</option>'
-      + entities.map((entity) => `<option value="${escapeHtml(entity)}">${escapeHtml(labels[entity] || entity)}</option>`).join("");
+      + entities.map((entity) => `<option value="${escapeHtml(entity)}">${escapeHtml(ENTITY_LABELS[entity] || entity)}</option>`).join("");
     entityFilter.value = entities.includes(selected) ? selected : "all";
   }
 
@@ -255,35 +259,38 @@
     draftCount.textContent = stats.draft.toLocaleString("it-IT");
     retiredCount.textContent = stats.retired.toLocaleString("it-IT");
     customCount.textContent = stats.custom.toLocaleString("it-IT");
-    populateSourceFilter();
+
+    populateAreaFilter();
     populateEntityFilter();
-    const filtered = model.filterCatalog(effectiveTrails, {
+    let filtered = model.filterCatalog(effectiveTrails, {
       query: search.value,
       status: statusFilter.value,
       entity: entityFilter.value,
-      source: sourceFilter.value
+      source: "all"
     });
+    if (areaFilter.value !== "all") {
+      filtered = filtered.filter((item) => (item.areas || []).includes(areaFilter.value));
+    }
     visibleCount.textContent = `${filtered.length.toLocaleString("it-IT")} su ${effectiveTrails.length.toLocaleString("it-IT")}`;
     emptyState.hidden = filtered.length > 0;
     tableBody.innerHTML = filtered.map((item) => {
       const statusAction = item.publicationStatus === "published"
-        ? `<button type="button" class="outline trail-row-action trail-row-action--danger" data-action="retire" data-id="${escapeHtml(item.id)}">Ritira dall’app</button>`
+        ? `<button type="button" class="outline trail-row-action trail-row-action--danger" data-action="retire" data-id="${escapeHtml(item.id)}" aria-label="Ritira dall’app" title="Ritira dall’app">⊘</button>`
         : item.publicationStatus === "draft" && item.geometryAvailable && canAdministerTrail(item)
-          ? `<button type="button" class="outline trail-row-action" data-action="validate-publish" data-id="${escapeHtml(item.id)}">Valida e pubblica</button>`
+          ? `<button type="button" class="outline trail-row-action" data-action="validate-publish" data-id="${escapeHtml(item.id)}" aria-label="Valida e pubblica" title="Valida e pubblica">↑</button>`
           : item.publicationStatus === "retired" && item.geometryAvailable && item.remoteValidationStatus === "validated"
-          ? `<button type="button" class="outline trail-row-action" data-action="publish" data-id="${escapeHtml(item.id)}">Ripubblica</button>`
-          : item.publicationStatus === "retired" && item.geometryAvailable && canAdministerTrail(item)
-            ? `<button type="button" class="outline trail-row-action" data-action="validate-publish" data-id="${escapeHtml(item.id)}">Valida e pubblica</button>`
-          : "";
-      const geometryLabel = item.geometryAvailable ? "Geometria disponibile" : "Geometria da aggiungere";
+            ? `<button type="button" class="outline trail-row-action" data-action="publish" data-id="${escapeHtml(item.id)}" aria-label="Ripubblica" title="Ripubblica">↑</button>`
+            : item.publicationStatus === "retired" && item.geometryAvailable && canAdministerTrail(item)
+              ? `<button type="button" class="outline trail-row-action" data-action="validate-publish" data-id="${escapeHtml(item.id)}" aria-label="Valida e pubblica" title="Valida e pubblica">↑</button>`
+              : "";
+      const modes = modesFor(item);
       return `
         <tr class="trail-row trail-row--${escapeHtml(item.publicationStatus)}">
-          <td><strong>${escapeHtml(item.code || "Senza codice")} · ${escapeHtml(item.name)}</strong><small>${escapeHtml(geometryLabel)}${item.lastReason ? ` · Ultima nota: ${escapeHtml(item.lastReason)}` : ""}</small></td>
-          <td><strong>${escapeHtml(DIFFICULTY_LABELS[item.difficulty] || "Non indicata")}</strong><small>${escapeHtml(formatLength(item.lengthMeters))} · ${escapeHtml(formatDuration(item.durationMinutes))}</small></td>
-          <td><span class="trail-mode-tags">${modesFor(item).map((mode) => `<i>${escapeHtml(mode)}</i>`).join("")}</span></td>
-          <td><strong>${escapeHtml(item.source)}</strong><small>${item.official ? "Fonte ufficiale" : item.custom ? "Dato del gestore" : "Fonte esterna"}${item.entityCode ? ` · ${escapeHtml(item.entityCode)}` : ""}</small></td>
+          <td><strong>${escapeHtml(item.name)}</strong><small>${escapeHtml(item.code || "Senza codice")}</small></td>
+          <td><strong>${escapeHtml(DIFFICULTY_LABELS[item.difficulty] || "Non indicata")}</strong><small>${escapeHtml(formatLength(item.lengthMeters))} · ${escapeHtml(formatDuration(item.durationMinutes))}</small><span class="trail-mode-tags">${modes.map((mode) => `<i>${escapeHtml(mode)}</i>`).join("")}</span></td>
           <td><span class="trail-publication-status trail-publication-status--${escapeHtml(item.publicationStatus)}">${escapeHtml(STATUS_LABELS[item.publicationStatus])}</span></td>
-          <td><div class="trail-row-actions"><button type="button" class="primary trail-row-action" data-action="open" data-id="${escapeHtml(item.id)}">Apri</button><button type="button" class="outline trail-row-action" data-action="edit" data-id="${escapeHtml(item.id)}">Modifica</button>${statusAction}</div></td>
+          <td><strong>${escapeHtml(ENTITY_LABELS[item.entityCode] || item.entityCode || "Non indicato")}</strong></td>
+          <td><div class="trail-row-actions"><button type="button" class="outline trail-row-action" data-action="bookings" data-id="${escapeHtml(item.id)}" aria-label="Prenotazioni" title="Prenotazioni">▣</button><button type="button" class="outline trail-row-action" data-action="details" data-id="${escapeHtml(item.id)}" aria-label="Dettagli" title="Dettagli">ⓘ</button><button type="button" class="outline trail-row-action" data-action="edit" data-id="${escapeHtml(item.id)}" aria-label="Modifica" title="Modifica">✎</button>${statusAction}</div></td>
         </tr>`;
     }).join("");
     window.dispatchEvent(new CustomEvent("sentieri:manager-catalog-updated", { detail: { catalog: effectiveTrails } }));
@@ -565,6 +572,11 @@
     }));
   }
 
+  function openTrailDetailSection(item, selector) {
+    openTrailDetail(item);
+    requestAnimationFrame(() => trailDetail.querySelector(selector)?.scrollIntoView({ block: "start" }));
+  }
+
   function openTrailFromRequest(request) {
     const item = effectiveTrails.find((trail) => trail.id === request?.productId);
     if (!item) {
@@ -792,7 +804,8 @@
     if (!button) return;
     const item = effectiveTrails.find((trail) => trail.id === button.dataset.id);
     if (!item) return;
-    if (button.dataset.action === "open") openTrailDetail(item);
+    if (button.dataset.action === "bookings") openTrailDetailSection(item, ".trail-detail-calendar-workspace");
+    if (button.dataset.action === "details") openTrailDetailSection(item, ".trail-data-section");
     if (button.dataset.action === "edit") openTrailEditor(item);
     if (button.dataset.action === "retire") openStatusDialog(item, "retired");
     if (button.dataset.action === "publish") openStatusDialog(item, "published");
@@ -813,7 +826,7 @@
     clearVertexMarkers();
   });
   cancelStatus.addEventListener("click", () => closeDialog(statusDialog));
-  [search, statusFilter, entityFilter, sourceFilter].forEach((control) => control.addEventListener("input", renderCatalog));
+  [search, statusFilter, entityFilter, areaFilter].forEach((control) => control.addEventListener("input", renderCatalog));
 
   editorFile.addEventListener("change", async () => {
     editorMessage.textContent = "";
@@ -855,13 +868,6 @@
     refreshVertexMarkers();
   });
 
-  resetButton.addEventListener("click", () => {
-    if (!window.confirm("Azzerare correzioni, ritiri e nuovi percorsi creati in questa demo?")) return;
-    catalogState = model.emptyState();
-    saveState();
-    renderCatalog();
-    catalogMessage.textContent = "Catalogo dimostrativo ripristinato.";
-  });
 
   window.addEventListener("sentieri:manager-online", async (event) => {
     try { await loadAvailableEntities(event.detail?.access || []); } catch { availableEntities = []; }
@@ -870,6 +876,6 @@
   window.addEventListener("sentieri:open-manager-trail", (event) => {
     openTrailFromRequest(event.detail);
   });
-  resetButton.hidden = true;
+
   loadRemoteCatalog();
 })();

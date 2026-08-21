@@ -5,6 +5,9 @@
   const form = document.getElementById("manager-login-form");
   const email = document.getElementById("manager-login-email");
   const password = document.getElementById("manager-login-password");
+  const socialLogin = document.getElementById("manager-social-login");
+  const googleLogin = document.getElementById("manager-login-google");
+  const facebookLogin = document.getElementById("manager-login-facebook");
   const firstAccess = document.getElementById("manager-first-access");
   const forgotPassword = document.getElementById("manager-forgot-password");
   const passwordForm = document.getElementById("manager-password-form");
@@ -18,15 +21,67 @@
   const accountAvatar = document.getElementById("manager-account-avatar");
   const accountEmail = document.getElementById("manager-account-email");
   const accountRole = document.getElementById("manager-account-role");
+  const accountLink = document.getElementById("manager-account-link");
+  const profileForm = document.getElementById("manager-profile-form");
+  const profileBack = document.getElementById("manager-account-back");
+  const profileAvatar = document.getElementById("manager-profile-avatar");
+  const profilePhoto = document.getElementById("manager-profile-photo");
+  const profileName = document.getElementById("manager-profile-name");
+  const profileEmail = document.getElementById("manager-profile-email");
+  const profileRole = document.getElementById("manager-profile-role");
+  const profileMessage = document.getElementById("manager-profile-message");
   const status = document.getElementById("manager-session-status");
   const title = document.getElementById("manager-session-title");
   const message = document.getElementById("manager-login-message");
   const navigation = document.querySelector(".manager-section-nav");
   const consoleContent = document.querySelector(".manager-folder-content");
-  if (!api || !form || !email || !password || !firstAccess || !forgotPassword || !passwordForm ||
+  if (!api || !form || !email || !password || !socialLogin || !googleLogin || !facebookLogin ||
+      !firstAccess || !forgotPassword || !passwordForm ||
       !newPassword || !confirmPassword || !logout || !sessionPanel || !account || !accountToggle ||
-      !accountMenu || !accountAvatar || !accountEmail || !accountRole || !status || !title ||
+      !accountMenu || !accountAvatar || !accountEmail || !accountRole || !accountLink || !profileForm ||
+      !profileBack || !profileAvatar || !profilePhoto || !profileName || !profileEmail || !profileRole ||
+      !profileMessage || !status || !title ||
       !message || !navigation || !consoleContent) return;
+
+  let activeSession = null;
+  let activeRoleLabel = "Account autenticato";
+  let activeAvatarUrl = "";
+
+  async function renderSocialProviders() {
+    try {
+      const settings = await api.authSettings();
+      googleLogin.hidden = !settings?.external?.google;
+      facebookLogin.hidden = !settings?.external?.facebook;
+      socialLogin.hidden = googleLogin.hidden && facebookLogin.hidden;
+    } catch {
+      socialLogin.hidden = true;
+    }
+  }
+
+  function safeAvatarUrl(value) {
+    try {
+      const url = new URL(value);
+      return ["http:", "https:"].includes(url.protocol) ? url.href : "";
+    } catch {
+      return "";
+    }
+  }
+
+  function renderAvatar(element, label, avatarUrl) {
+    const url = safeAvatarUrl(avatarUrl);
+    element.style.backgroundImage = url ? `url(${JSON.stringify(url)})` : "";
+    element.textContent = url ? "" : (label.trim().charAt(0).toUpperCase() || "A");
+  }
+
+  function renderProfile() {
+    const user = activeSession?.user || {};
+    const metadata = user.user_metadata || {};
+    const label = user.email || "Account autenticato";
+    profileName.value = metadata.full_name || metadata.name || "";
+    profileEmail.value = user.email || "";
+    profileRole.value = activeRoleLabel;
+    renderAvatar(profileAvatar, label, activeAvatarUrl || metadata.avatar_url || metadata.picture || "");
+  }
 
   function closeAccountMenu() {
     accountMenu.hidden = true;
@@ -42,7 +97,9 @@
     const label = signedInEmail || "Account autenticato";
     accountEmail.textContent = label;
     accountRole.textContent = roleLabel;
-    accountAvatar.textContent = label.trim().charAt(0).toUpperCase() || "A";
+    const metadata = activeSession?.user?.user_metadata || {};
+    renderAvatar(accountAvatar, label, activeAvatarUrl || metadata.avatar_url || metadata.picture || "");
+    renderProfile();
     account.hidden = false;
   }
 
@@ -83,7 +140,14 @@
 
   async function renderSession() {
     const session = await api.validSession();
+    activeSession = session;
+    activeRoleLabel = "Account autenticato";
     const signedInEmail = session?.user?.email;
+    const metadata = session?.user?.user_metadata || {};
+    activeAvatarUrl = metadata.avatar_url || metadata.picture || "";
+    if (session && !session.refreshPending) {
+      try { activeAvatarUrl = await api.profileAvatarUrl(session.user) || activeAvatarUrl; } catch { /* L’avatar non blocca l’accesso. */ }
+    }
     navigation.hidden = true;
     consoleContent.hidden = true;
     document.body.classList.remove("manager-online");
@@ -109,13 +173,15 @@
       passwordForm.hidden = false;
       title.textContent = "Nuova password";
       showStatus(signedInEmail || "Account verificato");
-      showAccount(signedInEmail, "Recupero password");
+      activeRoleLabel = "Recupero password";
+      showAccount(signedInEmail, activeRoleLabel);
       showMessage("");
       return;
     }
 
     if (session.refreshPending) {
-      showAccount(signedInEmail, "Sessione memorizzata · dati online non disponibili");
+      activeRoleLabel = "Sessione memorizzata · dati online non disponibili";
+      showAccount(signedInEmail, activeRoleLabel);
       return;
     }
 
@@ -124,6 +190,7 @@
       if (!access.length) throw new Error("Account autenticato ma privo di un ruolo attivo.");
       const superadmin = access.some((item) => item.staff_role === "superadmin");
       const roleLabel = superadmin ? "Superadmin" : access.map((item) => item.staff_role).join(", ");
+      activeRoleLabel = roleLabel;
       showAccount(signedInEmail, roleLabel);
       navigation.hidden = false;
       consoleContent.hidden = false;
@@ -192,6 +259,21 @@
     }
   });
 
+  googleLogin.addEventListener("click", () => api.signInWithSocial("google"));
+  facebookLogin.addEventListener("click", () => api.signInWithSocial("facebook"));
+
+  document.querySelectorAll("[data-password-toggle]").forEach((toggle) => {
+    toggle.addEventListener("click", () => {
+      const input = document.getElementById(toggle.dataset.passwordToggle);
+      if (!input) return;
+      const visible = input.type === "text";
+      input.type = visible ? "password" : "text";
+      toggle.textContent = visible ? "Mostra" : "Nascondi";
+      toggle.setAttribute("aria-label", visible ? "Mostra password" : "Nascondi password");
+      toggle.setAttribute("aria-pressed", String(!visible));
+    });
+  });
+
   passwordForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     if (newPassword.value !== confirmPassword.value) {
@@ -217,6 +299,43 @@
     renderSession();
   });
 
+  accountLink.addEventListener("click", () => {
+    closeAccountMenu();
+    window.dispatchEvent(new CustomEvent("sentieri:open-manager-account"));
+  });
+
+  profileBack.addEventListener("click", () => {
+    document.querySelector('[data-manager-tab="trails"]')?.click();
+  });
+
+  profilePhoto.addEventListener("change", () => {
+    const file = profilePhoto.files?.[0];
+    if (!file) {
+      renderProfile();
+      return;
+    }
+    const previewUrl = URL.createObjectURL(file);
+    profileAvatar.style.backgroundImage = `url(${JSON.stringify(previewUrl)})`;
+    profileAvatar.textContent = "";
+  });
+
+  profileForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    profileMessage.textContent = "Salvataggio…";
+    profileMessage.classList.remove("admin-message--error");
+    try {
+      activeSession = await api.updateProfile(profileName.value, profilePhoto.files?.[0] || null);
+      activeAvatarUrl = await api.profileAvatarUrl(activeSession.user) || activeAvatarUrl;
+      profilePhoto.value = "";
+      renderProfile();
+      showAccount(activeSession?.user?.email, activeRoleLabel);
+      profileMessage.textContent = "Account aggiornato.";
+    } catch (error) {
+      profileMessage.textContent = readableError(error, "Impossibile aggiornare l’account.");
+      profileMessage.classList.add("admin-message--error");
+    }
+  });
+
   accountToggle.addEventListener("click", () => {
     const open = accountMenu.hidden;
     accountMenu.hidden = !open;
@@ -231,7 +350,11 @@
     if (event.key === "Escape") closeAccountMenu();
   });
 
-  window.addEventListener("online", renderSession);
+  window.addEventListener("online", () => {
+    renderSocialProviders();
+    renderSession();
+  });
   window.addEventListener("sentieri:supabase-session-changed", renderSession);
+  renderSocialProviders();
   renderSession();
 })();

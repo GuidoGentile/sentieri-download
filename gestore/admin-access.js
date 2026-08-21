@@ -32,6 +32,7 @@
   const summaryMessage = document.getElementById("summary-calendar-message");
 
   const detailMonthLabel = document.getElementById("calendar-month-label");
+  const detailYearSelect = document.getElementById("calendar-year-select");
   const detailPrevious = document.getElementById("calendar-previous-month");
   const detailNext = document.getElementById("calendar-next-month");
   const editorTitle = document.getElementById("day-editor-title");
@@ -239,6 +240,9 @@
   function renderDetailCalendar() {
     if (!detailTrail) return;
     detailMonthLabel.textContent = monthName(detailYear, detailMonth);
+    const years = Array.from({ length: 11 }, (_, index) => detailYear - 5 + index);
+    detailYearSelect.innerHTML = years.map((year) => `<option value="${year}">${year}</option>`).join("");
+    detailYearSelect.value = String(detailYear);
     const firstWeekday = (new Date(detailYear, detailMonth, 1).getDay() + 6) % 7;
     const cells = Array.from({ length: firstWeekday }, () => '<span class="calendar-day calendar-day--empty" aria-hidden="true"></span>');
     for (let day = 1; day <= model.daysInMonth(detailYear, detailMonth); day += 1) {
@@ -370,6 +374,11 @@
   }
   detailPrevious.addEventListener("click", () => changeDetailMonth(-1));
   detailNext.addEventListener("click", () => changeDetailMonth(1));
+  detailYearSelect.addEventListener("change", () => {
+    detailYear = Number.parseInt(detailYearSelect.value, 10);
+    selectedDetailDate = model.dateKey(detailYear, detailMonth, 1);
+    loadTrailDetail();
+  });
 
   window.addEventListener("sentieri:manager-trail-detail-opened", (event) => {
     detailTrail = event.detail?.trail || null;
