@@ -1,6 +1,18 @@
 # Note di versione
 
+## 0.28.0 correzione della base cartografica — 23 agosto 2026
+
+- rimosso il riempimento acqua del secondo estratto OpenStreetMap che nella 0.27 poteva apparire come un grande riquadro azzurro sopra l’Abruzzo;
+- mantenuti entrambi gli estratti offline per estendere strade, suolo e riferimenti territoriali, evitando però che il livello acqua sovrapposto copra la base principale;
+- città, paesi, strade, parchi, corsi d’acqua, cime e altri luoghi leggono anche il campo `name:latin` realmente presente nelle tile e tornano visibili;
+- aggiornata la chiave della cache cartografica affinché lo stile corretto sia ricaricato dopo l’installazione;
+- verificata la resa senza rete nella mappa generale, nella mappa dinamica del percorso, in Attrazioni e in Copertura.
+
+La 0.28.0 sostituisce la 0.27.0, usa `it.sentieri.abruzzo`, `versionCode 38` e lo stesso certificato delle release precedenti. Il solo file da scaricare è `02-Sentieri-Abruzzo-0.28-arm64.apk`; va installato sopra la versione corrente senza disinstallare, così Android conserva tracce, profilo e dati personali.
+
 ## 0.27.0 cartografia e geometrie regionali — 22 agosto 2026
+
+> Superata dalla 0.28.0: su alcuni dispositivi la composizione dei due estratti OSM mostrava un grande riquadro azzurro e le etichette geografiche restavano assenti.
 
 - tutti i 1.162 percorsi conservano nuovamente quote TINITALY, dislivelli e profilo altimetrico completo nell’APK;
 - 130 percorsi adottano la geometria OpenStreetMap quando coincide in modo affidabile con la fonte autorevole ed è più precisa; l’originale ufficiale resta conservato per verifica;
