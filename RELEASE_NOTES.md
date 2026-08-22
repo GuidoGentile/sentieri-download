@@ -1,5 +1,17 @@
 # Note di versione
 
+## 0.27.0 cartografia e geometrie regionali — 22 agosto 2026
+
+- tutti i 1.162 percorsi conservano nuovamente quote TINITALY, dislivelli e profilo altimetrico completo nell’APK;
+- 130 percorsi adottano la geometria OpenStreetMap quando coincide in modo affidabile con la fonte autorevole ed è più precisa; l’originale ufficiale resta conservato per verifica;
+- la rete cartografica contiene 1.230 bivi e 8.889 cartellini orientati lungo i tratti, mantenendo identificabili i codici CAI;
+- le 28 aree territoriali non sono più celle geometriche: derivano dall’assegnazione esplicita dei 305 comuni abruzzesi e rispettano i confini comunali ISTAT;
+- il lettore Android riconosce e decomprime correttamente le tile vettoriali e le curve di livello GZIP anche in assenza del metadato dell’archivio;
+- la cache cartografica precedente viene invalidata, evitando sfondi vuoti o livelli che scompaiono passando agli zoom di dettaglio;
+- le immagini di Abruzzo Turismo vengono richieste in una forma HTTPS ridimensionata e compatibile, senza archiviarle nel database o nell’APK.
+
+La 0.27.0 usa `it.sentieri.abruzzo`, `versionCode 37` e lo stesso certificato della 0.26. Il solo file da scaricare è `02-Sentieri-Abruzzo-0.27-arm64.apk`; installandolo sopra la versione corrente Android conserva tracce, profilo e dati personali.
+
 ## 0.26.0 gallerie delle attrazioni — 21 agosto 2026
 
 - il catalogo conserva 679 attrazioni e passa da 973 a 1.350 riferimenti fotografici remoti;
