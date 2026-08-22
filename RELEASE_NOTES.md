@@ -1,5 +1,18 @@
 # Note di versione
 
+## 0.29.0 rete sentieristica OSM e correzioni di campo — 23 agosto 2026
+
+- la rete OpenStreetMap diventa la geometria sentieristica primaria sulla mappa: 73.287 elementi di rete locali, tratto rosso-bianco più leggibile e 8.708 bivi rilevanti derivati dai nodi reali;
+- 975 dei 1.162 percorsi del catalogo sono associati con soglia prudenziale agli archi OSM; ufficialità, provenienza e geometria originale restano separate e conservate, mentre gli archi OSM non associati sono visibili solo in mappa e non diventano percorsi ricercabili o recensibili;
+- i percorsi senza una corrispondenza OSM affidabile continuano a usare la geometria del catalogo, evitando fusioni arbitrarie;
+- la base vettoriale centrale e meridionale torna leggibile su tutto l’Abruzzo; curve, cime, valichi e nomi geografici restano distinti, con quote delle curve intermedie visibili allo zoom ravvicinato;
+- test bloccanti verificano che tutti i 1.162 percorsi conservino coordinate tridimensionali, salita e discesa prima della pubblicazione;
+- Attrazioni e Copertura dispongono degli stessi comandi cliccabili per layer, nord e posizione; lista e mappa mantengono il margine sotto la ricerca e il conteggio filtrato non espone il nome tecnico dell’area;
+- la data di nascita gestisce la digitazione continua con separatori automatici e cursore coerente;
+- le tracce personali usano lo stesso profilo altimetrico completo dei percorsi ufficiali; all’avvio vengono ripulite retroattivamente da punti GPS impossibili, soste agli estremi e code in automobile, ricostruendo distanza ed esagoni.
+
+La 0.29.0 usa `it.sentieri.abruzzo`, `versionCode 39` e lo stesso certificato stabile delle release precedenti. Il solo file da scaricare è `02-Sentieri-Abruzzo-0.29-arm64.apk`; va installato sopra la versione corrente senza disinstallare, così Android conserva tracce, profilo e dati personali.
+
 ## 0.28.0 correzione della base cartografica — 23 agosto 2026
 
 - rimosso il riempimento acqua del secondo estratto OpenStreetMap che nella 0.27 poteva apparire come un grande riquadro azzurro sopra l’Abruzzo;

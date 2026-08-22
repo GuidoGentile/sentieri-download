@@ -8,7 +8,7 @@ base descrittiva dell'opera software, mantenendo distinti componenti realizzati,
 
 ## Android
 
-La release attuale è una **build sperimentale 0.28.0 ARM64**, distribuita fuori
+La release attuale è una **build sperimentale 0.29.0 ARM64**, distribuita fuori
 dal Play Store per test controllati. L’APK contiene un catalogo offline di 1.162 percorsi
 canonici abruzzesi, con 339 identità CAI documentate e fonti storiche conservate,
 cartografia vettoriale offline, profili altimetrici e registrazione GPS predisposta per continuare
@@ -43,8 +43,9 @@ La 0.26.0 amplia le gallerie delle 679 attrazioni a 1.350 riferimenti fotografic
 
 La 0.27.0 ripristina le quote e i dislivelli di tutti i 1.162 percorsi, adotta la geometria OpenStreetMap nei 130 confronti affidabili, costruisce le 28 aree come unioni di 305 comuni e corregge la decodifica delle mappe e delle curve di livello offline.
 La 0.28.0 sostituisce la 0.27 perché corregge la sovrapposizione cartografica che poteva coprire l’Abruzzo con un riquadro azzurro e rende nuovamente visibili città, strade, parchi, corsi d’acqua e altri nomi geografici.
+La 0.29.0 promuove a rete primaria i sentieri OpenStreetMap, collega 975 percorsi del catalogo agli archi OSM senza cancellarne le fonti originali, rende espliciti 8.708 bivi rilevanti e aggiunge controlli mappa uniformi, profilo personale completo e test bloccanti sulle quote 3D.
 
-La distribuzione usa un solo APK completo: `02-Sentieri-Abruzzo-0.28-arm64.apk`. Non esiste più un APK ponte: il pacchetto unico include
+La distribuzione usa un solo APK completo: `02-Sentieri-Abruzzo-0.29-arm64.apk`. Non esiste più un APK ponte: il pacchetto unico include
 applicazione, mappe e dati territoriali offline. Installato sopra una versione precedente della stessa
 edizione, conserva tracce, profilo e dati personali.
 
