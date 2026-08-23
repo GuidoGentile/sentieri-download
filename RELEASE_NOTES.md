@@ -1,5 +1,15 @@
 # Note di versione
 
+## 0.30.0 rete continua e controllo esteso — 23 agosto 2026
+
+- la rete OpenStreetMap resta il modello cartografico predominante: 73.287 archi locali, 8.710 bivi reali e 977 dei 1.163 percorsi collegati alla rete;
+- 876 percorsi usano una geometria OSM operativa verificata contro l'osservazione sorgente normalizzata, mentre ufficialità, codice, fonte e geometrie originali restano distinti e conservati;
+- i tronconi fuori ordine vengono ricomposti entro una tolleranza di 35 metri, i punti consecutivi duplicati sono eliminati e i componenti davvero scollegati restano separati;
+- mappa, profilo altimetrico, copertura, quota offline e controllo fuori-traccia rispettano i segmenti reali e non creano raccordi artificiali;
+- una verifica estesa e ripetibile controlla catalogo, asset Android, rete, bivi, quote 3D, associazioni OSM e la regressione del percorso PNALM A1: 0 errori e 0 avvisi.
+
+La 0.30.0 usa `it.sentieri.abruzzo`, `versionCode 40` e lo stesso certificato stabile delle release precedenti. Il solo file da scaricare è `02-Sentieri-Abruzzo-0.30-arm64.apk`; va installato sopra la versione corrente senza disinstallare, così Android conserva tracce, profilo e dati personali.
+
 ## 0.29.0 rete sentieristica OSM e correzioni di campo — 23 agosto 2026
 
 - la rete OpenStreetMap diventa la geometria sentieristica primaria sulla mappa: 73.287 elementi di rete locali, tratto rosso-bianco più leggibile e 8.708 bivi rilevanti derivati dai nodi reali;
