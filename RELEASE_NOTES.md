@@ -1,5 +1,15 @@
 # Note di versione
 
+## 0.31.0 — 23 agosto 2026
+
+- la mappa Copertura considera gli esagoni validi di tutti i 1.163 sentieri installati e mantiene visibile l’intero territorio;
+- percentuale, titolo, prossimo traguardo e classifica sono separati per tre parchi nazionali, il Parco Regionale Sirente-Velino e cinque aree di esplorazione;
+- la card bianca della Copertura si trascina verso l’alto e permette di cambiare ambito senza ricaricare la mappa;
+- Account → Impostazioni conserva il parco o l’area scelta e la sezione Informazioni rimanda alla guida completa aggiornata;
+- un controllo automatico assegna ogni percorso a un solo ambito statistico e impedisce ambiti vuoti o sovrapposti nella configurazione.
+
+La 0.31.0 usa `it.sentieri.abruzzo`, `versionCode 41` e lo stesso certificato stabile delle release precedenti. Il solo file da scaricare è `02-Sentieri-Abruzzo-0.31-arm64.apk`; va installato sopra la versione corrente senza disinstallare, così Android conserva tracce, profilo e dati personali.
+
 ## 0.30.0 rete continua e controllo esteso — 23 agosto 2026
 
 - la rete OpenStreetMap resta il modello cartografico predominante: 73.287 archi locali, 8.710 bivi reali e 977 dei 1.163 percorsi collegati alla rete;

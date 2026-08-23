@@ -48,7 +48,7 @@
           <dl>
             <div><dt>Prodotto</dt><dd>Sentieri</dd></div>
             <div><dt>Edizione</dt><dd>Sentieri d’Abruzzo</dd></div>
-            <div><dt>Versione Android</dt><dd>0.30.0</dd></div>
+            <div><dt>Versione Android</dt><dd>0.31.0</dd></div>
             <div><dt>Catalogo</dt><dd>1.163 percorsi · 679 attrazioni</dd></div>
             <div><dt>Identità CAI</dt><dd>339 documentate</dd></div>
             <div><dt>Aggiornamento documento</dt><dd>23 agosto 2026</dd></div>
@@ -218,20 +218,35 @@
 
           <section id="copertura" class="guide-section">
             <p class="chapter">06 · Storico e copertura</p>
-            <h2>Lo Storico racconta le uscite; la Copertura misura il territorio conosciuto.</h2>
+            <h2>Una sola mappa dei passi; una progressione distinta per ogni territorio.</h2>
             <div class="comparison">
               <article><h3>Storico</h3><p>Elenco cronologico delle escursioni, anche ripetute sullo stesso percorso. Mostra data, traccia, percentuale coperta, ricordo, giudizio e fotografie private.</p></article>
-              <article><h3>Copertura</h3><p>Unione cumulativa degli esagoni territoriali attraversati. Non replica le singole uscite e visualizza il progresso complessivo su una mappa navigabile.</p></article>
+              <article><h3>Copertura</h3><p>Unione cumulativa degli esagoni attraversati sui sentieri dell’app. Non replica le singole uscite e resta visibile su una mappa unica e navigabile.</p></article>
             </div>
             <p>
-              La griglia usa esagoni reali di circa 100 metri. Nella demo la percentuale, i titoli e la classifica
-              considerano esclusivamente le celle della rete ufficiale PNALM; passaggi esterni restano nello storico
-              ma non aumentano la progressione. Gli esagoni visitati sono fucsia semitrasparente. Velocità e ripetizioni
-              non producono vantaggi artificiali.
+              La griglia usa esagoni reali di circa 100 metri. La mappa mostra sempre gli esagoni validi di tutti
+              i sentieri del catalogo e colora in fucsia semitrasparente quelli visitati. Il selettore non nasconde
+              il resto dell’Abruzzo: cambia soltanto il perimetro usato per percentuale, titolo e classifica.
+            </p>
+            <div class="how-to compact-steps">
+              <article><span class="step-number">1</span><div><h3>Scegliere l’ambito</h3><p>In Account → Impostazioni si seleziona il parco o l’area di esplorazione preferita. La scelta resta memorizzata sul dispositivo.</p></div></article>
+              <article><span class="step-number">2</span><div><h3>Leggere la card</h3><p>Nella pagina Copertura la linguetta bianca si trascina verso l’alto. Mostra esagoni, percorsi del catalogo, titolo, prossimo traguardo e classifica dell’ambito scelto.</p></div></article>
+              <article><span class="step-number">3</span><div><h3>Cambiare territorio</h3><p>Toccando il nome nella card si passa direttamente a un altro ambito senza ricaricare o limitare la mappa globale.</p></div></article>
+            </div>
+            <p>
+              Gli ambiti iniziali comprendono i tre parchi nazionali che interessano l’Abruzzo — PNALM, Maiella,
+              Gran Sasso e Monti della Laga — e il Parco Regionale Sirente-Velino. I sentieri esterni sono raccolti
+              in aree di esplorazione pensate per la passeggiata: Alto Sangro e Scanno, Marsica e Fucino, Aquilano
+              e valli interne, colline e costa. Queste aree sono indipendenti dalle 28 destinazioni usate per le
+              attrazioni turistiche.
+            </p>
+            <p>
+              Ogni percorso appartiene a un solo ambito statistico. Oggi l’assegnazione usa fonte del percorso e
+              area territoriale primaria; resterà modificabile e verificabile dal gestore quando saranno adottati
+              i poligoni ufficiali delle aree protette. Velocità e ripetizioni non producono vantaggi artificiali.
             </p>
             <p class="fine-print">La classifica corrente è dimostrativa. Una versione reale richiederà soprannome pubblico, consenso esplicito e possibilità di non partecipare.</p>
           </section>
-
           <section id="gestore" class="guide-section">
             <p class="chapter">07 · Console gestore</p>
             <h2>Il pannello con cui un ente governa l’offerta territoriale.</h2>
@@ -326,7 +341,7 @@
               <div><strong>Struttura</strong><p>App utente, console gestore, app Guardiaparco, servizi dati e futuro portale verbali.</p></div>
               <div><strong>Modello centrale</strong><p>Ente, prodotto territoriale, regime, calendario, capienza, prenotazione e titolo.</p></div>
               <div><strong>Funzioni distintive</strong><p>Catalogo senza duplicazioni pubbliche, provenienza conservata, pacchetti offline, copertura esagonale e accessi regolati.</p></div>
-              <div><strong>Versione descritta</strong><p>Android 0.30.0, edizione regionale Abruzzo con 1.163 profili altimetrici completi, rete sentieristica OSM primaria con 8.710 bivi reali, cartografia offline completa e nomi geografici leggibili, 679 attrazioni, tracce personali e infrastruttura Supabase.</p></div>
+              <div><strong>Versione descritta</strong><p>Android 0.31.0, edizione regionale Abruzzo con 1.163 profili altimetrici completi, rete sentieristica OSM primaria con 8.710 bivi reali, cartografia offline completa e nomi geografici leggibili, 679 attrazioni, tracce personali e infrastruttura Supabase.</p></div>
             </div>
             <p class="fine-print">
               Codice, interfacce, documentazione e modello applicativo costituiscono l’opera software. Banche dati,
@@ -356,7 +371,7 @@
             <p class="chapter">Collegamenti</p>
             <h2>Prova e approfondisci.</h2>
             <div class="actions">
-              <a class="button primary" href="https://github.com/GuidoGentile/sentieri-download/releases/latest/download/02-Sentieri-Abruzzo-0.30-arm64.apk">Scarica Sentieri d’Abruzzo</a>
+              <a class="button primary" href="https://github.com/GuidoGentile/sentieri-download/releases/latest/download/02-Sentieri-Abruzzo-0.31-arm64.apk">Scarica Sentieri d’Abruzzo</a>
               <a class="button secondary" href="../gestore/">Apri la console gestore</a>
               <a class="button secondary" href="https://github.com/GuidoGentile/sentieri-download/releases/latest">Consulta la release</a>
             </div>
@@ -368,7 +383,7 @@
     <footer>
       <div class="shell footer-inner">
         <div class="brand footer-brand"><img src="../assets/sentieri-mark.png" alt="" /><span class="brand-name">Sentieri <em>d’Abruzzo</em></span></div>
-        <p>Guida completa · versione descritta 0.30.0 · progetto sperimentale</p>
+        <p>Guida completa · versione descritta 0.31.0 · progetto sperimentale</p>
         <a href="../">Pagina principale</a>
       </div>
     </footer>
