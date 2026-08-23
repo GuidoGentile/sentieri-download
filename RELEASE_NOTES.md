@@ -1,5 +1,15 @@
 # Note di versione
 
+## 0.32.0 — 23 agosto 2026
+
+- eliminata la velatura azzurra rettangolare che copriva l’Abruzzo, causata da poligoni oceanici errati presenti nelle tile vettoriali interne;
+- laghi e altri elementi d’acqua reali restano visibili, mentre i poligoni `ocean` spuri vengono esclusi da tutti i livelli regionali e di dettaglio;
+- rimosso il precedente riempimento semitrasparente applicato sopra il territorio regionale;
+- rigenerate le curve di livello regionali con una semplificazione molto più delicata, per ottenere linee più morbide e fedeli soprattutto agli zoom intermedi;
+- incrementata la versione del pacchetto cartografico incorporato, così l’aggiornamento sostituisce automaticamente i vecchi dati offline.
+
+La 0.32.0 usa `it.sentieri.abruzzo`, `versionCode 42` e lo stesso certificato stabile delle release precedenti. Il solo file da scaricare è `02-Sentieri-Abruzzo-0.32-arm64.apk`; va installato sopra la versione corrente senza disinstallare, così Android conserva tracce, profilo e dati personali.
+
 ## 0.31.0 — 23 agosto 2026
 
 - la mappa Copertura considera gli esagoni validi di tutti i 1.163 sentieri installati e mantiene visibile l’intero territorio;
