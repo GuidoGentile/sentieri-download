@@ -755,8 +755,9 @@
   overflow-x: auto;
   scrollbar-width: none;
   padding: 0.35rem 0 0;
-  margin-bottom: -1px;
+  margin-bottom: 0;
   border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--primary) 30%, var(--line));
   background: var(--bg);
 }
 
@@ -804,9 +805,9 @@
   position: relative;
   z-index: 2;
   color: var(--primary);
-  background: var(--surface);
+  background: var(--bg);
   border-color: color-mix(in srgb, var(--primary) 36%, var(--line));
-  border-bottom: 1px solid var(--surface);
+  border-bottom: 1px solid var(--bg);
   margin-bottom: -1px;
 
   box-shadow:
@@ -821,7 +822,7 @@
   bottom: -3px;
   left: 0;
   height: 4px;
-  background: var(--surface);
+  background: var(--bg);
 }
 
 .manager-section-nav__item:active {
@@ -834,12 +835,11 @@
   grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.75fr);
   gap: 1.25rem;
   min-width: 0;
-  padding: 1.25rem;
-  border: 1px solid color-mix(in srgb, var(--primary) 36%, var(--line));
-
+  padding: 1.25rem 0 0;
+  border: 0;
   border-radius: 0;
-  background: var(--surface);
-  box-shadow: 0 8px 18px rgb(18 61 58 / 8%);
+  background: transparent;
+  box-shadow: none;
 }
 
 .manager-folder-content > [data-manager-pane]:not(.branding-editor):not(.branding-preview-column) {
@@ -852,6 +852,11 @@
 
 .manager-folder-content > .card {
   margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .access-panel,
@@ -895,9 +900,10 @@
 .staff-operator-section,
 .staff-audit-section {
   min-width: 0;
-  padding: 1rem;
-  border: 1px solid var(--line);
-  background: var(--surface);
+  padding: 1rem 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+  background: transparent;
 }
 
 .staff-subhead {
@@ -970,10 +976,12 @@
   grid-template-columns: minmax(260px, 1.5fr) minmax(150px, 0.55fr) auto;
   gap: 0.75rem;
   align-items: end;
-  padding: 0.9rem;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: var(--surface-soft);
+  padding: 0.9rem 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
 }
 
 .access-toolbar select,
@@ -1037,15 +1045,20 @@
 }
 
 .access-kpis div {
-  min-height: 86px;
+  min-height: 64px;
   display: flex;
   flex-direction: column-reverse;
   justify-content: space-between;
   gap: 0.35rem;
-  padding: 0.8rem 0.9rem;
-  border: 1px solid var(--line);
-  border-radius: 15px;
-  background: var(--surface);
+  padding: 0.4rem 0.9rem;
+  border: 0;
+  border-right: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+}
+
+.access-kpis div:first-child {
+  padding-left: 0;
 }
 
 .access-kpis span {
@@ -1223,6 +1236,17 @@
   padding: 0.75rem 0.85rem;
   border-radius: 13px;
   background: var(--surface-soft);
+}
+
+.summary-calendar-kpis div {
+  padding: 0.4rem 0.9rem;
+  border-right: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+}
+
+.summary-calendar-kpis div:first-child {
+  padding-left: 0;
 }
 
 .summary-calendar-kpis span,
@@ -2451,6 +2475,20 @@
     margin-left: 0;
   }
 
+  .trail-catalog-kpis div,
+  .access-kpis div,
+  .summary-calendar-kpis div {
+    padding: 0.65rem 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .trail-catalog-kpis div:last-of-type,
+  .access-kpis div:last-of-type,
+  .summary-calendar-kpis div:last-of-type {
+    border-bottom: 0;
+  }
+
   .trail-editor-actions {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -2663,7 +2701,7 @@
 .field-checks-tools .admin-field { min-width: min(280px, 42vw); }
 .operator-form { display: grid; grid-template-columns: minmax(190px, 1.5fr) minmax(140px, 0.8fr) minmax(130px, 0.7fr) auto; gap: 10px; align-items: end; }
 .operations-list { display: grid; gap: 8px; margin-top: 14px; }
-.operation-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; border: 1px solid rgba(31, 79, 61, .14); border-radius: 14px; padding: 12px 14px; background: rgba(255,255,255,.72); }
+.operation-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; border: 0; border-bottom: 1px solid rgba(31, 79, 61, .14); border-radius: 0; padding: 12px 0; background: transparent; }
 .operation-row div { display: grid; gap: 3px; }
 .operation-row small { color: #53645c; }
 .operation-result { font-weight: 800; white-space: nowrap; color: #9a5b00; }
