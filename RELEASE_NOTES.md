@@ -1,6 +1,6 @@
 # Note di versione
 
-## 0.34.0 — 24 agosto 2026
+## 0.34.0 — 25 agosto 2026
 
 - completata la gerarchia della rete sentieristica con nodi reali ai bivi e nodi terminali anche alla fine dei percorsi;
 - i tratti primari ufficiali o CAI prevalgono sui secondari quasi sovrapposti, mentre le diramazioni secondarie conservano un proprio nodo e restano riconoscibili;
