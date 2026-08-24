@@ -1,5 +1,16 @@
 # Note di versione
 
+## 0.34.0 — 24 agosto 2026
+
+- completata la gerarchia della rete sentieristica con nodi reali ai bivi e nodi terminali anche alla fine dei percorsi;
+- i tratti primari ufficiali o CAI prevalgono sui secondari quasi sovrapposti, mentre le diramazioni secondarie conservano un proprio nodo e restano riconoscibili;
+- accorciata la cadenza dei tratti di sentieri e strade sterrate, aumentato lo spessore della rete secondaria e raddoppiata la leggibilità dei corsi d’acqua;
+- le etichette delle cime danno priorità alla quota maggiore quando lo spazio non consente di mostrarle tutte;
+- aggiunto alla mappa un livello offline autonomo “Aree protette”, distinto dalle aree turistiche, con PNALM, Maiella, Gran Sasso e Monti della Laga e Sirente-Velino;
+- mantenute separate geometria operativa di rete, ufficialità, identità CAI, fonti e osservazioni originali, così il gestore potrà riesaminare le associazioni senza perdere informazioni.
+
+La 0.34.0 usa `it.sentieri.abruzzo`, `versionCode 44` e lo stesso certificato stabile delle release precedenti. Il solo file da scaricare è `02-Sentieri-Abruzzo-0.34-arm64.apk`; va installato sopra la versione corrente senza disinstallare, così Android conserva tracce, profilo e dati personali.
+
 ## 0.33.0 — 24 agosto 2026
 
 - introdotta una gerarchia cartografica stabile: rete primaria ufficiale/CAI, rete secondaria dei percorsi pubblicati e contesto OSM non catalogato;
