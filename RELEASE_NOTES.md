@@ -1,5 +1,19 @@
 # Note di versione
 
+## 0.33.0 — 24 agosto 2026
+
+- introdotta una gerarchia cartografica stabile: rete primaria ufficiale/CAI, rete secondaria dei percorsi pubblicati e contesto OSM non catalogato;
+- consolidate le geometrie OpenStreetMap più affidabili in archi e bivi reali, mantenendo separate ufficialità, fonti, validazione e osservazioni originali;
+- allineati tracciato planimetrico colorato, profilo altimetrico e cursore alla stessa geometria operativa di rete;
+- resi costanti con lo zoom spessore e cadenza dei sentieri, con codici orientati sugli archi e simboli triangolari nuovamente visibili per le cime;
+- rigenerate le curve regionali TINITALY con lisciatura metrica controllata, passo 10 metri e direttrici ogni 50 metri;
+- aggiunta l’ombreggiatura del rilievo come livello offline autonomo, attivabile o disattivabile anche durante navigazione e registrazione;
+- eliminato il popup dei bivi: i nodi restano leggibili sulla carta senza interrompere l’esplorazione;
+- una registrazione non salvata resta riprendibile dopo uscita dalla pagina, arresto del servizio o riapertura dell’app; si conclude soltanto salvandola con un nome o eliminandola esplicitamente;
+- alleggerita la linguetta altimetrica chiusa eliminando l’icona decorativa laterale.
+
+La 0.33.0 usa `it.sentieri.abruzzo`, `versionCode 43` e lo stesso certificato stabile delle release precedenti. Il solo file da scaricare è `02-Sentieri-Abruzzo-0.33-arm64.apk`; va installato sopra la versione corrente senza disinstallare, così Android conserva tracce, profilo e dati personali.
+
 ## 0.32.0 — 23 agosto 2026
 
 - eliminata la velatura azzurra rettangolare che copriva l’Abruzzo, causata da poligoni oceanici errati presenti nelle tile vettoriali interne;
