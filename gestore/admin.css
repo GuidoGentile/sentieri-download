@@ -7,10 +7,17 @@ html {
   background: var(--bg);
 }
 
+.manager-fixed-shell {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: var(--bg);
+}
+
 .admin-header {
   max-width: 1240px;
   margin: 0 auto;
-  padding: 0.9rem 1.25rem 0.7rem;
+  padding: 0.7rem 1.25rem 0.25rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -748,18 +755,18 @@ html {
 .state-danger { background: var(--preview-danger, var(--danger)); }
 
 .manager-section-nav {
-  grid-column: 1 / -1;
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  --manager-nav-inline: 1.25rem;
+  position: relative;
+  z-index: 1;
+  max-width: 1240px;
+  margin: 0 auto;
   isolation: isolate;
   display: flex;
   align-items: end;
   gap: 0.2rem;
   overflow-x: auto;
   scrollbar-width: none;
-  padding: 0.35rem 0 0;
-  margin-bottom: 0;
+  padding: 0.08rem var(--manager-nav-inline) 0;
   border: 0;
   background: var(--bg);
 }
@@ -767,9 +774,9 @@ html {
 .manager-section-nav::after {
   content: "";
   position: absolute;
-  right: 0;
+  right: var(--manager-nav-inline);
   bottom: 0;
-  left: 0;
+  left: var(--manager-nav-inline);
   z-index: 3;
   height: 1px;
   background: color-mix(in srgb, var(--line) 82%, #617475);
@@ -2343,6 +2350,10 @@ html {
 }
 
 @media (max-width: 640px) {
+  .manager-section-nav {
+    --manager-nav-inline: 1rem;
+  }
+
   .admin-header,
   .section-head {
     align-items: start;

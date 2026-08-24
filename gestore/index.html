@@ -7,7 +7,7 @@
     <title>Sentieri d'Abruzzo · Console Gestore</title>
     <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.5.0/dist/maplibre-gl.css" />
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="admin.css?v=32" />
+    <link rel="stylesheet" href="admin.css?v=33" />
     <script defer src="https://unpkg.com/maplibre-gl@5.5.0/dist/maplibre-gl.js"></script>
     <script defer src="theme-config.js"></script>
     <script defer src="map-config.js"></script>
@@ -24,6 +24,7 @@
     <script defer src="admin.js?v=12"></script>
   </head>
   <body class="admin-page">
+    <div class="manager-fixed-shell">
     <header class="admin-header">
       <div class="admin-header-brand">
         <img class="admin-header-logo" src="../assets/sentieri-mark.png" alt="" width="56" height="56" />
@@ -47,6 +48,15 @@
         </div>
       </div>
     </header>
+
+    <nav class="manager-section-nav" aria-label="Sezioni della console gestore" role="tablist" hidden>
+      <a class="manager-section-nav__item manager-section-nav__item--active" href="#manager-trails" data-manager-tab="trails" role="tab" aria-selected="true" tabindex="0">Percorsi</a>
+      <a class="manager-section-nav__item" href="#access-calendar" data-manager-tab="calendar" role="tab" aria-selected="false" tabindex="-1">Prenotazioni</a>
+      <a class="manager-section-nav__item" href="#field-operations" data-manager-tab="guards" role="tab" aria-selected="false" tabindex="-1">Controlli QR</a>
+      <a class="manager-section-nav__item" href="#staff-access" data-manager-tab="staff" role="tab" aria-selected="false" tabindex="-1">Utenti e ruoli</a>
+      <a class="manager-section-nav__item" href="#branding-form" data-manager-tab="configuration" role="tab" aria-selected="false" tabindex="-1">Configurazione</a>
+    </nav>
+    </div>
 
     <main class="admin-layout">
       <section class="card manager-session-panel" aria-labelledby="manager-session-title">
@@ -90,13 +100,6 @@
         <p id="manager-login-message" class="admin-message" aria-live="polite"></p>
       </section>
 
-      <nav class="manager-section-nav" aria-label="Sezioni della console gestore" role="tablist" hidden>
-        <a class="manager-section-nav__item manager-section-nav__item--active" href="#manager-trails" data-manager-tab="trails" role="tab" aria-selected="true" tabindex="0">Percorsi</a>
-        <a class="manager-section-nav__item" href="#access-calendar" data-manager-tab="calendar" role="tab" aria-selected="false" tabindex="-1">Prenotazioni</a>
-        <a class="manager-section-nav__item" href="#field-operations" data-manager-tab="guards" role="tab" aria-selected="false" tabindex="-1">Controlli QR</a>
-        <a class="manager-section-nav__item" href="#staff-access" data-manager-tab="staff" role="tab" aria-selected="false" tabindex="-1">Utenti e ruoli</a>
-        <a class="manager-section-nav__item" href="#branding-form" data-manager-tab="configuration" role="tab" aria-selected="false" tabindex="-1">Configurazione</a>
-      </nav>
 
       <div class="manager-folder-content" hidden>
       <section id="field-operations" class="card field-operations-panel" data-manager-pane="guards" role="tabpanel" aria-labelledby="field-operations-title" hidden>
