@@ -757,8 +757,18 @@
   padding: 0.35rem 0 0;
   margin-bottom: 0;
   border: 0;
-  border-bottom: 1px solid color-mix(in srgb, var(--primary) 30%, var(--line));
   background: var(--bg);
+}
+
+.manager-section-nav::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+  height: 1px;
+  background: color-mix(in srgb, var(--primary) 42%, var(--line));
 }
 
 .manager-section-nav[hidden],
@@ -771,6 +781,8 @@
 }
 
 .manager-section-nav__item {
+  position: relative;
+  z-index: 1;
   min-height: 45px;
   display: inline-flex;
   align-items: center;
@@ -778,8 +790,8 @@
   border: 1px solid color-mix(in srgb, var(--line) 82%, #617475);
   border-bottom: 0;
   border-radius: 7px 7px 0 0;
-  color: color-mix(in srgb, var(--text) 78%, var(--muted));
-  background: color-mix(in srgb, var(--surface-soft) 76%, #d5dedd);
+  color: color-mix(in srgb, var(--text) 88%, var(--primary));
+  background: color-mix(in srgb, var(--surface-soft) 58%, #b7c5c3);
   box-shadow:
     inset 1px 1px 0 rgb(255 255 255 / 96%),
     inset -1px 0 0 rgb(62 83 83 / 25%);
@@ -793,7 +805,7 @@
 .manager-section-nav__item:hover,
 .manager-section-nav__item:focus-visible {
   color: var(--primary);
-  background: color-mix(in srgb, var(--surface) 70%, var(--surface-soft));
+  background: color-mix(in srgb, var(--surface-soft) 72%, #c6d1cf);
 }
 
 .manager-section-nav__item:focus-visible {
@@ -803,7 +815,7 @@
 
 .manager-section-nav__item--active {
   position: relative;
-  z-index: 2;
+  z-index: 4;
   color: var(--primary);
   background: var(--bg);
   border-color: color-mix(in srgb, var(--primary) 36%, var(--line));
@@ -818,10 +830,10 @@
 .manager-section-nav__item--active::after {
   content: "";
   position: absolute;
-  right: 0;
-  bottom: -3px;
-  left: 0;
-  height: 4px;
+  right: -1px;
+  bottom: -2px;
+  left: -1px;
+  height: 3px;
   background: var(--bg);
 }
 
