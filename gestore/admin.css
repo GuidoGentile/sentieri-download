@@ -834,9 +834,9 @@ html {
 .manager-section-nav__item--active::after {
   content: "";
   position: absolute;
-  right: -1px;
+  right: 0;
   bottom: -2px;
-  left: -1px;
+  left: 0;
   height: 3px;
   background: var(--bg);
 }
