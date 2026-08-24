@@ -769,7 +769,7 @@
   left: 0;
   z-index: 3;
   height: 1px;
-  background: color-mix(in srgb, var(--primary) 42%, var(--line));
+  background: color-mix(in srgb, var(--line) 82%, #617475);
 }
 
 .manager-section-nav[hidden],
