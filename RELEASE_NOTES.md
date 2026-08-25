@@ -1,5 +1,15 @@
 # Note di versione
 
+## 0.35.0 — 25 agosto 2026
+
+- la mappa Attrazioni elimina la visualizzazione aggregata: i 679 luoghi georeferenziati sono mostrati direttamente come punti cliccabili e ricerca e filtri aggiornano lo stesso insieme visibile della lista;
+- tornando dal dettaglio di un’attrazione, la mappa conserva il luogo attivo e lo inquadra allo zoom locale;
+- nella mappa Attrazioni il livello Sentieri parte disattivato e il pannello dei layer si chiude toccando la carta;
+- i confini delle aree di lavoro scompaiono allo zoom ravvicinato, mentre confine regionale e aree protette restano layer indipendenti;
+- aggiunti test automatici per la selezione dei punti georeferenziati, il comportamento dei controlli e la soglia di zoom dei confini.
+
+La 0.35.0 usa `it.sentieri.abruzzo`, `versionCode 45` e lo stesso certificato stabile delle release precedenti. Il solo file da scaricare è `02-Sentieri-Abruzzo-0.35-arm64.apk`; va installato sopra la versione corrente senza disinstallare, così Android conserva tracce, profilo e dati personali.
+
 ## 0.34.0 — 25 agosto 2026
 
 - completata la gerarchia della rete sentieristica con nodi reali ai bivi e nodi terminali anche alla fine dei percorsi;
