@@ -1,5 +1,28 @@
 # Note di versione
 
+
+## 0.39.0 — 25 agosto 2026
+
+- aggiunto il Mare Adriatico come livello offline dedicato, sotto la carta fisica e senza riaprire i poligoni oceanici che coprivano l'entroterra;
+- autostrade e superstrade sono distinte dalla viabilità ordinaria con toni marroni leggibili sulla carta;
+- il selettore Lista/Mappa è allineato al menu globale e le ricerche di Percorsi e Attrazioni mostrano soltanto `Cerca`;
+- planimetria colorata, profilo altimetrico e cursore usano una sola progressiva monotona, evitando salti tra rami paralleli, tornanti o estremi degli anelli;
+- gli archi memorizzati al contrario vengono orientati senza alterare il verso dell'escursione; se l'allineamento non è affidabile resta visibile la geometria tridimensionale del catalogo;
+- mantenuti rete gerarchica, nodi secondari e terminali, idrografia continua, mappe e curve offline complete della 0.38 candidata.
+
+La 0.39.0 usa `it.sentieri.abruzzo`, `versionCode 49` e lo stesso certificato stabile delle release precedenti. Il solo file da scaricare è `02-Sentieri-Abruzzo-0.39-arm64.apk`; va installato sopra la versione corrente senza disinstallare, così Android conserva tracce, profilo e dati personali.
+
+## 0.38.0 — 25 agosto 2026
+
+- laghi, bacini e pozze non marini hanno un layer lineare blu autonomo, più leggibile del solo bordo del riempimento su MapLibre Android;
+- tutti i corsi d’acqua ricevono un contorno blu sottile; fiumi, canali e corsi nominati mantengono un secondo contorno più marcato;
+- l’ordine di disegno collega visivamente immissari ed emissari alla sponda dei laghi senza interruzioni;
+- la regola è identica nei livelli regionali e di dettaglio, nord e sud, ed è protetta da un test automatico;
+- le biforcazioni dei rami secondari mantengono il simbolo ambra anche quando toccano la rete primaria e compaiono dallo stesso livello di zoom dei sentieri secondari;
+- i nodi finali vengono agganciati alla geometria pubblicata dello stesso percorso, eliminando terminali isolati; tutti i nodi sono visibili dallo zoom della rete.
+
+La 0.38.0 usa `it.sentieri.abruzzo`, `versionCode 48` e lo stesso certificato stabile delle release precedenti. Il solo file da scaricare è `02-Sentieri-Abruzzo-0.38-arm64.apk`; va installato sopra la versione corrente senza disinstallare, così Android conserva tracce, profilo e dati personali.
+
 ## 0.37.0 — 25 agosto 2026
 
 - la rete sentieristica pubblicata è ora un grafo gerarchico continuo: rete primaria ufficiale/CAI, rete secondaria e vie OpenStreetMap non associate hanno identità e rappresentazioni distinte;
