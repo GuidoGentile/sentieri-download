@@ -1,5 +1,15 @@
 # Note di versione
 
+## 0.36.0 — 25 agosto 2026
+
+- Percorsi e Attrazioni collocano il selettore lista/mappa accanto ai filtri e conservano la modalità scelta durante la navigazione;
+- la home Percorsi elimina il titolo ripetuto e mostra il conteggio soltanto quando ricerca o filtri restringono il catalogo;
+- lista e mappa consumano lo stesso insieme filtrato: con criteri attivi la carta mostra esclusivamente i risultati, senza lasciare visibili elementi esclusi;
+- nella mappa Percorsi è possibile aprire la stessa scheda della lista toccando direttamente la linea o il relativo riferimento;
+- nelle testate interne il logo sostituisce la freccia grafica e il ritorno resta affidato al comando Indietro di Android.
+
+La 0.36.0 usa `it.sentieri.abruzzo`, `versionCode 46` e lo stesso certificato stabile delle release precedenti. Il solo file da scaricare è `02-Sentieri-Abruzzo-0.36-arm64.apk`; va installato sopra la versione corrente senza disinstallare, così Android conserva tracce, profilo e dati personali.
+
 ## 0.35.0 — 25 agosto 2026
 
 - la mappa Attrazioni elimina la visualizzazione aggregata: i 679 luoghi georeferenziati sono mostrati direttamente come punti cliccabili e ricerca e filtri aggiornano lo stesso insieme visibile della lista;
