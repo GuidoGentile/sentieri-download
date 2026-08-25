@@ -1,5 +1,16 @@
 # Note di versione
 
+## 0.37.0 — 25 agosto 2026
+
+- la rete sentieristica pubblicata è ora un grafo gerarchico continuo: rete primaria ufficiale/CAI, rete secondaria e vie OpenStreetMap non associate hanno identità e rappresentazioni distinte;
+- nodi primari, nodi secondari, estremità e varianti sono verificati; frammenti isolati o dubbi restano in quarantena fuori dall’APK invece di apparire come percorsi spezzati;
+- cartografia offline rifinita con acque continue e più leggibili, etichette sopra la carta fisica, priorità alle cime, confine regionale permanente, aree opzionali e POI per parcheggi e punti d’acqua;
+- Percorsi si apre in vista Mappa; ricerca, filtri e selettore lista/mappa condividono lo stesso catalogo e le targhette dei percorsi restano il riferimento di selezione;
+- due registrazioni personali salvate vengono mostrate come un’unica escursione quando nome, mezzo, giornata, distanza e intervallo indicano con prudenza la stessa uscita; punti ed esagoni originali restano intatti nel database;
+- il consolidamento delle tracce personali viene ripetuto all’avvio e dopo il ripristino Supabase, senza cancellazioni automatiche remote.
+
+La 0.37.0 usa `it.sentieri.abruzzo`, `versionCode 47` e lo stesso certificato stabile delle release precedenti. Il solo file da scaricare è `02-Sentieri-Abruzzo-0.37-arm64.apk`; va installato sopra la versione corrente senza disinstallare, così Android conserva tracce, profilo e dati personali.
+
 ## 0.36.0 — 25 agosto 2026
 
 - Percorsi e Attrazioni collocano il selettore lista/mappa accanto ai filtri e conservano la modalità scelta durante la navigazione;
