@@ -1,5 +1,16 @@
 # Note di versione
 
+## 0.40.0 — 28 agosto 2026
+
+- OpenStreetMap diventa l’ossatura geometrica e topologica della rete escursionistica, senza importare indiscriminatamente gli altri elementi OSM;
+- parchi e CAI alimentano prioritariamente denominazione, codice, difficoltà, stato e qualificazione ufficiale, mantenendo separati geometria e autorità della fonte;
+- gli itinerari ufficiali dei parchi e quelli CAI formano la rete primaria; gli altri sentieri, collegamenti e deviazioni costituiscono la rete secondaria;
+- 1.128 percorsi su 1.163 trovano una presenza OSM significativa; soltanto 35 usano una geometria esterna perché realmente assenti dall’ossatura OSM;
+- la rete pubblicata contiene 10.058 archi e 4.810 nodi; gli originali e la precedente rete versione 1 rimangono conservati per audit e confronti;
+- backup di profilo e tracce personali, predisposizione iOS e documentazione tecnica sono riallineati alla stessa versione candidata.
+
+La 0.40.0 usa `it.sentieri.abruzzo`, `versionCode 52` e lo stesso certificato stabile delle release precedenti. Il solo file da scaricare è `02-Sentieri-Abruzzo-0.40-arm64.apk`; va installato sopra la versione corrente senza disinstallare, così Android conserva tracce, profilo e dati personali.
+
 
 ## 0.39.0 — 25 agosto 2026
 
