@@ -1,5 +1,16 @@
 # Note di versione
 
+## 0.41.0 — 28 agosto 2026
+
+- ogni percorso principale o secondario con identità propria è ora una sola sequenza continua e non ramificata;
+- monconi, tratti paralleli e deviazioni restano visibili come rete subordinata, associata al percorso padre ma senza etichetta, scheda, recensione o prenotazione autonoma;
+- le etichette dei percorsi in mappa sono selezionabili anche per cambiare direttamente il percorso corrente;
+- la rete pubblicata contiene 9.941 archi e 4.580 nodi; l’audit verifica tutti i 1.162 percorsi e non rileva errori o avvisi;
+- logo e campo di ricerca della home Percorsi condividono ora lo stesso allineamento sinistro;
+- versione e build dei sorgenti iOS sono riallineate alla candidata Android; compilazione, firma e distribuzione TestFlight restano separate e richiedono Xcode su Mac.
+
+La 0.41.0 usa `it.sentieri.abruzzo`, `versionCode 53` e lo stesso certificato stabile delle release precedenti. Il solo file da scaricare è `02-Sentieri-Abruzzo-0.41-arm64.apk`; va installato sopra la versione corrente senza disinstallare, così Android conserva tracce, profilo e dati personali.
+
 ## 0.40.0 — 28 agosto 2026
 
 - OpenStreetMap diventa l’ossatura geometrica e topologica della rete escursionistica, senza importare indiscriminatamente gli altri elementi OSM;
