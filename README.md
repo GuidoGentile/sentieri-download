@@ -8,8 +8,8 @@ base descrittiva dell'opera software, mantenendo distinti componenti realizzati,
 
 ## Android
 
-La release attuale è una **build sperimentale 0.42.0 ARM64**, distribuita fuori
-dal Play Store per test controllati. L’APK contiene un catalogo offline di 1.163 percorsi
+La release attuale è una **build sperimentale 0.43.0 ARM64**, distribuita fuori
+dal Play Store per test controllati. L’APK contiene un catalogo offline di 1.162 percorsi
 canonici abruzzesi, con 339 identità CAI documentate e fonti storiche conservate,
 cartografia vettoriale offline, profili altimetrici e registrazione GPS predisposta per continuare
 anche a schermo spento. Dal menu `Registra` si può creare un percorso personale privato e vederlo
@@ -47,9 +47,9 @@ La 0.32.0 ripristina la cartografia offline senza velature spurie, conserva lagh
 
 ombreggiatura come livello autonomo e mantiene riprendibili le registrazioni finché non vengono salvate con un nome o eliminate.
 
-La 0.42.0 usa OpenStreetMap come ossatura geometrica della sola rete escursionistica. Ogni percorso con identità propria è pubblicato come sequenza unica e continua; monconi, parallele e deviazioni restano nella rete subordinata, visibili in mappa ma privi di etichetta e scheda autonoma. Le linee della rete sono leggibili anche nella vista territoriale, mentre nodi ed etichette compaiono soltanto nello zoom di dettaglio. Dati di parchi e CAI qualificano prioritariamente codici, nomi, difficoltà e ufficialità.
+La 0.43.0 usa OpenStreetMap come ossatura geometrica della sola rete escursionistica e riconosce CAI-INFOMONT come autorità nazionale per le identità CAI documentate. Ogni percorso con identità propria è pubblicato come sequenza unica e continua; monconi, parallele e deviazioni restano nella rete subordinata, visibili in mappa ma privi di etichetta e scheda autonoma. Nodi e targhette sono più coerenti e leggibili anche ruotando la mappa. La versione separa inoltre Account e Impostazioni, parte con rotazione dello schermo disattivata e rifinisce Copertura, Storico e percorsi personali.
 
-La distribuzione usa un solo APK completo: `02-Sentieri-Abruzzo-0.42-arm64.apk`. Non esiste più un APK ponte: il pacchetto unico include
+La distribuzione usa un solo APK completo: `02-Sentieri-Abruzzo-0.43-arm64.apk`. Non esiste più un APK ponte: il pacchetto unico include
 applicazione, mappe e dati territoriali offline. Installato sopra una versione precedente della stessa
 edizione, conserva tracce, profilo e dati personali.
 

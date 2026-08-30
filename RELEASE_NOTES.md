@@ -1,5 +1,16 @@
 # Note di versione
 
+## 0.43.0 — 30 agosto 2026
+
+- la rete OSM resta l’ossatura topologica e CAI-INFOMONT diventa una regola nazionale per promuovere nella rete primaria le identità CAI documentate;
+- nodi finali, terminali secondari, targhette e verso delle etichette sono più coerenti; le etichette restano leggibili anche ruotando la mappa;
+- punti d’acqua, laghi e corsi d’acqua sono più evidenti e conservano il contorno blu nelle continuità idrografiche;
+- ricerca di Percorsi e Attrazioni allineata, Copertura visibile a ogni scala e intestazioni fisse in Account, Impostazioni, Storico e percorsi personali;
+- Account e Impostazioni sono pagine distinte; la rotazione automatica dello schermo è disattivata inizialmente e la scelta viene ricordata;
+- il dettaglio delle tracce personali mostra la data completa accanto a Modifica ed Elimina, dispone le sei metriche su tre righe e nasconde le diciture tecniche di recupero dopo il salvataggio.
+
+La 0.43.0 usa `it.sentieri.abruzzo`, `versionCode 55` e lo stesso certificato stabile delle release precedenti. Il solo file da scaricare è `02-Sentieri-Abruzzo-0.43-arm64.apk`; va installato sopra la versione corrente senza disinstallare, così Android conserva tracce, profilo e dati personali.
+
 ## 0.42.0 — 30 agosto 2026
 
 - la planimetria colorata usa soltanto una geometria di rete completa, con controlli di connessione, copertura, estremi e rapporto di lunghezza prima di sostituire la traccia canonica;
