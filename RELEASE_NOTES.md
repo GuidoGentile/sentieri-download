@@ -1,5 +1,16 @@
 # Note di versione
 
+## 0.42.0 — 30 agosto 2026
+
+- la planimetria colorata usa soltanto una geometria di rete completa, con controlli di connessione, copertura, estremi e rapporto di lunghezza prima di sostituire la traccia canonica;
+- preservati anche i brevissimi archi OSM che costituiscono un collegamento topologico reale, come il raccordo tra C3 e C5, senza introdurre falsi nodi visibili;
+- le linee della rete primaria e secondaria compaiono dallo zoom 9,5; nodi e targhette restano rispettivamente agli zoom 11 e 12 per mantenere pulita la vista territoriale;
+- logo, ricerca e bordi esterni delle card principali condividono una guida unica a 16 dp;
+- profilo altimetrico e planimetria restano sincronizzati e ricadono sulla geometria canonica quando l’associazione OSM è parziale o distorta;
+- etichette dei sentieri più leggibili, rettangolari e scalate gradualmente con lo zoom.
+
+La 0.42.0 usa `it.sentieri.abruzzo`, `versionCode 54` e lo stesso certificato stabile delle release precedenti. Il solo file da scaricare è `02-Sentieri-Abruzzo-0.42-arm64.apk`; va installato sopra la versione corrente senza disinstallare, così Android conserva tracce, profilo e dati personali.
+
 ## 0.41.0 — 28 agosto 2026
 
 - ogni percorso principale o secondario con identità propria è ora una sola sequenza continua e non ramificata;
