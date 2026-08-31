@@ -1,5 +1,26 @@
 # Note di versione
 
+## 0.44.6 — 31 agosto 2026
+
+- sostituisce i due segnaposto vuoti Lazio con nodi derivati dalla topologia
+  dell’ossatura OSM già pubblicata, senza creare intersezioni artificiali;
+- pubblica 13.435 nodi primari/secondari: 8.573 bivi, 4.416 terminali e 446
+  cambi di livello; il contesto conserva inoltre 5.239 incroci terziari
+  maggiori o nominati;
+- rende i bivi primari e secondari visibili dallo zoom 11, i terminali dallo
+  zoom 13 e i terziari dallo zoom 14, limitando l’affollamento regionale;
+- aggiunge un audit riproducibile e blocca la distribuzione di una nuova
+  edizione quando il file dei nodi principali manca o è vuoto;
+- non cambia lo stato delle fonti: i nodi descrivono la topologia OSM, non
+  attribuiscono ufficialità e non certificano la continuità turn-by-turn;
+- Abruzzo e Lazio usano `versionCode 62` e `versionName 0.44.6`; la Lazio è
+  stata aggiornata in-place, avviata sul telefono e verificata senza errori
+  fatali di avvio.
+
+`02-Sentieri-Abruzzo-0.44.6-arm64.apk` misura 325.947.928 byte e ha SHA-256 `a614f207393f57c15e3210b78061f990ea395d8e4fd3362c3894ce9517a09d9c`.
+
+`Sentieri-Lazio-0.44.6-arm64.apk` misura 294.698.205 byte e ha SHA-256 `b8bca393d64f300a5a053a76baf661d43ce45dba2066b263527585df90c3a5c4`.
+
 ## 0.44.5 — 31 agosto 2026
 
 - aggiunge ad Abruzzo e Lazio un livello fisico regionale offline z7–10,
