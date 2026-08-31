@@ -1,5 +1,22 @@
 # Note di versione
 
+## 0.44.3 — 31 agosto 2026
+
+- Sentieri del Lazio include il DEM regionale reale TINITALY 1.1: profili e
+  dislivelli completi per 1.643 percorsi, curve ogni 10 metri con direttrici
+  ogni 50 e hillshade offline;
+- la selezione Lazio usa 22 riquadri sorgente a 10 metri. Nell’APK entrano solo
+  i derivati compatti: 650 tile di curve e 977 tile di rilievo;
+- il manifest verifica profili, metriche e contenuto effettivo degli MBTiles.
+  Una nuova edizione regionale non può più essere distribuita con archivi DEM
+  mancanti o segnaposto vuoti;
+- Abruzzo e Lazio usano `versionCode 59` e `versionName 0.44.3`, con application
+  ID e porte cartografiche locali distinti.
+
+`02-Sentieri-Abruzzo-0.44.3-arm64.apk` misura 308.402.434 byte e ha SHA-256 `81106d9da827e32ec4e158d17055fed1c91aaf7399468878c2927f2fdd65c505`.
+
+`Sentieri-Lazio-0.44.3-arm64.apk` misura 288.229.459 byte e ha SHA-256 `743adf942b12fa5f21e6c299e5fee9277e9a3c03e77c8cb99f3a91f9e796ac12`.
+
 ## 0.44.2 — 31 agosto 2026
 
 - aggiunge ad Abruzzo e Lazio una panoramica fisica offline dell’Italia, ispirata alla leggibilità di Tracestrack Topo ma generata da Natural Earth II 3.2.0, pubblico dominio;
