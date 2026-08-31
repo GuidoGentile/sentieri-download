@@ -1,5 +1,15 @@
 # Note di versione
 
+## 0.44.0 — 31 agosto 2026
+
+- preserva integralmente geometrie, nodi ed etichette della rete primaria e secondaria pubblicata nella 0.43;
+- aggiunge la rete terziaria OSM come sorgente vettoriale autonoma, beige e marrone tratteggiata, senza creare elementi nel catalogo;
+- aggiunge nodi terziari distinti soltanto nello zoom ravvicinato e mantiene la precedenza dei nodi primari e secondari;
+- mostra i nomi OSM lungo le vie nello zoom di dettaglio e aggiunge offline 144 impianti sciistici e 176 stazioni;
+- anticipa la visibilità della rete primaria e secondaria nella panoramica regionale, ingrandisce i parcheggi e rende più chiara l’indicazione del Nord.
+
+La 0.44.0 usa `it.sentieri.abruzzo`, `versionCode 56` e lo stesso certificato stabile delle release precedenti. Il solo file da scaricare è `02-Sentieri-Abruzzo-0.44-arm64.apk`; va installato sopra la versione corrente senza disinstallare, così Android conserva tracce, profilo e dati personali.
+
 ## 0.43.0 — 30 agosto 2026
 
 - la rete OSM resta l’ossatura topologica e CAI-INFOMONT diventa una regola nazionale per promuovere nella rete primaria le identità CAI documentate;

@@ -8,7 +8,7 @@ base descrittiva dell'opera software, mantenendo distinti componenti realizzati,
 
 ## Android
 
-La release attuale è una **build sperimentale 0.43.0 ARM64**, distribuita fuori
+La release attuale è una **build sperimentale 0.44.0 ARM64**, distribuita fuori
 dal Play Store per test controllati. L’APK contiene un catalogo offline di 1.162 percorsi
 canonici abruzzesi, con 339 identità CAI documentate e fonti storiche conservate,
 cartografia vettoriale offline, profili altimetrici e registrazione GPS predisposta per continuare
@@ -47,9 +47,9 @@ La 0.32.0 ripristina la cartografia offline senza velature spurie, conserva lagh
 
 ombreggiatura come livello autonomo e mantiene riprendibili le registrazioni finché non vengono salvate con un nome o eliminate.
 
-La 0.43.0 usa OpenStreetMap come ossatura geometrica della sola rete escursionistica e riconosce CAI-INFOMONT come autorità nazionale per le identità CAI documentate. Ogni percorso con identità propria è pubblicato come sequenza unica e continua; monconi, parallele e deviazioni restano nella rete subordinata, visibili in mappa ma privi di etichetta e scheda autonoma. Nodi e targhette sono più coerenti e leggibili anche ruotando la mappa. La versione separa inoltre Account e Impostazioni, parte con rotazione dello schermo disattivata e rifinisce Copertura, Storico e percorsi personali.
+La 0.44.0 conserva la rete primaria e secondaria validata della 0.43 e aggiunge il terziario OSM come sovrapposizione autonoma marrone tratteggiata, con nodi distinti soltanto nello zoom ravvicinato. Nomi OSM e impianti sciistici arricchiscono la cartografia offline senza creare nuove identità di catalogo. Parcheggi, visibilità territoriale della rete e indicazione del Nord risultano più leggibili.
 
-La distribuzione usa un solo APK completo: `02-Sentieri-Abruzzo-0.43-arm64.apk`. Non esiste più un APK ponte: il pacchetto unico include
+La distribuzione usa un solo APK completo: `02-Sentieri-Abruzzo-0.44-arm64.apk`. Non esiste più un APK ponte: il pacchetto unico include
 applicazione, mappe e dati territoriali offline. Installato sopra una versione precedente della stessa
 edizione, conserva tracce, profilo e dati personali.
 
