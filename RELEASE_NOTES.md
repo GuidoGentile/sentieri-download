@@ -1,5 +1,36 @@
 # Note di versione
 
+## 0.44.7 — 31 agosto 2026
+
+- introduce come standard regionale la rete OSM-first a tre livelli: primari
+  associati a CAI o parchi, secondari identificabili con metadati rilevanti e
+  terziari non elencati né etichettati ma visibili in primo piano per
+  l’esplorazione;
+- il Lazio pubblica 1.635 percorsi identificabili e 65.652 archi: 5.107
+  primari, 2.431 secondari e 58.114 terziari; otto relazioni con identità OSM
+  artificiale sono state tolte dal catalogo senza cancellarne automaticamente
+  l’eventuale geometria utile;
+- elimina dal contesto terziario 1.627 elementi non escursionistici o urbani,
+  fra cui marciapiedi, attraversamenti e percorsi asfaltati o illuminati senza
+  evidenza escursionistica;
+- prolunga conservativamente i percorsi catalogati attraverso 2.602 nodi di
+  continuità di grado due e ricuce 20 microinterruzioni fino a due metri, senza
+  attraversare bivi, cambi di livello o identità diverse;
+- pubblica 13.323 nodi primari/secondari e 4.913 nodi terziari; il livello
+  terziario è disponibile dallo zoom 11 e resta sopra rilievo, vegetazione e
+  altre basi cartografiche;
+- identifica 9.275 parti di strada sterrata OSM come viabilità distinta. I
+  7.152 archi terziari coincidenti non vengono duplicati come sentieri, mentre
+  un percorso primario o secondario che segue una sterrata conserva entrambe
+  le letture;
+- aggiunge una procedura riproducibile e controlli bloccanti affinché lo stesso
+  criterio sia applicato a ogni nuova edizione regionale;
+- Abruzzo e Lazio usano `versionCode 63` e `versionName 0.44.7`.
+
+`02-Sentieri-Abruzzo-0.44.7-arm64.apk` misura 325.948.056 byte e ha SHA-256 `8b5bbe5c0a91b395fd710f2dfc8ad18cec057ff31a04b7c4cbc1a051fb0b82d5`.
+
+`Sentieri-Lazio-0.44.7-arm64.apk` misura 299.194.665 byte e ha SHA-256 `431ec378aeb138a6be165542e66ff0530cef12d9f4984daac788536c48fb9ea3`.
+
 ## 0.44.6 — 31 agosto 2026
 
 - sostituisce i due segnaposto vuoti Lazio con nodi derivati dalla topologia
