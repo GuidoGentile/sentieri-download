@@ -8,20 +8,22 @@ base descrittiva dell'opera software, mantenendo distinti componenti realizzati,
 
 ## Android
 
-La landing distribuisce due edizioni Android ARM64 installabili insieme:
+La landing distribuisce due edizioni Android 0.44.2 ARM64 installabili insieme:
 
-- `02-Sentieri-Abruzzo-0.44-arm64.apk`, release sperimentale Abruzzo;
-- `Sentieri-Lazio-0.44.1-arm64.apk`, build candidata Lazio 0.44.1 con dati territoriali separati.
+- `02-Sentieri-Abruzzo-0.44.2-arm64.apk`, release sperimentale Abruzzo;
+- `Sentieri-Lazio-0.44.2-arm64.apk`, build candidata Lazio con dati territoriali separati.
 
 La candidata Lazio usa `it.sentieri.lazio`, contiene 1.643 identità di percorso,
 617 attrazioni, una cartografia vettoriale offline costruita sull’ossatura OSM
-e il contesto marino Tirreno/Adriatico derivato dai confini ISTAT 2026.
+e il contesto marino Tirreno/Adriatico derivato dai confini ISTAT 2026. Le due
+edizioni condividono inoltre una carta fisica italiana Natural Earth di appena
+1,21 MB, usata soltanto nella panoramica e sostituita dal dettaglio OSM avvicinandosi.
 Le fonti CAI e ParchiLazio qualificano le identità quando la corrispondenza è
 documentata; non rendono OpenStreetMap una fonte ufficiale. Curve di livello,
 hillshade, verifica diretta INFOMONT, continuità turn-by-turn e collaudo sul campo
 restano incompleti. La build è stata installata e avviata su un telefono Android.
 
-La release attuale è una **build sperimentale 0.44.0 ARM64**, distribuita fuori
+La release attuale è una **build sperimentale 0.44.2 ARM64**, distribuita fuori
 dal Play Store per test controllati. L’APK contiene un catalogo offline di 1.162 percorsi
 canonici abruzzesi, con 339 identità CAI documentate e fonti storiche conservate,
 cartografia vettoriale offline, profili altimetrici e registrazione GPS predisposta per continuare
@@ -60,7 +62,7 @@ La 0.32.0 ripristina la cartografia offline senza velature spurie, conserva lagh
 
 ombreggiatura come livello autonomo e mantiene riprendibili le registrazioni finché non vengono salvate con un nome o eliminate.
 
-La 0.44.0 conserva la rete primaria e secondaria validata della 0.43 e aggiunge il terziario OSM come sovrapposizione autonoma marrone tratteggiata, con nodi distinti soltanto nello zoom ravvicinato. Nomi OSM e impianti sciistici arricchiscono la cartografia offline senza creare nuove identità di catalogo. Parcheggi, visibilità territoriale della rete e indicazione del Nord risultano più leggibili.
+La 0.44.2 conserva la rete primaria e secondaria validata della 0.43 e aggiunge il terziario OSM come sovrapposizione autonoma marrone tratteggiata, con nodi distinti soltanto nello zoom ravvicinato. Nomi OSM e impianti sciistici arricchiscono la cartografia offline senza creare nuove identità di catalogo. La panoramica nazionale usa rilievo e colori fisici Natural Earth; il dettaglio resta OSM-first.
 
 Ogni edizione usa un APK completo con applicazione, mappe e dati territoriali
 propri. Installato sopra una versione precedente della stessa edizione, conserva

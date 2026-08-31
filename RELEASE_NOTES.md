@@ -1,5 +1,18 @@
 # Note di versione
 
+## 0.44.2 — 31 agosto 2026
+
+- aggiunge ad Abruzzo e Lazio una panoramica fisica offline dell’Italia, ispirata alla leggibilità di Tracestrack Topo ma generata da Natural Earth II 3.2.0, pubblico dominio;
+- limita la carta nazionale agli zoom 4–8 e la dissolve entro lo zoom 9, dove continua la cartografia vettoriale OSM delle singole edizioni;
+- distribuisce soltanto 207 tile JPEG in un MBTiles da 1.212.416 byte, sotto il limite bloccante di 5 MiB;
+- non copia le tile ospitate da Tracestrack: i loro termini vietano il download massivo senza accordo;
+- assegna porte locali distinte ad Abruzzo e Lazio, così le mappe offline funzionano anche quando entrambe le app restano attive sullo stesso telefono;
+- usa `versionCode 58` e `versionName 0.44.2` per entrambi gli application ID.
+
+`02-Sentieri-Abruzzo-0.44.2-arm64.apk` misura 308.402.434 byte e ha SHA-256 `a0c6054c9d0e21f8bd9c304a0023e039c5a1b7aa2831046542d66809d36a88b0`.
+
+`Sentieri-Lazio-0.44.2-arm64.apk` misura 195.511.467 byte e ha SHA-256 `54b7c15f8cb291f7a5f15cd5de42f170aca94bf46801057ea77b7c145db4daf8`.
+
 ## 0.44.1 Lazio — 31 agosto 2026
 
 - aggiunge il contesto marino regionale mancante, con Tirreno e porzione di Adriatico visibile nella panoramica;
