@@ -1,5 +1,22 @@
 # Note di versione
 
+## 0.44.4 — 31 agosto 2026
+
+- Sentieri del Lazio passa da 617 candidati soltanto OSM a 937 attrazioni
+  qualificate da portali turistici regionali, provinciali e comunali;
+- le schede coprono 366 comuni. 680 attrazioni hanno almeno una fotografia
+  remota collegata, per 697 riferimenti complessivi;
+- OSM resta la fonte di identità candidata e coordinate; i nomi incerti o
+  omonimi restano nello staging e non vengono pubblicati;
+- fotografie, crediti e siti restano collegamenti alle pagine istituzionali:
+  nessun file fotografico entra nell'APK o nel database;
+- Abruzzo e Lazio usano `versionCode 60` e `versionName 0.44.4`, con
+  application ID, dati e porte cartografiche distinti.
+
+`02-Sentieri-Abruzzo-0.44.4-arm64.apk` misura 308.402.430 byte e ha SHA-256 `7f0468929da2b9b0c4e1b6a33560a966ca31324323e8de369dc9362f59a8f5ca`.
+
+`Sentieri-Lazio-0.44.4-arm64.apk` misura 288.362.127 byte e ha SHA-256 `67c0f23894600081c21a1cfc05ce8a99e0b58192918cecb25b63b8a3728fde39`.
+
 ## 0.44.3 — 31 agosto 2026
 
 - Sentieri del Lazio include il DEM regionale reale TINITALY 1.1: profili e

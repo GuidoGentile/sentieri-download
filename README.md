@@ -8,13 +8,14 @@ base descrittiva dell'opera software, mantenendo distinti componenti realizzati,
 
 ## Android
 
-La landing distribuisce due edizioni Android 0.44.3 ARM64 installabili insieme:
+La landing distribuisce due edizioni Android 0.44.4 ARM64 installabili insieme:
 
-- `02-Sentieri-Abruzzo-0.44.3-arm64.apk`, release sperimentale Abruzzo;
-- `Sentieri-Lazio-0.44.3-arm64.apk`, build candidata Lazio con dati territoriali separati.
+- `02-Sentieri-Abruzzo-0.44.4-arm64.apk`, release sperimentale Abruzzo;
+- `Sentieri-Lazio-0.44.4-arm64.apk`, build candidata Lazio con dati territoriali separati.
 
 La candidata Lazio usa `it.sentieri.lazio`, contiene 1.643 identità di percorso,
-617 attrazioni, una cartografia vettoriale offline costruita sull’ossatura OSM
+937 attrazioni qualificate da portali turistici istituzionali e 697
+collegamenti fotografici remoti, una cartografia vettoriale offline costruita sull’ossatura OSM
 e il contesto marino Tirreno/Adriatico derivato dai confini ISTAT 2026. Le due
 edizioni condividono inoltre una carta fisica italiana Natural Earth di appena
 1,21 MB, usata soltanto nella panoramica e sostituita dal dettaglio OSM avvicinandosi.
@@ -22,9 +23,9 @@ Le fonti CAI e ParchiLazio qualificano le identità quando la corrispondenza è
 documentata; non rendono OpenStreetMap una fonte ufficiale. Profili e dislivelli
 sono completi per 1.643 percorsi; curve ogni 10 metri e hillshade derivano da
 TINITALY 1.1. Verifica diretta INFOMONT, continuità turn-by-turn, prova della
-0.44.3 sul telefono e collaudo sul campo restano incompleti.
+0.44.4 sul telefono e collaudo sul campo restano incompleti.
 
-La release attuale è una **build sperimentale 0.44.3 ARM64**, distribuita fuori
+La release attuale è una **build sperimentale 0.44.4 ARM64**, distribuita fuori
 dal Play Store per test controllati. L’APK contiene un catalogo offline di 1.162 percorsi
 canonici abruzzesi, con 339 identità CAI documentate e fonti storiche conservate,
 cartografia vettoriale offline, profili altimetrici e registrazione GPS predisposta per continuare
@@ -63,7 +64,10 @@ La 0.32.0 ripristina la cartografia offline senza velature spurie, conserva lagh
 
 ombreggiatura come livello autonomo e mantiene riprendibili le registrazioni finché non vengono salvate con un nome o eliminate.
 
-La 0.44.3 conserva la rete primaria e secondaria validata della 0.43 e aggiunge il terziario OSM come sovrapposizione autonoma marrone tratteggiata, con nodi distinti soltanto nello zoom ravvicinato. Nomi OSM e impianti sciistici arricchiscono la cartografia offline senza creare nuove identità di catalogo. La panoramica nazionale usa rilievo e colori fisici Natural Earth; nel Lazio il dettaglio aggiunge 1.643 profili, curve e hillshade TINITALY reali.
+La 0.44.4 conserva rete, profili, DEM e cartografia della 0.44.3. Nel Lazio
+sostituisce la base di attrazioni soltanto OSM con 937 schede qualificate da
+fonti turistiche regionali, provinciali e comunali. OSM fornisce coordinate e
+identità candidata; le fotografie restano URL remoti e non entrano nell'APK.
 
 Ogni edizione usa un APK completo con applicazione, mappe e dati territoriali
 propri. Installato sopra una versione precedente della stessa edizione, conserva
