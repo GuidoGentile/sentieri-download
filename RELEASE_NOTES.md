@@ -1,5 +1,15 @@
 # Note di versione
 
+## 0.44.1 Lazio — 31 agosto 2026
+
+- aggiunge il contesto marino regionale mancante, con Tirreno e porzione di Adriatico visibile nella panoramica;
+- deriva la costa e le isole dai confini regionali ISTAT 2026, CC BY 4.0, senza riattivare i poligoni ocean OSM che in passato potevano coprire l’entroterra;
+- verifica geometricamente che il mare al largo di Ostia sia incluso e che Roma, lago di Bolsena e Ponza restino terra;
+- mantiene invariati ossatura OSM, 1.643 identità di percorso, 617 attrazioni e separazione completa dai dati Abruzzo;
+- usa `it.sentieri.lazio`, `versionCode 57` e `versionName 0.44.1`.
+
+Il file `Sentieri-Lazio-0.44.1-arm64.apk` misura 194.510.780 byte e ha SHA-256 `0ffc01e8c635f104a6d3ba1b6b6be228dada330f6c48ba4407d031a94e9a6ee0`.
+
 ## 0.44.0 — 31 agosto 2026
 
 ### Sentieri del Lazio — build candidata

@@ -8,13 +8,14 @@ base descrittiva dell'opera software, mantenendo distinti componenti realizzati,
 
 ## Android
 
-La landing distribuisce due edizioni Android 0.44 ARM64 installabili insieme:
+La landing distribuisce due edizioni Android ARM64 installabili insieme:
 
 - `02-Sentieri-Abruzzo-0.44-arm64.apk`, release sperimentale Abruzzo;
-- `Sentieri-Lazio-0.44-arm64.apk`, build candidata Lazio con dati territoriali separati.
+- `Sentieri-Lazio-0.44.1-arm64.apk`, build candidata Lazio 0.44.1 con dati territoriali separati.
 
 La candidata Lazio usa `it.sentieri.lazio`, contiene 1.643 identità di percorso,
-617 attrazioni e una cartografia vettoriale offline costruita sull’ossatura OSM.
+617 attrazioni, una cartografia vettoriale offline costruita sull’ossatura OSM
+e il contesto marino Tirreno/Adriatico derivato dai confini ISTAT 2026.
 Le fonti CAI e ParchiLazio qualificano le identità quando la corrispondenza è
 documentata; non rendono OpenStreetMap una fonte ufficiale. Curve di livello,
 hillshade, verifica diretta INFOMONT, continuità turn-by-turn e collaudo sul campo
