@@ -2,6 +2,18 @@
 
 ## 0.44.0 — 31 agosto 2026
 
+### Sentieri del Lazio — build candidata
+
+- aggiunge l’edizione separata `it.sentieri.lazio`, installabile insieme a Sentieri d’Abruzzo;
+- include 1.643 identità di percorso, 617 attrazioni e il pacchetto vettoriale offline Lazio;
+- costruisce il grafo fisico sui way OpenStreetMap e conserva separatamente le evidenze CAI e ParchiLazio usate per qualificare e promuovere le identità;
+- usa il marchio a foglia inclinata con profilo ispirato al Terminillo e cielo coerente con l’icona Abruzzo;
+- è stata installata e avviata su un telefono Android, ma non è ancora validata sul campo e non offre navigazione certificata.
+
+Il file `Sentieri-Lazio-0.44-arm64.apk` misura 194.430.464 byte e ha SHA-256 `c0d062b98e711587e24db21d9a5018321a72522492e8a0c4144c50203f90b123`.
+
+### Sentieri d’Abruzzo
+
 - preserva integralmente geometrie, nodi ed etichette della rete primaria e secondaria pubblicata nella 0.43;
 - aggiunge la rete terziaria OSM come sorgente vettoriale autonoma, beige e marrone tratteggiata, senza creare elementi nel catalogo;
 - aggiunge nodi terziari distinti soltanto nello zoom ravvicinato e mantiene la precedenza dei nodi primari e secondari;

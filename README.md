@@ -8,6 +8,18 @@ base descrittiva dell'opera software, mantenendo distinti componenti realizzati,
 
 ## Android
 
+La landing distribuisce due edizioni Android 0.44 ARM64 installabili insieme:
+
+- `02-Sentieri-Abruzzo-0.44-arm64.apk`, release sperimentale Abruzzo;
+- `Sentieri-Lazio-0.44-arm64.apk`, build candidata Lazio con dati territoriali separati.
+
+La candidata Lazio usa `it.sentieri.lazio`, contiene 1.643 identità di percorso,
+617 attrazioni e una cartografia vettoriale offline costruita sull’ossatura OSM.
+Le fonti CAI e ParchiLazio qualificano le identità quando la corrispondenza è
+documentata; non rendono OpenStreetMap una fonte ufficiale. Curve di livello,
+hillshade, verifica diretta INFOMONT, continuità turn-by-turn e collaudo sul campo
+restano incompleti. La build è stata installata e avviata su un telefono Android.
+
 La release attuale è una **build sperimentale 0.44.0 ARM64**, distribuita fuori
 dal Play Store per test controllati. L’APK contiene un catalogo offline di 1.162 percorsi
 canonici abruzzesi, con 339 identità CAI documentate e fonti storiche conservate,
@@ -49,12 +61,12 @@ ombreggiatura come livello autonomo e mantiene riprendibili le registrazioni fin
 
 La 0.44.0 conserva la rete primaria e secondaria validata della 0.43 e aggiunge il terziario OSM come sovrapposizione autonoma marrone tratteggiata, con nodi distinti soltanto nello zoom ravvicinato. Nomi OSM e impianti sciistici arricchiscono la cartografia offline senza creare nuove identità di catalogo. Parcheggi, visibilità territoriale della rete e indicazione del Nord risultano più leggibili.
 
-La distribuzione usa un solo APK completo: `02-Sentieri-Abruzzo-0.44-arm64.apk`. Non esiste più un APK ponte: il pacchetto unico include
-applicazione, mappe e dati territoriali offline. Installato sopra una versione precedente della stessa
-edizione, conserva tracce, profilo e dati personali.
+Ogni edizione usa un APK completo con applicazione, mappe e dati territoriali
+propri. Installato sopra una versione precedente della stessa edizione, conserva
+tracce, profilo e dati personali; Abruzzo e Lazio possono convivere sul telefono.
 
 1. Apri la pagina pubblica da Android.
-2. Scarica l’unico APK completo; se Sentieri d’Abruzzo è già installata, installalo sopra la versione corrente senza disinstallare.
+2. Scegli Abruzzo o Lazio; se la stessa edizione è già installata, installa l’APK sopra la versione corrente senza disinstallare.
 3. Se richiesto, consenti al browser di installare app dalla sorgente corrente.
 4. Apri `Sentieri d’Abruzzo` e, in caso di migrazione, controlla subito lo Storico.
 
