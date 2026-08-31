@@ -5,6 +5,7 @@
 - aggiunge il contesto marino regionale mancante, con Tirreno e porzione di Adriatico visibile nella panoramica;
 - deriva la costa e le isole dai confini regionali ISTAT 2026, CC BY 4.0, senza riattivare i poligoni ocean OSM che in passato potevano coprire l’entroterra;
 - verifica geometricamente che il mare al largo di Ostia sia incluso e che Roma, lago di Bolsena e Ponza restino terra;
+- è stata installata e avviata su telefono Android, verificando visivamente Tirreno, costa e isole nella panoramica;
 - mantiene invariati ossatura OSM, 1.643 identità di percorso, 617 attrazioni e separazione completa dai dati Abruzzo;
 - usa `it.sentieri.lazio`, `versionCode 57` e `versionName 0.44.1`.
 
