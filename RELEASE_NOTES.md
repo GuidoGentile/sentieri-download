@@ -1,5 +1,26 @@
 # Note di versione
 
+## 0.44.5 — 31 agosto 2026
+
+- aggiunge ad Abruzzo e Lazio un livello fisico regionale offline z7–10,
+  derivato dai rispettivi mosaici TINITALY 1.1 con tinte ipsometriche calde,
+  rilievi rossicci e hillshade leggero;
+- raccorda la panoramica nazionale Natural Earth al dettaglio OSM senza
+  stirare il raster a bassa risoluzione: campiture territoriali più trasparenti
+  alle scale intermedie e ritorno progressivo della base vettoriale entro z11,2;
+- il nuovo archivio contiene 70 tile e circa 0,6 MiB in Abruzzo, 90 tile e circa
+  0,7 MiB nel Lazio. Il gate di distribuzione blocca pacchetti mancanti, vuoti o
+  oltre 10 MiB;
+- Tracestrack Topo resta un riferimento visivo: nessuna tile ospitata viene
+  copiata o scaricata in massa;
+- Abruzzo e Lazio usano `versionCode 61` e `versionName 0.44.5`; la Lazio è
+  stata installata in-place, avviata sul telefono e ha estratto correttamente il
+  nuovo MBTiles nella memoria privata.
+
+`02-Sentieri-Abruzzo-0.44.5-arm64.apk` misura 326.437.072 byte e ha SHA-256 `cb5cf1183035f64b6836c45d02275d2db4ef15eb5ccae7e1f937c5434ac258f9`.
+
+`Sentieri-Lazio-0.44.5-arm64.apk` misura 293.604.189 byte e ha SHA-256 `32840293f3103c19319c6d7ba11f77cdbd4850b23677d6f0abb9978ee91673ca`.
+
 ## 0.44.4 — 31 agosto 2026
 
 - Sentieri del Lazio passa da 617 candidati soltanto OSM a 937 attrazioni
