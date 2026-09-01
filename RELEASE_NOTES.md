@@ -14,8 +14,11 @@
 - Abruzzo e Lazio usano `versionCode 65` e `versionName 0.44.9`, application ID
   distinti e certificato invariato.
 
-Le dimensioni e le impronte degli APK sono riportate negli asset della release
-GitHub `v0.44.9`.
+`02-Sentieri-Abruzzo-0.44.9-arm64.apk` misura 341.596.705 byte e ha
+SHA-256 `441320a25ae5e995db9daf50e304254d6f0a018ebe3a85a80f3896840acda5ab`.
+
+`Sentieri-Lazio-0.44.9-arm64.apk` misura 326.097.046 byte e ha
+SHA-256 `02a79b26bbfe8d534b9c647874bae277b5af9f9034ca22809ef5a3668cd6e6c9`.
 
 ## 0.44.8 — 1 settembre 2026
 
