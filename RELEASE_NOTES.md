@@ -1,5 +1,30 @@
 # Note di versione
 
+## 0.45.0 — 1 settembre 2026
+
+- applica ad Abruzzo e Lazio un unico standard regionale OSM-first: i percorsi
+  primari e secondari appartengono al catalogo, mentre il contesto senza
+  identità resta terziario, visibile e non ricercabile;
+- completa la topologia con bivi, estremi e ancore degli anelli anche per il
+  livello terziario; i terminali secondari conservano la propria gerarchia;
+- ricuce soltanto le interruzioni brevi e sicure, senza trasformare raccordi
+  dubbi in percorsi catalogati;
+- ripristina le piste carrabili OSM, compreso `tracktype=grade3`, mantenendole
+  distinte dai sentieri che possono percorrerle;
+- mostra più edifici dalla scala utile e ingrandisce parcheggi e punti acqua;
+- rimuove definitivamente i raster fisici e l’hillshade dai due pacchetti:
+  restano cartografia vettoriale, curve TINITALY, profili e dati offline;
+- pubblica 6.719 nodi complessivi e 8.690 tratti carrabili in Abruzzo; 75.824
+  nodi complessivi e 14.636 tratti carrabili nel Lazio;
+- Abruzzo e Lazio usano `versionCode 66` e `versionName 0.45.0`, application ID
+  distinti e certificato invariato.
+
+`02-Sentieri-Abruzzo-0.45.0-arm64.apk` misura 264.879.223 byte e ha
+SHA-256 `efaab9e4d04f8f70ad183dfaee842fee2ff5fe1a01ae1065b2253fea7aa9d42e`.
+
+`Sentieri-Lazio-0.45.0-arm64.apk` misura 262.475.548 byte e ha
+SHA-256 `f61d2067211b13aa8863fdbeacc215f48a738c3fbec78157dd50c9f9f7d39aa4`.
+
 ## 0.44.9 — 1 settembre 2026
 
 - restringe il pan di tutte le mappe a circa due chilometri oltre il confine
