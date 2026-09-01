@@ -1,5 +1,27 @@
 # Note di versione
 
+## 0.44.8 — 1 settembre 2026
+
+- sostituisce il caricamento globale della rete sentieristica con tile
+  vettoriali locali: primari, secondari e terziari restano integri, mentre il
+  cambio di zoom non espande più in memoria il GeoJSON Lazio da 68,9 MB;
+- rigenera le etichette Lazio dalla geometria finale della rete: 12.557
+  scudetti compatti orientati e 128 nomi lineari seguono ora i percorsi come
+  nell'edizione Abruzzo;
+- elimina il vecchio raster nazionale sfocato e porta il rilievo regionale
+  TINITALY sull'intero rettangolo massimo di Abruzzo e Lazio, comprese le tile
+  marine;
+- consegna il dettaglio alla carta vettoriale: il rilievo regionale raggiunge
+  opacità zero a zoom 11,2 e l'hillshade raster a zoom 12;
+- la build Lazio è stata installata in-place sul Samsung SM-S926B e ha
+  attraversato ripetutamente gli zoom 7–14 con PID stabile e senza crash;
+- Abruzzo e Lazio usano `versionCode 64` e `versionName 0.44.8`, application ID
+  distinti e certificato invariato.
+
+`02-Sentieri-Abruzzo-0.44.8-arm64.apk` misura 331.052.749 byte e ha SHA-256 `188d5a2e0e82e5d5d316ec0b729e0ffdf5dc16849a319037a80dac0ad72830df`.
+
+`Sentieri-Lazio-0.44.8-arm64.apk` misura 307.710.742 byte e ha SHA-256 `670e04d74821f653eb5f3c151cef1465af9e4335e9b467dce09fa5b828ce15f7`.
+
 ## 0.44.7 — 31 agosto 2026
 
 - introduce come standard regionale la rete OSM-first a tre livelli: primari
