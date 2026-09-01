@@ -28,8 +28,9 @@ Le fonti CAI e ParchiLazio qualificano le identità quando la corrispondenza è
 documentata; non rendono OpenStreetMap una fonte ufficiale. Profili e dislivelli
 sono completi per 1.635 percorsi; curve ogni 10 metri e hillshade derivano da
 TINITALY 1.1. Verifica diretta INFOMONT, continuità turn-by-turn, prova della
-prova sul campo resta incompleta; la 0.44.8 è stata installata e verificata sul
-telefono, incluso il passaggio ripetuto fra gli zoom 7–14 senza crash.
+prova sul campo resta incompleta; la 0.44.8 è pubblicata, installata e
+verificata sul telefono, incluso il passaggio ripetuto fra gli zoom 7–14 senza
+crash.
 
 La release attuale è una **build sperimentale 0.44.8 ARM64**, distribuita fuori
 dal Play Store per test controllati. L’APK contiene un catalogo offline di 1.162 percorsi
