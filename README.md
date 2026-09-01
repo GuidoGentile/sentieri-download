@@ -8,10 +8,10 @@ base descrittiva dell'opera software, mantenendo distinti componenti realizzati,
 
 ## Android
 
-La landing distribuisce due edizioni Android 0.44.8 ARM64 installabili insieme:
+La landing distribuisce due edizioni Android 0.44.9 ARM64 installabili insieme:
 
-- `02-Sentieri-Abruzzo-0.44.8-arm64.apk`, release sperimentale Abruzzo;
-- `Sentieri-Lazio-0.44.8-arm64.apk`, build candidata Lazio con dati territoriali separati.
+- `02-Sentieri-Abruzzo-0.44.9-arm64.apk`, release sperimentale Abruzzo;
+- `Sentieri-Lazio-0.44.9-arm64.apk`, build candidata Lazio con dati territoriali separati.
 
 La candidata Lazio usa `it.sentieri.lazio`, contiene 1.635 identità di percorso,
 937 attrazioni qualificate da portali turistici istituzionali e 697
@@ -28,11 +28,11 @@ Le fonti CAI e ParchiLazio qualificano le identità quando la corrispondenza è
 documentata; non rendono OpenStreetMap una fonte ufficiale. Profili e dislivelli
 sono completi per 1.635 percorsi; curve ogni 10 metri e hillshade derivano da
 TINITALY 1.1. Verifica diretta INFOMONT, continuità turn-by-turn, prova della
-prova sul campo resta incompleta; la 0.44.8 è pubblicata, installata e
+prova sul campo resta incompleta; la 0.44.9 è pubblicata, installata e
 verificata sul telefono, incluso il passaggio ripetuto fra gli zoom 7–14 senza
 crash.
 
-La release attuale è una **build sperimentale 0.44.8 ARM64**, distribuita fuori
+La release attuale è una **build sperimentale 0.44.9 ARM64**, distribuita fuori
 dal Play Store per test controllati. L’APK contiene un catalogo offline di 1.162 percorsi
 canonici abruzzesi, con 339 identità CAI documentate e fonti storiche conservate,
 cartografia vettoriale offline, profili altimetrici e registrazione GPS predisposta per continuare
@@ -71,7 +71,7 @@ La 0.32.0 ripristina la cartografia offline senza velature spurie, conserva lagh
 
 ombreggiatura come livello autonomo e mantiene riprendibili le registrazioni finché non vengono salvate con un nome o eliminate.
 
-La 0.44.8 conserva rete, profili, DEM e le 937 attrazioni Lazio qualificate da
+La 0.44.9 conserva rete, profili, DEM e le 937 attrazioni Lazio qualificate da
 fonti turistiche regionali, provinciali e comunali. Applica alla rete Lazio lo
 standard OSM-first primario/secondario/terziario, ricuce soltanto le continuità
 sicure, fa emergere il contesto escursionistico terziario e separa le strade

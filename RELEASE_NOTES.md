@@ -1,5 +1,22 @@
 # Note di versione
 
+## 0.44.9 — 1 settembre 2026
+
+- restringe il pan di tutte le mappe a circa due chilometri oltre il confine
+  della rispettiva regione, in Abruzzo e nel Lazio;
+- rende il mare visibile fin dalla panoramica iniziale e conserva costa e isole
+  anche durante i passaggi di zoom;
+- estende il rilievo fisico TINITALY fino a zoom 13: 2.298 tile e 18,6 MiB in
+  Abruzzo, 5.358 tile e 32,1 MiB nel Lazio;
+- incrementa la versione dei pacchetti offline (`v20` Abruzzo e `v9` Lazio),
+  forzando l’aggiornamento delle mappe senza cancellare tracce, profilo o
+  preferenze dell’utente;
+- Abruzzo e Lazio usano `versionCode 65` e `versionName 0.44.9`, application ID
+  distinti e certificato invariato.
+
+Le dimensioni e le impronte degli APK sono riportate negli asset della release
+GitHub `v0.44.9`.
+
 ## 0.44.8 — 1 settembre 2026
 
 - sostituisce il caricamento globale della rete sentieristica con tile
