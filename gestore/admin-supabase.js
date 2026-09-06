@@ -424,6 +424,8 @@
 
   captureRedirectSession();
   root.SentieriSupabase = Object.freeze({
+    requestTerritorialPackage: (edition) => authenticatedRequest('/rest/v1/rpc/request_territorial_package', {method:'POST',body:{p_edition:edition}}),
+    packageReleases: () => authenticatedRequest('/rest/v1/territorial_package_releases?select=id,edition,generation,status,requested_at,published_at&order=generation.desc&limit=20'),
     availability,
     authSettings,
     auditEvents,

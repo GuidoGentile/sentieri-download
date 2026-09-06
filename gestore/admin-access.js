@@ -341,9 +341,9 @@
     if (!detailTrail) return;
     const currentBooked = model.bookedUnits(detailBookings, detailTrail.id, "a_piedi", selectedDetailDate);
     const kind = accessKind.value;
-    const capacity = Number.parseInt(capacityInput.value, 10);
-    if (kind === "limited" && (!Number.isFinite(capacity) || capacity < Math.max(1, currentBooked) || capacity > 999)) {
-      editorMessage.textContent = `La capienza deve essere compresa tra ${Math.max(1, currentBooked)} e 999 posti.`;
+    const capacity = Number(capacityInput.value);
+    if (kind === "limited" && (!Number.isInteger(capacity) || capacity < Math.max(1, currentBooked) || capacity > 2147483647)) {
+      editorMessage.textContent = `La capienza deve essere un numero intero tra ${Math.max(1, currentBooked)} e 2.147.483.647 posti.`;
       editorMessage.classList.add("admin-message--error"); return;
     }
     if (kind !== "limited" && currentBooked > 0) {

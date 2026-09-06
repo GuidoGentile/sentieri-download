@@ -13,6 +13,7 @@
     <script defer src="map-config.js"></script>
     <script defer src="supabase-config.js?v=2"></script>
     <script defer src="admin-supabase.js?v=8"></script>
+    <script defer src="admin-packages.js?v=1"></script>
     <script defer src="admin-session.js?v=9"></script>
     <script defer src="admin-operations.js?v=2"></script>
     <script defer src="admin-roles.js?v=2"></script>
@@ -231,6 +232,12 @@
           <div><span>Ritirati</span><strong id="trail-retired-count">—</strong></div>
           <div><span>Inseriti dal gestore</span><strong id="trail-custom-count">—</strong></div>
           <button id="add-manager-trail" type="button" class="primary trail-add-button">Aggiungi percorso</button>
+          <details><summary>Aggiornamenti delle mappe</summary>
+            <label>Edizione <select id="package-edition"><option value="abruzzo">Abruzzo</option><option value="lazio">Lazio</option></select></label>
+            <button id="package-request" type="button">Prepara aggiornamento</button>
+            <button id="package-refresh" type="button">Controlla stato</button>
+            <p id="package-message" role="status">La pubblicazione regionale richiede l’accesso di amministrazione della piattaforma.</p>
+          </details>
         </div>
 
         <div class="trail-catalog-toolbar">
@@ -337,7 +344,7 @@
               </label>
               <label id="day-capacity-field" class="admin-field">
                 <span>Capienza massima</span>
-                <input id="day-capacity" type="number" min="1" max="999" step="1" inputmode="numeric" />
+                <input id="day-capacity" type="number" min="1" max="2147483647" step="1" inputmode="numeric" />
               </label>
               <div class="day-capacity-summary" aria-live="polite">
                 <div><span>Prenotati</span><strong id="day-booked">0</strong></div>
