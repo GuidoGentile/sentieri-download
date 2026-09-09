@@ -8,10 +8,15 @@ base descrittiva dell'opera software, mantenendo distinti componenti realizzati,
 
 ## Android
 
-La landing distribuisce due edizioni Android 0.45.0 ARM64 installabili insieme:
+La release corrente distribuisce **Sentieri d’Italia 0.46.6**, un APK ARM64
+consumer con identità separata `it.sentieri.app`. Abruzzo è incorporato;
+Lazio, Molise, Umbria e Toscana sono pacchetti territoriali separati e una sola
+regione resta attiva alla volta. Le app regionali Abruzzo e Lazio rimangono
+disponibili nei rispettivi canali storici stabili.
 
-- `02-Sentieri-Abruzzo-0.45.0-arm64.apk`, release sperimentale Abruzzo;
-- `Sentieri-Lazio-0.45.0-arm64.apk`, build candidata Lazio con dati territoriali separati.
+Il launcher nazionale usa montagne, sentiero dorato, onde bianche e un mare blu
+notte uniforme. L’APK è stato verificato e installato in-place sul Samsung di
+prova il 9 settembre 2026; resta una build sperimentale fuori da Google Play.
 
 La candidata Lazio usa `it.sentieri.lazio`, contiene 1.635 identità di percorso,
 937 attrazioni qualificate da portali turistici istituzionali e 697
@@ -30,7 +35,8 @@ TINITALY 1.1. Verifica diretta INFOMONT, continuità turn-by-turn, prova della
 prova sul campo resta incompleta; la 0.45.0 è una candidata da verificare sul
 telefono e sul territorio.
 
-La release attuale è una **build sperimentale 0.45.0 ARM64**, distribuita fuori
+La release regionale Abruzzo descritta di seguito è una build sperimentale,
+distribuita fuori
 dal Play Store per test controllati. L’APK contiene un catalogo offline di 1.162 percorsi
 canonici abruzzesi, con 339 identità CAI documentate e fonti storiche conservate,
 cartografia vettoriale offline, profili altimetrici e registrazione GPS predisposta per continuare

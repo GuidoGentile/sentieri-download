@@ -1,5 +1,74 @@
 # Note di versione
 
+## 0.46.6 — 9 settembre 2026
+
+- pubblica il primo APK consumer multi-regione **Sentieri d’Italia**, con
+  application ID separato `it.sentieri.app` e `versionCode 75`;
+- introduce il marchio nazionale e il launcher a pieno formato: montagne,
+  sentiero dorato, onde bianche e mare blu notte piatto, senza cornice
+  incorporata;
+- mantiene Abruzzo incorporato e consente di scegliere un solo pacchetto
+  territoriale alla volta fra Abruzzo, Lazio, Molise, Umbria e Toscana;
+- aggiunge importazione ed esportazione GPX nella sezione Tracce e conserva
+  l’identità anonima o permanente dell’utente;
+- è una build sperimentale ARM64 distribuita fuori da Google Play; i dati non
+  validati e i limiti di navigazione restano dichiarati nella landing.
+
+L’APK `Sentieri-d-Italia-0.46.6-arm64.apk` misura 326.319.628 byte e ha
+SHA-256 `7c0ed76baf0f1df06e92bf7b78a3f05de46d9e3ea1231e2154ff9ff3a86175e9`.
+Firma, application ID e versione sono stati verificati; installazione in-place,
+avvio e launcher sono stati controllati sul Samsung di prova il 9 settembre
+2026.
+
+## 0.46.4 — 8 settembre 2026
+
+- aggiorna insieme Sentieri d’Abruzzo, Sentieri del Lazio e
+  Sentieri del Molise con `versionCode 73`;
+- applica alle tre edizioni la medesima resa dei cartigli: piccoli alle scale
+  territoriali, crescita a radice negli ultimi zoom e dimensione massima più
+  leggibile;
+- l’aggiornamento sostituisce i dati cartografici incorporati della versione
+  precedente senza rimuovere tracce, account o preferenze personali;
+- conserva application ID e firma separati per le tre app, che possono
+  continuare a convivere sullo stesso dispositivo.
+
+Artefatti ARM64 preparati:
+
+- `02-Sentieri-Abruzzo-0.46.4-arm64.apk`: 324.623.168 byte, SHA-256
+  `f3e58b4d819d6522e89b8634dfab238913d27106ac668bb62ad71bab26490f05`;
+- `Sentieri-Lazio-0.46.4-arm64.apk`: 274.047.345 byte, SHA-256
+  `c9688267ac442cc409acae9f7c7540b7bb90871c123abdb0679e1ce3ee26aede`;
+- `Sentieri-Molise-0.46.4-arm64.apk`: 128.284.155 byte, SHA-256
+  `e0f752f86de1f287959930eafd7460715ae040def3baa3cb865e66c803a588bb`.
+
+## 0.46.3 Molise — 8 settembre 2026
+
+- introduce la terza edizione regionale **Sentieri del Molise**, con application
+  ID e dati territoriali separati;
+- pubblica il nuovo marchio del campanaccio del Matese con tratturo, comprese
+  icona adattiva Android e variante monocromatica;
+- include 136 identità di percorso OSM candidate, 18.553 archi fisici, 30.066
+  nodi e 8.338 piste carrabili distinte;
+- collega 112 identità al grafo fisico; le altre 24 conservano la geometria
+  diretta e tracciabile della relazione OSM, ma non sono certificate per la
+  navigazione turn-by-turn;
+- completa base vettoriale offline, curve TINITALY e profili altimetrici per
+  tutti i 136 percorsi candidati;
+- automatizza acquisizione e confronto delle fonti istituzionali: 18 delle 49
+  attrazioni OSM sono corroborate da pagine MiC o UniMol; gli altri casi e gli
+  errori dei siti restano nello staging verificabile;
+- aggiunge l'orchestratore riusabile delle nuove regioni: download riprendibili,
+  un solo ritaglio OSM condiviso, copertura TINITALY dal confine, checkpoint,
+  test, APK e rapporto finale senza pubblicazione automatica;
+- non attribuisce ufficialità ai dati OSM: corroborazione CAI/INFOMONT,
+  validazione gestore, navigazione certificata e prova sul campo restano aperte.
+
+La release Molise è candidata, separata dalla release Latest Abruzzo/Lazio, e
+usa `it.sentieri.molise`, `versionCode 72`, `versionName 0.46.3`.
+
+`Sentieri-Molise-0.46.3-arm64.apk` misura 128.284.155 byte e ha SHA-256
+`fd79adfb52058dee37ae6923a11eb5a69211c3a1264b60f8c3f328a84c3aaf45`.
+
 ## 0.45.0 — 1 settembre 2026
 
 - applica ad Abruzzo e Lazio un unico standard regionale OSM-first: i percorsi
@@ -723,3 +792,17 @@ Prima pubblicazione dimostrativa di Sentieri.
 L’APK era una build debug per valutazione e non conteneva ancora funzioni operative. Non era firmato
 per la distribuzione Play Store e poteva richiedere l’autorizzazione temporanea all’installazione da
 origini esterne.
+# Sentieri d'Italia 0.46.4 — prototipo multi-regione (2026-09-08)
+
+- Aggiunta la quarta build Android `Sentieri` (`it.sentieri.app`), installabile
+  accanto alle app Abruzzo, Lazio e Molise.
+- Abruzzo è incorporato; Lazio, Molise, Umbria e Toscana sono gestiti come pacchetti firmati
+  separati, installabili insieme ma attivabili uno alla volta dalle Impostazioni.
+- Regione attiva, catalogo, attrazioni, confini, cartografia, logo, centro e
+  limiti di navigazione vengono ora cambiati insieme e immediatamente; un
+  pacchetto assente o non valido non lascia più titolo e mappa disallineati.
+- APK arm64: `Sentieri-d-Italia-0.46.4-arm64.apk`, 324.454.504 byte,
+  SHA-256 `c7e315d42d24684ac37a906d750d8c03e54bf62b4b8ae3353f14039ac2ae3dcb`.
+- Verifica: compilazione unificata riuscita; test Android, 201 test JavaScript
+  e 16 test Python passati.
+  Prova sul telefono non eseguita perché nessun dispositivo ADB era collegato.

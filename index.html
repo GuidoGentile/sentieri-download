@@ -6,20 +6,19 @@
     <meta name="theme-color" content="#163f33" />
     <meta
       name="description"
-      content="Sentieri d’Abruzzo e Sentieri del Lazio: la stessa app, due edizioni territoriali con dati separati."
+      content="Sentieri d’Italia: un’unica app con pacchetti separati per Abruzzo, Lazio, Molise, Umbria e Toscana."
     />
-    <title>Sentieri · Abruzzo e Lazio, passo dopo passo</title>
-    <link rel="icon" href="assets/sentieri-mark.png" type="image/png" />
-    <link rel="stylesheet" href="styles.css?v=23" />
+    <title>Sentieri d’Italia · cinque regioni, un’unica app</title>
+    <link rel="icon" href="assets/sentieri-italia-mark.png" type="image/png" />
+    <link rel="stylesheet" href="styles.css?v=24" />
   </head>
   <body>
     <header class="topbar">
       <a class="brand" href="#inizio" aria-label="Sentieri, torna all'inizio">
         <span class="brand-marks" aria-hidden="true">
-          <img src="assets/sentieri-mark.png" alt="" />
-          <img src="assets/sentieri-lazio-mark.png" alt="" />
+          <img src="assets/sentieri-italia-mark.png" alt="" />
         </span>
-        <span class="brand-name">Sentieri</span>
+        <span class="brand-name">Sentieri d’Italia</span>
       </a>
       <nav aria-label="Navigazione principale">
         <a href="guida/">Guida</a>
@@ -34,33 +33,51 @@
     <main id="inizio">
       <section class="hero shell">
         <div class="hero-copy">
-          <div class="hero-marks" aria-label="Marchi Sentieri d’Abruzzo e Sentieri del Lazio">
-            <img class="hero-mark" src="assets/sentieri-mark.png" alt="Logo Sentieri d’Abruzzo" />
-            <img class="hero-mark" src="assets/sentieri-lazio-mark.png" alt="Logo Sentieri del Lazio" />
+          <div class="hero-marks" aria-label="Marchio Sentieri d’Italia">
+            <img class="hero-mark" src="assets/sentieri-italia-mark.png" alt="Logo Sentieri d’Italia" />
           </div>
           <p class="eyebrow"><span></span> Un’unica app · dati territoriali separati</p>
-          <h1>Due regioni da vivere,<br /><em>passo dopo passo.</em></h1>
+          <h1>Cinque regioni da vivere,<br /><em>una sola app.</em></h1>
           <p class="lead">
-            Scegli la tua edizione. L’esperienza resta la stessa; percorsi, attrazioni,
-            cartografia, identità e installazione appartengono alla singola regione.
+            Installa Sentieri d’Italia e scegli il pacchetto territoriale. Percorsi,
+            attrazioni e cartografia cambiano insieme; una sola regione resta attiva.
           </p>
           <div id="edizioni" class="edition-picker">
             <article class="edition-card available">
+              <img src="assets/sentieri-italia-mark.png" alt="" />
+              <div>
+                <span>APK unico · Android 0.46.6</span>
+                <h2>Sentieri d’Italia</h2>
+                <p>Abruzzo incorporato; Lazio, Molise, Umbria e Toscana come pacchetti territoriali separati e attivabili uno alla volta.</p>
+                <a class="button primary" href="https://github.com/GuidoGentile/sentieri-download/releases/latest/download/Sentieri-d-Italia-0.46.6-arm64.apk">Scarica Sentieri d’Italia</a>
+              </div>
+            </article>
+            <article class="edition-card available">
               <img src="assets/sentieri-mark.png" alt="" />
               <div>
-                <span>Disponibile · Android 0.46.1</span>
+                <span>Release regionale stabile · Android 0.46.1</span>
                 <h2>Sentieri d’Abruzzo</h2>
                 <p>1.162 percorsi, 679 attrazioni, rete OSM e rilievo fisico regionale offline.</p>
-                <a class="button primary" href="https://github.com/GuidoGentile/sentieri-download/releases/latest/download/02-Sentieri-Abruzzo-0.46.1-arm64.apk">Scarica l’APK Abruzzo</a>
+                <a class="button primary" href="https://github.com/GuidoGentile/sentieri-download/releases/download/v0.46.1/02-Sentieri-Abruzzo-0.46.1-arm64.apk">Scarica l’APK Abruzzo</a>
+              </div>
+            </article>
+            <article class="edition-card available">
+              <img src="assets/sentieri-molise-mark.png" alt="" />
+              <div>
+                <span>Pacchetto candidato nell’APK unico</span>
+                <h2>Sentieri del Molise</h2>
+                <p>136 identità OSM candidate, 18.553 archi fisici, 30.066 nodi, 8.338 piste carrabili, profili TINITALY completi e 18 attrazioni corroborate automaticamente da pagine MiC o UniMol. Base vettoriale, curve e rete sono offline. Percorsi e attrazioni non sono ancora validati da un gestore o verificati sul campo.</p>
+                <a class="button primary" href="#download">Usa Sentieri d’Italia</a>
+                <p class="icon-variants">Icona: campanaccio del Matese con tratturo, marchio sperimentale non ufficiale.</p>
               </div>
             </article>
             <article class="edition-card available">
               <img src="assets/sentieri-lazio-mark.png" alt="" />
               <div>
-                <span>Build candidata · Android 0.46.1</span>
+                <span>Release regionale stabile · Android 0.46.1</span>
                 <h2>Sentieri del Lazio</h2>
                 <p>1.635 percorsi identificabili con profili e dislivelli TINITALY, 14.514 nodi di catalogo, 61.310 nodi terziari, 57.610 archi terziari esplorabili e 14.636 tratti di strada sterrata distinti dai sentieri. Completano il pacchetto 937 attrazioni da fonti turistiche istituzionali, curve di livello, Tirreno e mappe vettoriali offline. La navigazione certificata è ancora in lavorazione.</p>
-                <a class="button primary" href="https://github.com/GuidoGentile/sentieri-download/releases/latest/download/Sentieri-Lazio-0.46.1-arm64.apk">Scarica l’APK Lazio candidato</a>
+                <a class="button primary" href="https://github.com/GuidoGentile/sentieri-download/releases/download/v0.46.1/Sentieri-Lazio-0.46.1-arm64.apk">Scarica l’APK Lazio candidato</a>
                 <p class="icon-variants">Icona attiva: foglia inclinata con profilo del Terminillo e cielo della famiglia Abruzzo.</p>
               </div>
             </article>
@@ -70,8 +87,8 @@
             <a class="button secondary" href="guida/">Guida completa</a>
           </div>
           <p class="microcopy">
-            Build sperimentali fuori da Google Play. Il Lazio è una candidata non ancora validata sul campo
-            e non usa cataloghi o mappe Abruzzo come riempitivo.
+            Build sperimentali fuori da Google Play. Lazio, Molise, Umbria e Toscana hanno dati non ancora validati sul campo
+            e non usano cataloghi o mappe di altre regioni come riempitivo.
           </p>
           <p class="microcopy">
             Puoi iniziare senza registrarti. Per recuperare i dati personali su altri dispositivi puoi poi
@@ -81,7 +98,7 @@
         </div>
 
         <div class="terrain-card" aria-label="Illustrazione di un percorso tra montagne">
-          <div class="terrain-meta"><span>EDIZIONI DISPONIBILI</span><strong>ABRUZZO · LAZIO · 0.46.1</strong></div>
+          <div class="terrain-meta"><span>PACCHETTI DISPONIBILI</span><strong>ABRUZZO · LAZIO · MOLISE · UMBRIA · TOSCANA</strong></div>
           <svg viewBox="0 0 660 520" role="img" aria-label="Percorso stilizzato attraverso un paesaggio montano">
             <defs>
               <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
@@ -101,7 +118,7 @@
             <circle cx="78" cy="472" r="12" fill="#fffaf0" stroke="#163f33" stroke-width="6" />
             <circle cx="560" cy="380" r="12" fill="#fffaf0" stroke="#163f33" stroke-width="6" />
           </svg>
-          <div class="terrain-status"><span class="pulse"></span> 2.805 percorsi · dati separati · mappe offline</div>
+          <div class="terrain-status"><span class="pulse"></span> 3 edizioni · dati separati · mappe offline</div>
         </div>
       </section>
 
@@ -198,37 +215,34 @@
       <section id="download" class="download-band">
         <div class="shell download-grid">
           <div>
-            <p class="eyebrow light"><span></span> Android · Abruzzo e Lazio 0.46.1</p>
-            <h2>Ogni territorio,<br />la sua progressione.</h2>
+            <p class="eyebrow light"><span></span> Android · Sentieri d’Italia</p>
+            <h2>Un’app sola,<br />territori separati.</h2>
             <p>
-              Scegli l’edizione del territorio che vuoi esplorare. Abruzzo e Lazio sono due applicazioni
-              installabili insieme, con identificativi, mappe, cataloghi e dati locali separati. La Lazio
-              0.46.1 usa l’ossatura OSM arricchita con le evidenze CAI e ParchiLazio disponibili, include
+              Scarica un solo APK e scegli nelle Impostazioni il territorio da esplorare. Abruzzo è incorporato;
+              Lazio, Molise, Umbria e Toscana sono pacchetti separati e una sola regione è attiva alla volta. Il pacchetto Lazio
+              usa l’ossatura OSM arricchita con le evidenze CAI e ParchiLazio disponibili, include
               14.514 nodi di catalogo e 61.310 nodi terziari derivati dalla topologia della rete. I 57.610 archi terziari restano visibili in primo piano per l’esplorazione, ma non sono elencati né etichettati; 14.636 tratti di strada sterrata sono rappresentati come viabilità e non confusi con i sentieri. Profili, dislivelli, curve TINITALY e contesto marino completano il pacchetto vettoriale. I vecchi raster fisici sono stati rimossi per evitare sovrapposizioni e peso inutile; il pan resta limitato all’area regionale; resta una
               build candidata non ancora validata sul campo.
             </p>
             <div class="actions migration-actions">
               <a
                 class="button warm"
-                href="https://github.com/GuidoGentile/sentieri-download/releases/latest/download/02-Sentieri-Abruzzo-0.46.1-arm64.apk"
-              >Scarica Sentieri d’Abruzzo</a>
-              <a
-                class="button warm"
-                href="https://github.com/GuidoGentile/sentieri-download/releases/latest/download/Sentieri-Lazio-0.46.1-arm64.apk"
-              >Scarica Sentieri del Lazio</a>
+                href="https://github.com/GuidoGentile/sentieri-download/releases/latest/download/Sentieri-d-Italia-0.46.6-arm64.apk"
+              >Scarica Sentieri d’Italia</a>
             </div>
-            <p class="migration-note"><strong>Novità 0.46.1:</strong> ripristinato il pulsante per centrare la posizione, utilizzabile anche senza una posizione precedente; indicazioni chiare quando GPS o permessi mancano. Aggiornamenti cartografici separati disponibili per Abruzzo e Lazio dalle Impostazioni.</p>
+            <p class="migration-note"><strong>Novità 0.46.6:</strong> nuova identità nazionale con launcher a pieno formato, onde bianche e mare blu notte uniforme; importazione ed esportazione GPX nella sezione Tracce e accesso account più diretto. L’aggiornamento conserva tracce, account e preferenze.</p>
             <p class="migration-note"><strong>Account facoltativo:</strong> l’app funziona e sincronizza con un’identità anonima; Google, Apple ed email/password permettono di recuperare i propri dati da altri dispositivi.</p>
-            <p class="migration-note"><strong>Un APK per regione:</strong> ogni download include applicazione, mappe e dati territoriali della propria edizione.</p>
+            <p class="migration-note"><strong>Pacchetti in qualificazione:</strong> Molise, Umbria e Toscana hanno ossatura OSM e altimetria generate tecnicamente; ufficialità, continuità operativa e verifica sul campo restano aperte.</p>
+            <p class="migration-note"><strong>Edizioni istituzionali:</strong> gli APK dedicati Abruzzo, Lazio e Molise restano disponibili per i progetti territoriali, ma l’app consumer usa pacchetti interni.</p>
             <p class="microcopy">
               iPhone: la beta nativa 0.2 è compilata e testata. Il collegamento TestFlight apparirà
               qui dopo il primo archivio firmato e l'elaborazione da parte di Apple.
             </p>
           </div>
           <ol class="steps">
-            <li><span>1</span><div><strong>Scegli la regione</strong><p>Scarica l’APK Abruzzo o Lazio: possono convivere sullo stesso telefono.</p></div></li>
-            <li><span>2</span><div><strong>Installa o aggiorna</strong><p>Non disinstallare una versione precedente della stessa edizione: installa il nuovo APK sopra quella esistente.</p></div></li>
-            <li><span>3</span><div><strong>Apri e parti</strong><p>Mappe, percorsi e dati territoriali offline sono già compresi nel pacchetto.</p></div></li>
+            <li><span>1</span><div><strong>Installa Sentieri d’Italia</strong><p>Un solo APK gestisce tutti i territori disponibili.</p></div></li>
+            <li><span>2</span><div><strong>Scegli il pacchetto</strong><p>Da Impostazioni scarica e attiva Abruzzo, Lazio, Molise, Umbria o Toscana.</p></div></li>
+            <li><span>3</span><div><strong>Apri e parti</strong><p>La regione attiva resta disponibile offline; account e tracce personali non cambiano.</p></div></li>
           </ol>
         </div>
       </section>
@@ -239,8 +253,8 @@
           <h2>Trasparenza prima delle promesse.</h2>
         </div>
         <div class="status-grid">
-          <article><strong>Realizzato nel prototipo</strong><p>Abruzzo: 1.162 percorsi, 679 attrazioni, 6.719 nodi complessivi e 8.690 tratti carrabili. Lazio: 1.635 profili completi, 75.824 nodi complessivi, 57.610 archi terziari esplorabili, 14.636 tratti di strada sterrata separati e 937 attrazioni qualificate. Entrambe usano ossatura OSM, curve TINITALY, mappe vettoriali offline e pan vincolato alla regione.</p></article>
-          <article><strong>Parziale</strong><p>Lazio: continuità turn-by-turn, riscontro diretto INFOMONT e validazione sul campo restano da completare. La 0.46.1 è una candidata da verificare sul telefono e sul territorio.</p></article>
+          <article><strong>Realizzato nel prototipo</strong><p>Sentieri d’Italia gestisce cinque territori separati e una sola regione attiva. Abruzzo, Lazio, Molise, Umbria e Toscana usano ossatura OSM, curve TINITALY, mappe vettoriali offline e pan vincolato alla regione.</p></article>
+          <article><strong>Parziale</strong><p>Lazio, Molise, Umbria e Toscana richiedono ancora verifiche editoriali e sul campo; i pacchetti Umbria e Toscana devono inoltre essere pubblicati nel registro remoto prima del download dall’app.</p></article>
           <article><strong>Non operativo</strong><p>Pagamenti, meteo live, editor GIS, verbali, stampa portatile e uso autorizzativo ufficiale sul territorio.</p></article>
         </div>
         <div class="notice">
@@ -256,10 +270,10 @@
     <footer>
       <div class="shell footer-inner">
         <div class="brand footer-brand">
-          <span class="brand-marks" aria-hidden="true"><img src="assets/sentieri-mark.png" alt="" /><img src="assets/sentieri-lazio-mark.png" alt="" /></span>
-          <span class="brand-name">Sentieri</span>
+          <span class="brand-marks" aria-hidden="true"><img src="assets/sentieri-italia-mark.png" alt="" /></span>
+          <span class="brand-name">Sentieri d’Italia</span>
         </div>
-        <p>Progetto sperimentale · edizioni Abruzzo e Lazio · nessun logo ufficiale utilizzato</p>
+        <p>Progetto sperimentale · Sentieri d’Italia con pacchetti Abruzzo, Lazio, Molise, Umbria e Toscana · nessun logo ufficiale utilizzato</p>
         <a href="guida/">Guida e descrizione tecnica</a>
         <a href="https://github.com/GuidoGentile/sentieri-download/releases">Tutte le release</a>
       </div>
