@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Apri percorso · Sentieri</title>
+  <style>
+    body{margin:0;background:#edf8fc;color:#123d3a;font:17px/1.5 system-ui,sans-serif;display:grid;min-height:100vh;place-items:center}
+    main{max-width:34rem;margin:1.2rem;padding:2rem;background:#fff;border-radius:1.5rem;box-shadow:0 10px 30px #123d3a22;text-align:center}
+    h1{margin:.2rem 0 1rem}a{display:block;margin-top:1.2rem;padding:.9rem 1.2rem;border-radius:1rem;background:#176b52;color:#fff;text-decoration:none;font-weight:750}
+    small{display:block;margin-top:1rem;color:#587875}
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Apri il percorso in Sentieri</h1>
+    <p id="message">Il QR contiene il riferimento al percorso, non dati personali.</p>
+    <a id="open" href="#">Apri nell’app</a>
+    <small>Se l’app non si apre, installa l’edizione territoriale che contiene questo percorso.</small>
+  </main>
+  <script>
+    const id = new URLSearchParams(location.search).get('id') || '';
+    const button = document.querySelector('#open');
+    if (id) button.href = 'sentieri://percorso/' + encodeURIComponent(id);
+    else {
+      button.hidden = true;
+      document.querySelector('#message').textContent = 'Il collegamento non contiene un percorso valido.';
+    }
+  </script>
+</body>
+</html>

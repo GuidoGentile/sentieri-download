@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="referrer" content="no-referrer">
+  <title>Posizione condivisa · Sentieri</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="anonymous">
+  <style>
+    :root{color-scheme:light;--forest:#176b52;--ink:#123d3a;--muted:#587875;--paper:#edf8fc;--sky:#78c6dc;--warn:#9c3f16}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.45 system-ui,sans-serif}
+    header{padding:1rem 1.1rem;background:var(--forest);color:#fff}h1{margin:0;font-size:1.25rem}header p{margin:.2rem 0 0;color:#dcece4}
+    main{max-width:70rem;margin:auto;padding:1rem}.card{background:#fff;border-radius:1.25rem;box-shadow:0 8px 24px #123d3a20;padding:1rem}
+    #map{height:min(62vh,38rem);min-height:20rem;border-radius:1rem;margin-top:1rem;background:#dcece4}
+    .status{display:flex;gap:.7rem;align-items:flex-start}.dot{width:.8rem;height:.8rem;border-radius:50%;background:var(--sky);margin-top:.3rem;flex:none}
+    .status.stale .dot,.status.ended .dot{background:#d9824e}.status.invalid .dot{background:#a9b4b0}
+    strong{display:block;font-size:1.08rem}.meta{color:var(--muted);margin-top:.15rem}.warning{color:var(--warn);font-weight:700;margin:.7rem 0 0}
+    footer{max-width:70rem;margin:auto;padding:0 1rem 1.5rem;color:var(--muted);font-size:.82rem}
+    @media(max-width:560px){main{padding:.7rem}.card{border-radius:1rem;padding:.8rem}#map{height:58vh}}
+  </style>
+</head>
+<body>
+  <header><h1>Sentieri · Piano di sicurezza</h1><p>Posizione volontariamente condivisa per questa uscita</p></header>
+  <main>
+    <section class="card">
+      <div id="status" class="status"><span class="dot"></span><div><strong>Caricamento…</strong><div class="meta">Controllo dell’ultimo aggiornamento</div></div></div>
+      <p id="warning" class="warning" hidden></p>
+      <div id="map" aria-label="Mappa della posizione condivisa"></div>
+    </section>
+  </main>
+  <footer>Il collegamento è temporaneo. La posizione può essere in ritardo o assente per mancanza di rete, GPS o batteria e non sostituisce i servizi di soccorso. La mappa online usa OpenStreetMap.</footer>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="anonymous"></script>
+  <script src="../gestore/supabase-config.js"></script>
+  <script>
+    (() => {
+      'use strict';
+      const token = location.hash.slice(1).trim();
+      const status = document.querySelector('#status');
+      const warning = document.querySelector('#warning');
+      const mapElement = document.querySelector('#map');
+      let map, route, marker, lastRenderedPoint = '';
+
+      function showState(kind, title, detail, alertText = '') {
+        status.className = 'status ' + kind;
+        status.querySelector('strong').textContent = title;
+        status.querySelector('.meta').textContent = detail;
+        warning.hidden = !alertText;
+        warning.textContent = alertText;
+      }
+
+      function initializeMap() {
+        if (map || !window.L) return;
+        map = L.map(mapElement, {zoomControl: true}).setView([42.2, 13.7], 8);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 18,
+          attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+        route = L.polyline([], {color: '#176b52', weight: 5, opacity: .85}).addTo(map);
+      }
+
+      function render(snapshot) {
+        const points = Array.isArray(snapshot.positions) ? snapshot.positions : [];
+        const last = points.at(-1);
+        const lastAt = snapshot.last_position_at ? new Date(snapshot.last_position_at) : null;
+        const ageMinutes = lastAt ? Math.max(0, Math.floor((Date.now() - lastAt.getTime()) / 60000)) : null;
+        const expiredAt = new Date(snapshot.expires_at).toLocaleString('it-IT');
+        const ended = snapshot.state === 'ended';
+        const stale = ageMinutes !== null && ageMinutes >= 5;
+        const detail = lastAt
+          ? `Ultimo aggiornamento ${lastAt.toLocaleString('it-IT')} · scadenza ${expiredAt}`
+          : `Nessuna posizione ricevuta · scadenza ${expiredAt}`;
+        showState(
+          ended ? 'ended' : stale ? 'stale' : '',
+          `${snapshot.trail_name} · ${ended ? 'condivisione terminata' : 'condivisione attiva'}`,
+          detail,
+          stale ? `La posizione non si aggiorna da ${ageMinutes} minuti: il telefono potrebbe essere senza rete.` : ''
+        );
+        initializeMap();
+        if (!map || !last) return;
+        const pointKey = `${last.latitude},${last.longitude},${last.recorded_at}`;
+        if (pointKey === lastRenderedPoint) return;
+        lastRenderedPoint = pointKey;
+        const coordinates = points.map(point => [point.latitude, point.longitude]);
+        route.setLatLngs(coordinates);
+        if (!marker) marker = L.circleMarker(coordinates.at(-1), {
+          radius: 9, color: '#fff', weight: 4, fillColor: '#176b52', fillOpacity: 1
+        }).addTo(map);
+        else marker.setLatLng(coordinates.at(-1));
+        const bounds = route.getBounds();
+        if (bounds.isValid() && coordinates.length > 1) map.fitBounds(bounds.pad(.18), {maxZoom: 16});
+        else map.setView(coordinates.at(-1), 16);
+      }
+
+      async function refresh() {
+        const configuration = window.SentieriSupabaseConfiguration;
+        if (!/^[0-9a-f]{64}$/.test(token) || !configuration) {
+          showState('invalid', 'Collegamento non valido', 'Chiedi alla persona di condividere nuovamente il link.');
+          mapElement.hidden = true;
+          return;
+        }
+        try {
+          const response = await fetch(`${configuration.url}/rest/v1/rpc/safety_share_snapshot`, {
+            method: 'POST',
+            headers: {'apikey': configuration.publishableKey, 'Content-Type': 'application/json'},
+            body: JSON.stringify({p_token: token}),
+            cache: 'no-store'
+          });
+          if (!response.ok) throw new Error('service_unavailable');
+          const snapshot = await response.json();
+          if (!snapshot) {
+            showState('invalid', 'Collegamento scaduto o revocato', 'La posizione non è più disponibile.');
+            mapElement.hidden = true;
+            return;
+          }
+          mapElement.hidden = false;
+          render(snapshot);
+        } catch (_) {
+          showState('stale', 'Aggiornamento non disponibile', 'Riprovo automaticamente tra un minuto.', 'Non usare questa pagina come unica fonte per una situazione di emergenza.');
+        }
+      }
+
+      refresh();
+      setInterval(refresh, 60000);
+    })();
+  </script>
+</body>
+</html>
