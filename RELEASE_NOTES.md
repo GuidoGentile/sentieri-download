@@ -1,5 +1,24 @@
 # Note di versione
 
+## 0.46.7 — 13 settembre 2026
+
+- aggiorna Sentieri d’Italia a `versionCode 76` conservando identità, firma,
+  tracce, account e preferenze dell’installazione precedente;
+- applica il cambio di regione senza riavvio e rende disponibili Abruzzo,
+  Lazio, Molise, Umbria e Toscana come pacchetti territoriali separati;
+- aggiorna la rete OSM-first e la gerarchia cartografica, i nodi, le etichette,
+  le strade bianche e la densità di strade e attrazioni alle diverse scale;
+- rende operativi Google, Apple ed email/password nel client Android e mantiene
+  l’uso anonimo come impostazione iniziale;
+- aggiunge gruppi privati, aderenza al percorso e una resa stabile delle tracce
+  GPX dense. Sicurezza temporanea e segnalazioni restano locali finché non viene
+  approvato esplicitamente il relativo trattamento della posizione.
+
+L’APK `Sentieri-d-Italia-0.46.7-arm64.apk` misura 325.474.722 byte e ha
+SHA-256 `3da38e044a380b8bbd30eddfd91d22bdb5bce30ebc686fce8c24443631e928c5`.
+Compilazione e test automatici sono riusciti; resta una build sperimentale
+ARM64 distribuita fuori da Google Play.
+
 ## 0.46.6 — 9 settembre 2026
 
 - pubblica il primo APK consumer multi-regione **Sentieri d’Italia**, con
