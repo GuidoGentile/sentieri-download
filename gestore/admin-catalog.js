@@ -252,6 +252,15 @@
       || (access.entity_code === item.entityCode && access.staff_role === "admin"));
   }
 
+  function administrableParks() {
+    const adminCodes = new Set(managerAccess
+      .filter((access) => access.staff_role === "admin")
+      .map((access) => access.entity_code));
+    const superadmin = managerAccess.some((access) => access.staff_role === "superadmin");
+    return availableEntities.filter((entity) => entity.entity_type === "park"
+      && (superadmin || adminCodes.has(entity.code)));
+  }
+
   function renderCatalog() {
     effectiveTrails = model.effectiveCatalog(baseTrails, catalogState);
     const stats = model.catalogStats(effectiveTrails);
@@ -284,13 +293,17 @@
               ? `<button type="button" class="outline trail-row-action" data-action="validate-publish" data-id="${escapeHtml(item.id)}" aria-label="Valida e pubblica" title="Valida e pubblica">↑</button>`
               : "";
       const modes = modesFor(item);
+      const adoptionAction = onlineMode && /^osm-route-\d+$/.test(item.id)
+        && item.remoteMetadata?.governance_mode !== "manager-adopted" && administrableParks().length
+        ? `<button type="button" class="outline trail-row-action" data-action="adopt-osm" data-id="${escapeHtml(item.id)}" aria-label="Adotta come percorso del parco" title="Adotta come percorso del parco">✓</button>`
+        : "";
       return `
         <tr class="trail-row trail-row--${escapeHtml(item.publicationStatus)}">
           <td><strong>${escapeHtml(item.name)}</strong><small>${escapeHtml(item.code || "Senza codice")}</small></td>
           <td><strong>${escapeHtml(DIFFICULTY_LABELS[item.difficulty] || "Non indicata")}</strong><small>${escapeHtml(formatLength(item.lengthMeters))} · ${escapeHtml(formatDuration(item.durationMinutes))}</small><span class="trail-mode-tags">${modes.map((mode) => `<i>${escapeHtml(mode)}</i>`).join("")}</span></td>
           <td><span class="trail-publication-status trail-publication-status--${escapeHtml(item.publicationStatus)}">${escapeHtml(STATUS_LABELS[item.publicationStatus])}</span></td>
           <td><strong>${escapeHtml(ENTITY_LABELS[item.entityCode] || item.entityCode || "Non indicato")}</strong></td>
-          <td><div class="trail-row-actions"><button type="button" class="outline trail-row-action" data-action="bookings" data-id="${escapeHtml(item.id)}" aria-label="Prenotazioni" title="Prenotazioni">▣</button><button type="button" class="outline trail-row-action" data-action="details" data-id="${escapeHtml(item.id)}" aria-label="Dettagli" title="Dettagli">ⓘ</button><button type="button" class="outline trail-row-action" data-action="edit" data-id="${escapeHtml(item.id)}" aria-label="Modifica" title="Modifica">✎</button>${statusAction}</div></td>
+          <td><div class="trail-row-actions"><button type="button" class="outline trail-row-action" data-action="bookings" data-id="${escapeHtml(item.id)}" aria-label="Prenotazioni" title="Prenotazioni">▣</button><button type="button" class="outline trail-row-action" data-action="details" data-id="${escapeHtml(item.id)}" aria-label="Dettagli" title="Dettagli">ⓘ</button><button type="button" class="outline trail-row-action" data-action="edit" data-id="${escapeHtml(item.id)}" aria-label="Modifica" title="Modifica">✎</button>${adoptionAction}${statusAction}</div></td>
         </tr>`;
     }).join("");
     window.dispatchEvent(new CustomEvent("sentieri:manager-catalog-updated", { detail: { catalog: effectiveTrails } }));
@@ -799,7 +812,7 @@
     }
   });
 
-  tableBody.addEventListener("click", (event) => {
+  tableBody.addEventListener("click", async (event) => {
     const button = event.target.closest("[data-action][data-id]");
     if (!button) return;
     const item = effectiveTrails.find((trail) => trail.id === button.dataset.id);
@@ -810,6 +823,28 @@
     if (button.dataset.action === "retire") openStatusDialog(item, "retired");
     if (button.dataset.action === "publish") openStatusDialog(item, "published");
     if (button.dataset.action === "validate-publish") openStatusDialog(item, "validate-publish");
+    if (button.dataset.action === "adopt-osm") {
+      const parks = administrableParks();
+      const defaultCode = parks[0]?.code || "";
+      const entityCode = parks.length === 1
+        ? defaultCode
+        : window.prompt(`Parco che adotta il percorso (${parks.map((park) => park.code).join(", ")}):`, defaultCode);
+      if (!entityCode || !parks.some((park) => park.code === entityCode)) return;
+      const reason = window.prompt("Motivo dell’adozione istituzionale:", "Percorso riconosciuto e preso in gestione dal parco");
+      if (!reason?.trim()) return;
+      button.disabled = true;
+      try {
+        await onlineApi.adoptOsmTrail(entityCode, item.id, Number(item.id.slice("osm-route-".length)), reason.trim());
+        await loadRemoteCatalog();
+        catalogMessage.classList.remove("admin-message--error");
+        catalogMessage.textContent = "Percorso adottato: l’identità OSM resta nello storico e i futuri aggiornamenti non lo sovrascriveranno.";
+      } catch (error) {
+        catalogMessage.textContent = error.message || "Adozione non riuscita.";
+        catalogMessage.classList.add("admin-message--error");
+      } finally {
+        button.disabled = false;
+      }
+    }
   });
 
   addButton.addEventListener("click", () => openTrailEditor());

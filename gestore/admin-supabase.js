@@ -357,8 +357,20 @@
     });
   }
 
+  async function adoptOsmTrail(entityCode, productId, osmRelationId, reason) {
+    return authenticatedRequest("/rest/v1/rpc/manager_adopt_osm_trail", {
+      method: "POST",
+      body: {
+        p_entity_code: entityCode,
+        p_product_id: productId,
+        p_osm_relation_id: osmRelationId,
+        p_reason: reason
+      }
+    });
+  }
+
   async function entities() {
-    return authenticatedRequest("/rest/v1/managing_entities?select=code,name,active&active=eq.true&order=name.asc");
+    return authenticatedRequest("/rest/v1/managing_entities?select=code,name,entity_type,active&active=eq.true&order=name.asc");
   }
 
   async function fieldReports(entityCode, status = "") {
@@ -449,6 +461,7 @@
   root.SentieriSupabase = Object.freeze({
     requestTerritorialPackage: (edition) => authenticatedRequest('/rest/v1/rpc/request_territorial_package', {method:'POST',body:{p_edition:edition}}),
     packageReleases: () => authenticatedRequest('/rest/v1/territorial_package_releases?select=id,edition,generation,status,requested_at,published_at&order=generation.desc&limit=20'),
+    adoptOsmTrail,
     availability,
     authSettings,
     auditEvents,
