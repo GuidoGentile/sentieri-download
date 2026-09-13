@@ -10,7 +10,10 @@
   Abruzzo incorporati e rende il controllo altimetrico compatibile con il nuovo
   manifesto OSM-first;
 - conserva application ID, firma, dati personali e pacchetti territoriali della
-  0.46.7. Il collaudo GPS reale resta da eseguire.
+  0.46.7;
+- installata in-place e avviata sul Samsung SM-S926B il 14 settembre 2026, con
+  `versionCode 77` e `versionName 0.46.8` verificati. Il collaudo GPS reale
+  resta da eseguire.
 
 L’APK `Sentieri-d-Italia-0.46.8-arm64.apk` misura 317.084.154 byte e ha
 SHA-256 `07625ce094a8ed0029e21c5948a39aff88c878f19262bb0e08afb5eace16f9cb`.
