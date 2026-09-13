@@ -361,6 +361,29 @@
     return authenticatedRequest("/rest/v1/managing_entities?select=code,name,active&active=eq.true&order=name.asc");
   }
 
+  async function fieldReports(entityCode, status = "") {
+    const filters = [
+      "select=id,product_id,entity_code,category,description,latitude,longitude,accuracy_meters,recorded_at,status,status_note,created_at,updated_at",
+      `entity_code=eq.${encodeURIComponent(entityCode)}`,
+      "order=created_at.desc",
+      "limit=100"
+    ];
+    if (status) filters.push(`status=eq.${encodeURIComponent(status)}`);
+    return authenticatedRequest(`/rest/v1/field_reports?${filters.join("&")}`);
+  }
+
+  async function updateFieldReport(reportId, status, note = "") {
+    return authenticatedRequest(`/rest/v1/field_reports?id=eq.${encodeURIComponent(reportId)}`, {
+      method: "PATCH",
+      headers: { Prefer: "return=representation" },
+      body: {
+        status,
+        status_note: String(note || "").trim() || null,
+        updated_at: new Date().toISOString()
+      }
+    });
+  }
+
   async function staffMembers(entityCode) {
     return authenticatedRequest("/rest/v1/rpc/manager_staff_members", {
       method: "POST", body: { p_entity_code: entityCode }
@@ -437,6 +460,7 @@
     currentAccess,
     deleteTrailSource,
     entities,
+    fieldReports,
     loadSession,
     logout: () => saveSession(null),
     sendPasswordRecovery,
@@ -458,6 +482,7 @@
     trailGeometry,
     uploadTrailSource,
     updatePassword,
+    updateFieldReport,
     updateProfile,
     validateAndPublishTrail,
     validSession

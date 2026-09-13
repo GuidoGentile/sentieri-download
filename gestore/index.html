@@ -12,11 +12,12 @@
     <script defer src="theme-config.js"></script>
     <script defer src="map-config.js"></script>
     <script defer src="supabase-config.js?v=2"></script>
-    <script defer src="admin-supabase.js?v=8"></script>
+    <script defer src="admin-supabase.js?v=9"></script>
     <script defer src="admin-packages.js?v=1"></script>
     <script defer src="admin-session.js?v=9"></script>
     <script defer src="admin-operations.js?v=2"></script>
     <script defer src="admin-roles.js?v=2"></script>
+    <script defer src="admin-field-reports.js?v=1"></script>
     <script defer src="manager-access-model.js?v=3"></script>
     <script defer src="manager-catalog-model.js?v=1"></script>
     <script defer src="manager-trail-geometry-model.js?v=1"></script>
@@ -54,6 +55,7 @@
       <a class="manager-section-nav__item manager-section-nav__item--active" href="#manager-trails" data-manager-tab="trails" role="tab" aria-selected="true" tabindex="0">Percorsi</a>
       <a class="manager-section-nav__item" href="#access-calendar" data-manager-tab="calendar" role="tab" aria-selected="false" tabindex="-1">Prenotazioni</a>
       <a class="manager-section-nav__item" href="#field-operations" data-manager-tab="guards" role="tab" aria-selected="false" tabindex="-1">Controlli QR</a>
+      <a class="manager-section-nav__item" href="#field-reports" data-manager-tab="reports" role="tab" aria-selected="false" tabindex="-1">Segnalazioni</a>
       <a class="manager-section-nav__item" href="#staff-access" data-manager-tab="staff" role="tab" aria-selected="false" tabindex="-1">Utenti e ruoli</a>
       <a class="manager-section-nav__item" href="#branding-form" data-manager-tab="configuration" role="tab" aria-selected="false" tabindex="-1">Configurazione</a>
     </nav>
@@ -103,6 +105,21 @@
 
 
       <div class="manager-folder-content" hidden>
+      <section id="field-reports" class="card field-reports-panel" data-manager-pane="reports" role="tabpanel" aria-labelledby="field-reports-title" hidden>
+        <div class="section-head">
+          <div>
+            <h2 id="field-reports-title">Segnalazioni dal campo</h2>
+            <p>Problemi inviati dagli utenti e instradati automaticamente all’ente del percorso.</p>
+          </div>
+          <div class="field-checks-tools">
+            <label class="admin-field"><span>Ente</span><select id="field-reports-entity-select"></select></label>
+            <label class="admin-field"><span>Stato</span><select id="field-reports-status-select"><option value="">Tutti</option><option value="received">Ricevuta</option><option value="verified">Verificata</option><option value="resolved">Risolta</option><option value="rejected">Non confermata</option></select></label>
+          </div>
+        </div>
+        <p id="field-reports-message" class="admin-message" aria-live="polite"></p>
+        <div id="field-reports-list" class="operations-list"><p class="muted">Accedi per vedere le segnalazioni.</p></div>
+      </section>
+
       <section id="field-operations" class="card field-operations-panel" data-manager-pane="guards" role="tabpanel" aria-labelledby="field-operations-title" hidden>
         <div class="section-head">
           <div>

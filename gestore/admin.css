@@ -2734,6 +2734,21 @@ html {
 .operation-result { font-weight: 800; white-space: nowrap; color: #9a5b00; }
 .operation-result--valid { color: #167345; }
 .operation-result--revoked, .operation-result--expired, .operation-result--not_found, .operation-result--cancelled { color: #b3261e; }
+
+.field-reports-panel .operation-row { align-items: flex-start; }
+.field-reports-panel .operation-main { flex: 1 1 28rem; min-width: 0; }
+.field-reports-panel .operation-main p { margin: .35rem 0; }
+.field-reports-panel .operation-result {
+  flex: 0 1 28rem;
+  grid-template-columns: minmax(9rem, .65fr) minmax(13rem, 1fr) auto;
+  align-items: end;
+  white-space: normal;
+}
+.field-reports-panel .operation-result .admin-field { margin: 0; }
+@media (max-width: 900px) {
+  .field-reports-panel .operation-row { align-items: stretch; flex-direction: column; }
+  .field-reports-panel .operation-result { grid-template-columns: 1fr; }
+}
 @media (max-width: 850px) {
   .operator-form { grid-template-columns: 1fr; }
   .field-checks-tools { width: 100%; align-items: stretch; flex-direction: column; }
