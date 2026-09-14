@@ -8,7 +8,7 @@ base descrittiva dell'opera software, mantenendo distinti componenti realizzati,
 
 ## Android
 
-La release corrente distribuisce **Sentieri d’Italia 0.46.8**, un APK ARM64
+La release corrente distribuisce **Sentieri d’Italia 0.46.9**, un APK ARM64
 consumer con identità separata `it.sentieri.app`. Abruzzo è incorporato;
 Lazio, Molise, Umbria e Toscana sono pacchetti territoriali separati e una sola
 regione resta attiva alla volta. Le app regionali Abruzzo e Lazio rimangono
@@ -16,7 +16,7 @@ disponibili nei rispettivi canali storici stabili.
 
 Il launcher nazionale usa montagne, sentiero dorato, onde bianche e un mare blu
 notte uniforme. Compatibilità di aggiornamento, firma e metriche dei 288
-percorsi Abruzzo incorporati sono verificate. La 0.46.8 è stata installata
+percorsi Abruzzo incorporati sono verificate. La 0.46.9 è stata installata
 in-place e avviata sul Samsung SM-S926B il 14 settembre 2026, conservando i dati
 locali; resta una versione sperimentale fuori da Google Play.
 

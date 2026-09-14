@@ -1,5 +1,25 @@
 # Note di versione
 
+## 0.46.9 — 14 settembre 2026
+
+- mostra sempre tutti i simboli dei luoghi sulla mappa, anche quando sono
+  ravvicinati o condividono la stessa posizione; soltanto i nomi restano
+  regolati da zoom e collisioni per non coprire la cartografia;
+- elimina dalla schermata Prenotazioni la nota pleonastica sulle escursioni già
+  effettuate;
+- autorizza nel backend i callback mobili esatti: dopo Google il ritorno è
+  nell'app che ha iniziato l'accesso e non nella console gestore;
+- corregge nel nuovo pacchetto Lazio la Via Appia Superiore presso Terracina,
+  usando la relazione OSM-first completa anziché il frammento del catalogo
+  regionale precedente;
+- conserva identità, firma, tracce, account, preferenze e pacchetti già
+  scaricati dall'installazione precedente.
+- installata in-place e avviata sul Samsung SM-S926B, con `versionCode 78` e
+  `versionName 0.46.9` verificati senza cancellare i dati locali.
+
+L’APK `Sentieri-d-Italia-0.46.9-arm64.apk` misura 313.039.006 byte e ha
+SHA-256 `e09504c21884e05354bd8deadb203996a5245ff5fbf1b932dfd7601da44e587f`.
+
 ## 0.46.8 — 13 settembre 2026
 
 - riconosce automaticamente il percorso primario o secondario realmente vicino
