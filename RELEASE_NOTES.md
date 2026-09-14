@@ -2,16 +2,21 @@
 
 ## 0.46.10 — 14 settembre 2026
 
-- aggiunge le Marche all'elenco dei pacchetti territoriali scaricabili e
-  attivabili nell'app nazionale;
-- conferma che tutti i simboli delle attrazioni restano sempre visibili; solo
-  i nomi dipendono da zoom e collisioni;
+- aggiunge le Marche fra i pacchetti territoriali selezionabili;
+- riconosce automaticamente e in modo stabile il percorso primario o secondario
+  vicino durante la registrazione;
+- mantiene sempre visibili tutti i simboli dei luoghi, senza clustering, soglie
+  o collisioni; soltanto i nomi dipendono dallo zoom;
 - include gli output altimetrici Abruzzo completi: 1.208 profili e metriche
-  salita/discesa verificati, con 1.123 profili runtime;
-- conserva application ID, firma e dati locali con crescita da build 78 a 79.
+  salita/discesa verificate, con 1.123 profili runtime;
+- semplifica Prenotazioni, corregge il ritorno Google nell'app nazionale e
+  conserva identità, firma, tracce, account, preferenze e pacchetti territoriali.
 
-APK ARM64: 95.870.269 byte, SHA-256
-`15b42a98cfe4c43dcbff53619a0831352cee7ca400fd82fd6f060d0309f43e24`.
+L’APK `Sentieri-d-Italia-0.46.10-arm64.apk` misura 95.870.269 byte e ha
+SHA-256 `15b42a98cfe4c43dcbff53619a0831352cee7ca400fd82fd6f060d0309f43e24`.
+È stato installato in-place sul Samsung SM-S926B; Marche 9 è stata scaricata,
+verificata e attivata senza cancellare i dati locali e senza crash. L’accesso
+Google è rientrato correttamente nell’app nazionale.
 
 ## Pacchetto Marche 9 — 14 settembre 2026
 

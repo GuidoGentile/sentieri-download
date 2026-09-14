@@ -10,8 +10,8 @@ base descrittiva dell'opera software, mantenendo distinti componenti realizzati,
 
 La release corrente distribuisce **Sentieri d’Italia 0.46.10**, un APK ARM64
 consumer con identità separata `it.sentieri.app`. Abruzzo è incorporato;
-Lazio, Marche, Molise, Umbria e Toscana sono pacchetti territoriali separati e una sola
-regione resta attiva alla volta. Le app regionali Abruzzo e Lazio rimangono
+Lazio, Marche, Molise, Umbria e Toscana sono pacchetti territoriali separati e
+una sola regione resta attiva alla volta. Le app regionali Abruzzo e Lazio rimangono
 disponibili nei rispettivi canali storici stabili.
 
 Il pacchetto **Marche 9**, pubblicato il 14 settembre 2026, aggiunge 207
@@ -21,10 +21,9 @@ non sono ancora verificati sul campo e non vanno considerati ufficiali.
 
 Il launcher nazionale usa montagne, sentiero dorato, onde bianche e un mare blu
 notte uniforme. Compatibilità di aggiornamento, firma e metriche dei 288
-percorsi Abruzzo incorporati sono verificate. La 0.46.10 abilita il pacchetto
-Marche e conserva identità e firma della 0.46.9 già installata sul Samsung; il
-collaudo del nuovo aggiornamento sul telefono resta da eseguire. È una versione
-sperimentale fuori da Google Play.
+percorsi Abruzzo incorporati sono verificate. La 0.46.10 è stata installata
+in-place e avviata sul Samsung SM-S926B il 14 settembre 2026, conservando i dati
+locali; resta una versione sperimentale fuori da Google Play.
 
 La candidata Lazio usa `it.sentieri.lazio`, contiene 1.635 identità di percorso,
 937 attrazioni qualificate da portali turistici istituzionali e 697
