@@ -1,5 +1,14 @@
 # Note di versione
 
+## Pacchetto Marche 9 — 14 settembre 2026
+
+- aggiunge le Marche come sesto territorio separato di Sentieri d’Italia;
+- include 207 relazioni OSM, 91.355 archi fisici, 2.260 etichette e profili
+  altimetrici completi;
+- pubblica 23 file per 123.433.743 byte nella release `maps-marche-9`;
+- conserva origine e stato candidato dei dati: il pacchetto è utilizzabile
+  offline ma non è ancora ufficiale né verificato sul campo.
+
 ## 0.46.9 — 14 settembre 2026
 
 - mostra sempre tutti i simboli dei luoghi sulla mappa, anche quando sono

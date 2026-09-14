@@ -10,9 +10,14 @@ base descrittiva dell'opera software, mantenendo distinti componenti realizzati,
 
 La release corrente distribuisce **Sentieri d’Italia 0.46.9**, un APK ARM64
 consumer con identità separata `it.sentieri.app`. Abruzzo è incorporato;
-Lazio, Molise, Umbria e Toscana sono pacchetti territoriali separati e una sola
+Lazio, Marche, Molise, Umbria e Toscana sono pacchetti territoriali separati e una sola
 regione resta attiva alla volta. Le app regionali Abruzzo e Lazio rimangono
 disponibili nei rispettivi canali storici stabili.
+
+Il pacchetto **Marche 9**, pubblicato il 14 settembre 2026, aggiunge 207
+relazioni OSM, 91.355 archi fisici, 2.260 etichette e profili altimetrici
+completi. È un pacchetto candidato utilizzabile offline: percorsi e attrazioni
+non sono ancora verificati sul campo e non vanno considerati ufficiali.
 
 Il launcher nazionale usa montagne, sentiero dorato, onde bianche e un mare blu
 notte uniforme. Compatibilità di aggiornamento, firma e metriche dei 288
